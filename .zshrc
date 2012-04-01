@@ -33,7 +33,7 @@ plugins=(git vi-mode brew github osx pip python)
 source /usr/local/etc/profile.d/z.sh
 #source /Users/beau.lyddon/.pythonbrew/etc/bashrc
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$PATH
-source ~/Dropbox/workspace/aliases
+source $HOME/aliases
 
 # VirtualEnv
 # 
