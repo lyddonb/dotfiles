@@ -1,0 +1,52 @@
+[core]
+    excludesfile = ~/.gitignore_global
+    editor = /usr/bin/vim
+    # Treat spaces before tabs, lines that are indented with 8 or more spaces, 
+    # and all kinds of trailing whitespace as an error
+    whitespacece = space-before-tab,indent-with-non-tab,trailing-space
+[alias]
+    gl  = log -16 --color=always --all --graph --topo-order --pretty='format: %Cgreen%h%Creset %s%Cred%d%Creset%n'
+    gll = log     --color=always --all --graph --topo-order --pretty='format: %Cgreen%h%Creset %s%Cred%d%Creset%n'
+
+    ci = commit
+    cm = commit -m
+
+    co = checkout
+
+    stat = status
+    st = status
+
+    fo = fetch origin
+    fu = fetch upstream
+    po = push origin
+    lo = pull origin
+[push]
+    default = current
+[color]
+    ui = auto
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellowow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[difftool "sourcetree"]
+    cmd = /Applications/DiffMerge.app/Contents/MacOS/DiffMerge --nosplash \"$LOCAL\" \"$REMOTE\"
+    path = 
+[mergetool "sourcetree"]
+    cmd = /Applications/DiffMergee.app/Contents/MacOS/DiffMerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+    trustExitCode = true
+[merge]
+    # Include summaries of merged commits in newly created mergedge commit
+    # messages
+    log = true
