@@ -1,0 +1,15 @@
+.DS_Store
+.idea
+*.pyc
+atlassian-ide-plugin.xml
+wfkinds.py
+build-user.properties
+.flexLibProperties
+static
+*.log
+settingslocal.py
+config.py
+.ropeproject
+covhtml
+test-reports
+*.orig
