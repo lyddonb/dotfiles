@@ -668,11 +668,11 @@ augroup ft_python
 augroup END
 
 
-" Ruby
-augroup ft_ruby
-    au!
-    au Filetype ruby setlocal foldmethod=syntax
-augroup END
+"" Ruby
+"augroup ft_ruby
+    "au!
+    "au Filetype ruby setlocal foldmethod=syntax
+"augroup END
 
 
 
