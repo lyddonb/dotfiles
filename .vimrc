@@ -7,6 +7,7 @@ filetype plugin indent on
 set nocompatible
 
 " The basics
+syn on
 set encoding=utf-8
 set modelines=0
 set autoindent
@@ -611,12 +612,12 @@ augroup END
 
 
 " Javascript
-augroup ft_javascripto
-    au!
+"augroup ft_javascripto
+    "au!
 
-    au FileType javascript setlocal foldmethod=marker
-    au FileType javascript setlocal foldmarker={,}
-augroup END
+    "au FileType javascript setlocal foldmethod=marker
+    "au FileType javascript setlocal foldmarker={,}
+"augroup END
 
 
 " Markdown
