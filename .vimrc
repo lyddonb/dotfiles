@@ -397,7 +397,7 @@ let python_highlight_all=1
 " COLOR SCHEME
 syntax on
 set background=dark
-colorscheme badwolf
+colorscheme molokai
 set t_Co=256
 
 
@@ -924,6 +924,25 @@ else
     " Console Vim
 endif
 
+
+" Vim TMUx
+map <Leader>rt :call RunVimTmuxCommand("clear; wft " . bufname("%"))<CR>
+map <Leader>rs :call RunVimTmuxCommand("clear; wfrs " . bufname("%"))<CR>
+" Prompt for a command to run
+map <Leader>rp :PromptVimTmuxCommand<CR>
+" Run last command executed by RunVimTmuxCommand
+map <Leader>rl :RunLastVimTmuxCommand<CR>
+" Inspect runner pane
+map <Leader>ri :InspectVimTmuxRunner<CR>
+" Close all other tmux panes in current window
+map <Leader>rx :CloseVimTmuxPanes<CR>
+" If text is selected, save it in the v buffer and send that buffer it to tmux
+vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
+" Select current paragraph and send it to tmux
+nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
+
+let VimuxOrientation = "h"
+let VimuxHeight = "25"
 
 
 "" VIMRC
