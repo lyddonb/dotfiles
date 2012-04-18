@@ -149,6 +149,7 @@ set colorcolumn=+1
 set copyindent
 
 
+
 if has("autocmd")
     " Enable file type detection
     filetype on
@@ -397,7 +398,7 @@ let python_highlight_all=1
 " COLOR SCHEME
 syntax on
 set background=dark
-colorscheme molokai
+colorscheme jellybeans
 set t_Co=256
 
 
@@ -953,3 +954,7 @@ let VimuxHeight = "25"
     "autocmd bufwritepost .vimrc source $MYVIMRC
 "endif
   ""
+
+
+
+hi ColorColumn ctermbg=233 guibg=#1c1c1c
