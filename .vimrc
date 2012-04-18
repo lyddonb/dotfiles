@@ -1,8 +1,8 @@
 " Beau's vimrc
 " some basics and turn on pathogen
 
-filetype off
 call pathogen#runtime_append_all_bundles()
+filetype off
 filetype plugin indent on
 set nocompatible
 
@@ -221,7 +221,7 @@ cnoremap <c-e> <end>
 nnoremap <leader>D :diffoff!<cr>
 
 " Yankring
-nnoremap <silent> <F6> :YRShow<cr>
+"nnoremap <silent> <F6> :YRShow<cr>
 
 " Formatting, TextMate-style
 nnoremap Q gqip
@@ -805,11 +805,11 @@ let g:miniBufExplSplitBelow=0
 
 
 " YankRing
-function! YRRunAfterMaps()
-    nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-    omap <expr> L YRMapsExpression("", "$")
-    omap <expr> H YRMapsExpression("", "^")
-endfunction
+"function! YRRunAfterMaps()
+    "nnoremap Y :<C-U>YRYankCount 'y$'<CR>
+    "omap <expr> L YRMapsExpression("", "$")
+    "omap <expr> H YRMapsExpression("", "^")
+"endfunction
 
 
 " Searching
