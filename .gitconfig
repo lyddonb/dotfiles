@@ -1,3 +1,9 @@
+[user]
+    email = beau.lyddon@webfilings.com
+    name = Beau Lyddon
+[github]
+    user = beaulyddon-wf
+    token = 0779aaec9a85f7146f7deeb8e774cc8c
 [core]
     excludesfile = ~/.gitignore_global
     editor = /usr/bin/vim
@@ -21,7 +27,7 @@
     po = push origin
     lo = pull origin
 [push]
-    default = current
+	default = tracking
 [color]
     ui = auto
     branch = auto
@@ -30,7 +36,7 @@
     status = auto
 [color "branch"]
     current = yellow reverse
-    local = yellowow
+    local = yellow
     remote = green
 [color "diff"]
     meta = yellow bold
@@ -41,12 +47,14 @@
     changed = green
     untracked = cyan
 [difftool "sourcetree"]
-    cmd = /Applications/DiffMerge.app/Contents/MacOS/DiffMerge --nosplash \"$LOCAL\" \"$REMOTE\"
-    path = 
+	cmd = /Applications/DiffMerge.app/Contents/MacOS/DiffMerge --nosplash \"$LOCAL\" \"$REMOTE\"
+	path = 
 [mergetool "sourcetree"]
-    cmd = /Applications/DiffMergee.app/Contents/MacOS/DiffMerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
-    trustExitCode = true
+	cmd = /Applications/DiffMerge.app/Contents/MacOS/DiffMerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+	trustExitCode = true
 [merge]
     # Include summaries of merged commits in newly created mergedge commit
     # messages
     log = true
+[branch]
+    autosetuprebase = always

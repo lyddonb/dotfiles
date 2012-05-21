@@ -957,4 +957,5 @@ let VimuxHeight = "25"
 
 
 
-hi ColorColumn ctermbg=233 guibg=#1c1c1c
+hi ColorColumn ctermbg=0 guibg=#1c1c1c
+hi CursorLine ctermbg=236 guibg=#DDDDDD
