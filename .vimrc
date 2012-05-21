@@ -1,8 +1,8 @@
 " Beau's vimrc
 " some basics and turn on pathogen
 
-filetype off
 call pathogen#runtime_append_all_bundles()
+filetype off
 filetype plugin indent on
 set nocompatible
 
@@ -164,6 +164,9 @@ if has("autocmd")
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
+    autocmd FileType coffeescript setlocal ts=4 sts=4 sw=4 noexpandtab
+    autocmd FileType mako setlocal ts=4 sts=4 sw=4 noexpandtab
+    autocmd FileType jst setlocal ts=4 sts=4 sw=4 noexpandtab
     
 endif
 
@@ -197,6 +200,8 @@ nnoremap <M-O>  O<Esc>
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType mustache set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType mako set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType jst set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType c set omnifunc=ccomplete#Completej
 set completeopt=menuone
@@ -222,7 +227,7 @@ cnoremap <c-e> <end>
 nnoremap <leader>D :diffoff!<cr>
 
 " Yankring
-nnoremap <silent> <F6> :YRShow<cr>
+"nnoremap <silent> <F6> :YRShow<cr>
 
 " Formatting, TextMate-style
 nnoremap Q gqip
@@ -532,6 +537,8 @@ augroup ft_html
 
     au BufNewFile,BufRead *.html setlocal filetype=htmldjango
     au BufNewFile,BufRead *.mustache setlocal filetype=html
+    au BufNewFile,BufRead *.mako setlocal filetype=htmldjango
+    au BufNewFile,BufRead *.jst setlocal filetype=htmldjango
 
     " HTML tag closing
     "inoremap <C-_> <Space><BS><Esc>:call InsertCloseTag()<cr>
@@ -549,7 +556,7 @@ augroup ft_html
     " by Smylers  http://www.stripey.com/vim/
     " 2000 May 3
 
-    if &filetype == 'html' || $filetype == 'mustache'
+    if &filetype == 'html' || $filetype == 'mustache' || $filetype == 'mako' || $filetype == 'jst'
 
         " list of tags which shouldn't be closed:
         let UnaryTags = ' Area Base Br DD DT HR Img Input LI Link Meta P Param '
@@ -597,7 +604,7 @@ augroup ft_html
 
     endfunction " InsertCloseTag()
 
-    au FileType html,jinja,htmldjango,mustache setlocal foldmethod=manual
+    au FileType html,jinja,htmldjango,mustache,mako,jst setlocal foldmethod=manual
 
     au FileType html,jinja,htmldjango nnoremap <buffer> <localleader>f Vatzf
     au FileType html,jinja,htmldjango nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
@@ -806,11 +813,11 @@ let g:miniBufExplSplitBelow=0
 
 
 " YankRing
-function! YRRunAfterMaps()
-    nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-    omap <expr> L YRMapsExpression("", "$")
-    omap <expr> H YRMapsExpression("", "^")
-endfunction
+"function! YRRunAfterMaps()
+    "nnoremap Y :<C-U>YRYankCount 'y$'<CR>
+    "omap <expr> L YRMapsExpression("", "$")
+    "omap <expr> H YRMapsExpression("", "^")
+"endfunction
 
 
 " Searching
