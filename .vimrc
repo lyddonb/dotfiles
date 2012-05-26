@@ -163,10 +163,10 @@ if has("autocmd")
     autocmd FileType mustache setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
+    autocmd FileType javascript setlocal ts=2 sts=2 sw=2 noexpandtab
     autocmd FileType coffeescript setlocal ts=4 sts=4 sw=4 noexpandtab
-    autocmd FileType mako setlocal ts=4 sts=4 sw=4 noexpandtab
-    autocmd FileType jst setlocal ts=4 sts=4 sw=4 noexpandtab
+    autocmd FileType mako setlocal ts=2 sts=2 sw=2 noexpandtab
+    autocmd FileType jst setlocal ts=2 sts=2 sw=2 noexpandtab
     
 endif
 
@@ -405,7 +405,6 @@ syntax on
 set background=dark
 colorscheme jellybeans
 set t_Co=256
-
 
 
 
@@ -964,5 +963,10 @@ let VimuxHeight = "25"
 
 
 
+"hi ColorColumn ctermbg=234 guibg=#1c1c1c
 hi ColorColumn ctermbg=0 guibg=#1c1c1c
 hi CursorLine ctermbg=236 guibg=#DDDDDD
+
+hi Normal guibg=#cccccc ctermbg=233
+"hi hsNiceOperator guifg=#cccccc guibg=#cccccc
+hi NonText guibg=#cccccc ctermbg=233
