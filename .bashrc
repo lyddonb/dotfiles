@@ -103,7 +103,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 source /usr/local/bin/virtualenvwrapper.sh
-source /home/lyddonb/aliases
+source ~/aliases
 
 DEFAULT_COLOR="[00;1m"
 GRAY_COLOR="[37;1m"
@@ -132,31 +132,8 @@ function activevirtualenv() {
     fi
 }
 
-export BASEPROMPT='\n\e${USER_COLOR}\u\
-`activevirtualenv` \
-\e${GRAY_COLOR}in \e${GREEN_COLOR}\w\
-\e${GRAY_COLOR}$(vcprompt)\
-\e${DEFAULT_COLOR}'''
-
-if [ `uname` == "Darwin" ]; then
-    export BASEPROMPT='\n\e${USER_COLOR}\u\
-        `activevirtualenv` \
-        \e${GRAY_COLOR}in \e${GREEN_COLOR}\w\
-        \e${GRAY_COLOR}`vcprompt`\
-        \e${DEFAULT_COLOR}'
-else
-    export BASEPROMPT='\[\e${GREEN_COLOR}\]\w\[\e${GRAY_COLOR}`vcprompt`\]\[\e${DEFAULT_COLOR}\]'
-    #export BASEPROMPT='\[\e${GREEN_COLOR}\]\w\[\e`activevirtualenv`\]\[\e${GRAY_COLOR}`vcprompt`\]\[\e${DEFAULT_COLOR}\]'
-    #export BASEPROMPT='\n\e${USER_COLOR}\u\
-    #export BASEPROMPT='\n\e${USER_COLOR}\u\
-        #`activevirtualenv` \
-        #\e${GRAY_COLOR}at \e${ORANGE_COLOR}\h \
-        #\e${GRAY_COLOR}in \e${GREEN_COLOR}\w\
-        #\e${GRAY_COLOR}`vcprompt`\
-        #\e${DEFAULT_COLOR}'
-fi
-
 #export ARCHFLAGS='-arch i386 -arch x86_64'
+export BASEPROMPT='\[\e${GREEN_COLOR}\]\w\[\e${GRAY_COLOR}`vcprompt`\]\[\e${DEFAULT_COLOR}\]'
 
 export PROMPT="${BASEPROMPT} $ "
 export PS1=$PROMPT""
@@ -185,12 +162,40 @@ export PYTHONDONTWRITEBYTECODE=1
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 
 # Enable bash history
-export HISTCONTROL=erasedups
-TSIZE=50000
-shopt -s histappend
+#export HISTCONTROL=erasedups
+#TSIZE=50000
+#shopt -s histappend
 
 # download this.
 # https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
 if [ -e "$HOME/git-completion.bash" ]; then
     source "$HOME/git-completion.bash"
 fi;
+
+source /usr/local/etc/profile.d/z.sh
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$PATH
+export PATH=~/bin:$PATH
+source $HOME/aliases
+
+# VirtualEnv
+# 
+# Setting up the VirtualEnv
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+export PIP_RESPECT_VIRTUALENV=true
+
+# Python command line
+export PYTHONSTARTUP=$HOME/.pythonstartup
+
+if [[ -r /Users/beau.lyddon/.pythonbrew/pythons/Python-2.5.5/bin/virtualenvwrapper.sh ]]; then
+    source /Users/beau.lyddon/.pythonbrew/pythons/Python-2.5.5/bin/virtualenvwrapper.sh
+else
+    echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
+
+ssh-add $HOME/.ssh/wf_github
+
+source /usr/local/Cellar/autoenv/0.1.0/activate.sh
+source ~/.git-completion.bash
