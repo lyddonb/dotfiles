@@ -117,6 +117,7 @@ vmap <C-Down> xp`[V`]
 " toggle current column highlight shortcut
 map <leader>b :set cursorcolumn!<cr>
 
+nnoremap <leader>g :GundoToggle<CR>
 
 
 " SEARCHING
@@ -132,6 +133,10 @@ nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 nnoremap <silent> <leader>? :execute "Ack! --python '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>>")))'"
 
 
+
+" Moving around
+" quick buffer list
+:nnoremap <C-b> :buffers<CR>:buffer<Space>
 
 
 
@@ -768,7 +773,7 @@ let ropevim_global_prefix = '<C-c>p'
 
 
 " Pep8
-"let g:pep8_map='<leader>8'
+let g:pep8_map='<leader>8'
 
 
 " Syntastic
