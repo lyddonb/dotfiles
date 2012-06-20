@@ -1,4 +1,4 @@
-" Beau's vimrc
+"_get_element_sessions_for_account Beau's vimrc
 " some basics and turn on pathogen
 
 call pathogen#runtime_append_all_bundles()
@@ -133,6 +133,14 @@ nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 nnoremap <silent> <leader>? :execute "Ack! --python '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>>")))'"
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" OPEN FILES IN DIRECTORY OF CURRENT FILE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>e :edit %%
+map <leader>v :view %%
+
+
 
 " Moving around
 " quick buffer list
@@ -218,8 +226,8 @@ map <leader>W  :%s/\s\+$//<cr>:let @/=''<CR>
 map <leader>WW :%s/\s\+$//<cr>:let @/=''<CR>
 
 " Change case
-nnoremap <C-u> gUiw
-inoremap <C-u> <esc>gUiwea
+"nnoremap <C-u> gUiw
+"inoremap <C-u> <esc>gUiwea
 
 " Substitute
 nnoremap <leader>s :%s//<left>
@@ -870,7 +878,7 @@ function! GitGrepWord()
     normal! "zyiw
     call GitGrep(getreg('z'))
 endfunction
-nmap <C-l>g :call GitGrepWord()<CR>"
+nmap <leader>gw :call GitGrepWord()<CR>"
 
 
 " Ctrlp

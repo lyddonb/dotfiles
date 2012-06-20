@@ -139,7 +139,7 @@ export PROMPT="${BASEPROMPT} $ "
 export PS1=$PROMPT""
 
 #export TERM=xterm-color
-#export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
+export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 
 #export CLICOLOR=1
 #if [ `uname` == "Darwin" ]; then
