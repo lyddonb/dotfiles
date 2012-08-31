@@ -50,6 +50,8 @@
     la = !git l --all
 [push]
 	default = tracking
+[fetch]
+    recurseSubmodules = yes
 [color]
     ui = auto
     branch = auto
@@ -68,8 +70,13 @@
     added = yellow
     changed = green
     untracked = cyan
+[diff]
+    tool = vimdiff
 [difftool "sourcetree"]
 	cmd = /Applications/DiffMerge.app/Contents/MacOS/DiffMerge --nosplash \"$LOCAL\" \"$REMOTE\"
+	path = 
+[difftool "pycharm"]
+	cmd = /Applications/PyCharm.app/Contents/MacOS/PyCharm  \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/DiffMerge.app/Contents/MacOS/DiffMerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
@@ -77,6 +84,7 @@
 [merge]
     # Include summaries of merged commits in newly created mergedge commit
     # messages
+    tool = sourcetree
     log = true
 [branch]
     autosetuprebase = always

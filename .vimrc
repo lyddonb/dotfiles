@@ -2,6 +2,7 @@
 " some basics and turn on pathogen
 
 call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
 filetype off
 filetype plugin indent on
 set nocompatible
@@ -49,13 +50,10 @@ set number
 set noswapfile
 set backup
 
-
+set wildmode=longest:full
+set wildmenu
 
 " KEY REMAPPING
-
-" absolute line numbers in insert mode, relative otherwise for easy movement
-au InsertEnter * :set nu
-au InsertLeave * :set rnu
 
 " leader
 let mapleader = ","
@@ -225,10 +223,6 @@ map <leader>W  :%s/\s\+$//<cr>:let @/=''<CR>
 " Dammit, Slimv
 map <leader>WW :%s/\s\+$//<cr>:let @/=''<CR>
 
-" Change case
-"nnoremap <C-u> gUiw
-"inoremap <C-u> <esc>gUiwea
-
 " Substitute
 nnoremap <leader>s :%s//<left>
 
@@ -250,8 +244,6 @@ nnoremap <leader>V V`]
 
 " Preview Files
 nnoremap <leader>p :w<cr>:Hammer<cr>
-
-
 
 
 " Align text
@@ -283,8 +275,6 @@ set completeopt=longest,menuone,preview
 
 " Sudo to write
 cmap w!! w !sudo tee % >/dev/null
-
-
 
 
 " FILE MANAGEMENT
@@ -325,11 +315,10 @@ au VimResized * exe "normal! \<c-w>="
 cmap w!! w !sudo tee % >/dev/null
 
 " backups
-set undodir=~/.vim/tmp/undo//     " undo files
-set backupdir=~/.vim/tmp/backup// " backups
-set directory=~/.vim/tmp/swap//   " swap files
+set undodir=/var/tmp/vim/undo//     " undo files
+set backupdir=/var/tmp/vim/backup// " backups
+set directory=/var/tmp/vim/swap//   " swap files
 set backup                        " enable backups""""
-
 
 
 
@@ -362,12 +351,12 @@ set virtualedit+=block
 
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
-nnoremap ˚ :lnext<cr>zvzz
-nnoremap ¬ :lprevious<cr>zvzz
-inoremap ˚ <esc>:lnext<cr>zvzz
-inoremap ¬ <esc>:lprevious<cr>zvzz
-nnoremap <m-Down> :cnext<cr>zvzz
-nnoremap <m-Up> :cprevious<cr>zvzz
+"nnoremap ˚ :lnext<cr>zvzz
+"nnoremap ¬ :lprevious<cr>zvzz
+"inoremap ˚ <esc>:lnext<cr>zvzz
+"inoremap ¬ <esc>:lprevious<cr>zvzz
+"nnoremap <m-Down> :cnext<cr>zvzz
+"nnoremap <m-Up> :cprevious<cr>zvzz
 
 " Easy buffer navigation
 noremap <C-h>  <C-w>h
@@ -383,13 +372,11 @@ endfor"
 
 
 
-
-
 " FONT
 
 " Try to get nicer font render on OS X
 if has("unix")
-	set antialias
+    set antialias
 endif
 
 " Make bad spelling/syntax style prettier
@@ -411,50 +398,15 @@ nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'
 let python_highlight_all=1
 
 
-
-
 " COLOR SCHEME
 syntax on
 set background=dark
 colorscheme jellybeans
+"colorscheme tomorrow_night
 set t_Co=256
 
-
-
-" STATUS LINE
-augroup ft_statuslinecolor
-    au!
-    
-    au InsertEnter * hi StatusLine ctermfg=196 guifg=#FF3145
-    au InsertLeave * hi StatusLine ctermfg=130 guifg=#CD5907
-augroup END
-
-set statusline=%f    " Path.
-set statusline+=%m   " Modified flag.
-set statusline+=%r   " Readonly flag.
-set statusline+=%w   " Preview window flag.
-
-set statusline+=\    " Space.
-
-set statusline+=%#redbar#                " Highlight the following as a warning.
-set statusline+=%{SyntasticStatuslineFlag()} " Syntastic errors.
-set statusline+=%*                           " Reset highlighting.
-
-set statusline+=%=   " Right align.
-
-" File format, encoding and type.  Ex: "(unix/utf-8/python)
-set statusline+=(
-set statusline+=%{&ff}                        " Format (unix/DOS).
-set statusline+=/
-set statusline+=%{strlen(&fenc)?&fenc:&enc}   " Encoding (utf-8).
-set statusline+=/
-set statusline+=%{&ft}                        " Type (python).
-set statusline+=)
-
-" Line and column position and counts.
-set statusline+=\ (line\ %l\/%L,\ col\ %03c)
-
-
+" Enable fancy mode 
+let g:Powerline_symbols = 'fancy'   " Powerline
 
 
 " ABBREVATIONS AND SPELLING
@@ -488,7 +440,6 @@ abbr sefl self
 
 
 
-
 " SYNTAX HELPER
 let g:tagbar_usearrows=1
 nnoremap <leader>l :TagbarToggle<CR>
@@ -496,15 +447,7 @@ let g:tagbar_ctags_bin = 'ctags'
 
 
 
-
-
 " LANGUAGE STUFF
-
-" C
-augroup ft_c
-    au!
-    au FileType c setlocal foldmethod=syntax
-augroup END
 
 
 " CSS / LESS
@@ -550,7 +493,7 @@ augroup ft_html
     au BufNewFile,BufRead *.html setlocal filetype=htmldjango
     au BufNewFile,BufRead *.mustache setlocal filetype=html
     au BufNewFile,BufRead *.mako setlocal filetype=htmldjango
-    au BufNewFile,BufRead *.jst setlocal filetype=htmldjango
+    au BufNewFile,BufRead *.jst setlocal filetype=html
 
     " HTML tag closing
     "inoremap <C-_> <Space><BS><Esc>:call InsertCloseTag()<cr>
@@ -631,39 +574,6 @@ augroup ft_html
 augroup END
 
 
-" Javascript
-"augroup ft_javascripto
-    "au!
-
-    "au FileType javascript setlocal foldmethod=marker
-    "au FileType javascript setlocal foldmarker={,}
-"augroup END
-
-
-" Markdown
-augroup ft_markdown
-    au!
-
-    au BufNewFile,BufRead *.m*down setlocal filetype=markdown
-    au Filetype markdown nnoremap <buffer> <localleader>1 yypVr=
-    au Filetype markdown nnoremap <buffer> <localleader>2 yypVr-
-    au Filetype markdown nnoremap <buffer> <localleader>3 I### <ESC>
-augroup END
-
-
-" Nginx
-augroup ft_nginx
-    au!
-
-    au BufRead,BufNewFile /etc/nginx/conf/*                      set ft=nginx
-    au BufRead,BufNewFile /etc/nginx/sites-available/*           set ft=nginx
-    au BufRead,BufNewFile /usr/local/etc/nginx/sites-available/* set ft=nginx
-    au BufRead,BufNewFile vhost.nginx                            set ft=nginx
-
-    au FileType nginx setlocal foldmethod=marker foldmarker={,}
-augroup END
-
-
 " Python
 map <leader>j :RopeGotoDefinition<CR>
 map <leader>d :RopeShowDoc<CR>
@@ -683,35 +593,13 @@ augroup ft_python
 
     au FileType python setlocal omnifunc=pythoncomplete#Complete
     au FileType python setlocal define=^\s*\\(def\\\\|class\\)
-    au FileType python compiler nose
     au FileType man nnoremap <buffer> <cr> :q<cr>
 augroup END
-
-
-"" Ruby
-"augroup ft_ruby
-    "au!
-    "au Filetype ruby setlocal foldmethod=syntax
-"augroup END
-
-
-
-
 
 " PLUGINS
 
 " Fugitive
 set statusline=%{fugitive#statusline()}
-nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gw :Gwrite<cr>
-nnoremap <leader>ga :Gadd<cr>
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gco :Gcheckout<cr>
-nnoremap <leader>gci :Gcommit<cr>
-nnoremap <leader>gm :Gmove<cr>
-nnoremap <leader>gr :Gremove<cr>
-nnoremap <leader>gl :Shell git gl -18<cr>:wincmd \|<cr>
 
 augroup ft_fugitive
     au!
@@ -728,7 +616,7 @@ let g:atia_attributes_complete = 0
 
 
 " NERD Tree
-map <leader>n :NERDTreeToggle<CR>j
+map <leader>n :NERDTreeMirrorToggle<CR>j
 inoremap <F2> <esc>:NERDTreeToggle<cr>
 
 au Filetype nerdtree setlocal nolist
@@ -738,6 +626,7 @@ let NERDTreeIgnore=['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
 
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
+let NERDTreeWinSize = 25
 
 
 " Pydoc
@@ -769,11 +658,6 @@ let g:rbpt_colorpairs = [
     \ ]
 let g:rbpt_max = 16
 
-
-" Tasks
-map <leader>td <Plug>TaskList
-
-
 " Rope
 let ropevim_enable_shortcuts = 0
 let ropevim_guess_project = 1
@@ -783,20 +667,14 @@ let ropevim_global_prefix = '<C-c>p'
 " Pep8
 let g:pep8_map='<leader>8'
 
-
 " Syntastic
-let g:syntastic_check_on_open=1
-"let g:syntastic_enable_signs = 1
-"let g:syntastic_disabled_filetypes = ['python']
-"let g:syntastic_auto_loc_list=0
-"let g:syntastic_stl_format = '[%E{Error 1/%e: line %fe}%B{, }%W{Warning 1/%w: line %fw}]'
-"let g:syntastic_jsl_conf = '$HOME/.vim/jsl.conf'
-"let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-
+"let g:syntastic_check_on_open=1
+"let g:SyntasticCheck
+nnoremap zj :lnext<CR>zz
+nnoremap zk :lprev<CR>zz
 
 " Pyflakes
 let g:pyflakes_use_quickfix = 0
-
 
 " Threesome
 let g:threesome_leader = "-"
@@ -819,17 +697,6 @@ let g:threesome_initial_scrollbind_compare = 0
 let g:threesome_initial_scrollbind_path = 0
 
 let g:threesome_wrap = "nowrap"
-
-" Minibuff Explorer
-let g:miniBufExplSplitBelow=0
-
-
-" YankRing
-"function! YRRunAfterMaps()
-    "nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-    "omap <expr> L YRMapsExpression("", "$")
-    "omap <expr> H YRMapsExpression("", "^")
-"endfunction
 
 
 " Searching
@@ -882,8 +749,6 @@ nmap <leader>gw :call GitGrepWord()<CR>"
 
 
 " Ctrlp
-"let g:ctrlp_map = '<c-p>'
-"let g:ctrlp_map = '<D-t>'
 map <leader>t :CtrlP()<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window_bottom = 0
@@ -900,7 +765,8 @@ let g:ctrlp_custom_ignore = {
 
 " Environments GUI
 if has('gui_running')
-    set guifont=Inconsolota:h11
+    "set guifont=Inconsolota:h11
+    set guifont=Inconsolota-dz for Pow:h11
 
     set go-=T
     set go-=l

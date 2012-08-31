@@ -141,25 +141,10 @@ export PS1=$PROMPT""
 #export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 
-#export CLICOLOR=1
-#if [ `uname` == "Darwin" ]; then
-    #export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
-    #export LC_CTYPE=en_US.utf-8
-    #alias free=tfree
-#else
-    #alias ls='ls --color=auto'
-#fi
-#export IGNOREEOF=1
-#export LESS=FRSX
-
 export EDITOR=vim
 export PYOPEN_CMD=vim
 export SVN_EDITOR=$EDITOR
 export GIT_EDITOR=$SVN_EDITOR
-
-# python
-export PYTHONDONTWRITEBYTECODE=1
-export PYTHONSTARTUP="$HOME/.pythonrc.py"
 
 # Enable bash history
 #export HISTCONTROL=erasedups
@@ -173,7 +158,7 @@ if [ -e "$HOME/git-completion.bash" ]; then
 fi;
 
 source /usr/local/etc/profile.d/z.sh
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$PATH
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/sbin$PATH
 export PATH=~/bin:$PATH
 source $HOME/aliases
 
@@ -182,20 +167,18 @@ source $HOME/aliases
 # Setting up the VirtualEnv
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
 
 # Python command line
 export PYTHONSTARTUP=$HOME/.pythonstartup
 
-if [[ -r /Users/beau.lyddon/.pythonbrew/pythons/Python-2.5.5/bin/virtualenvwrapper.sh ]]; then
-    source /Users/beau.lyddon/.pythonbrew/pythons/Python-2.5.5/bin/virtualenvwrapper.sh
-else
-    echo "WARNING: Can't find virtualenvwrapper.sh"
-fi
-
 ssh-add $HOME/.ssh/wf_github
 
 source /usr/local/Cellar/autoenv/0.1.0/activate.sh
 source ~/.git-completion.bash
+
+#todo.txt
+export PATH=~$PATH:~/Programs/todo.txt-cli
+source ~/Programs/todo.txt-cli/todo_completion
+export TODOTXT_DEFAULT_ACTION=ls
