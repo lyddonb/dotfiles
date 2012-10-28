@@ -2,6 +2,7 @@
 " some basics and turn on pathogen
 
 call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
 filetype off
 filetype plugin indent on
 set nocompatible
@@ -49,13 +50,10 @@ set number
 set noswapfile
 set backup
 
-
+set wildmode=longest:full
+set wildmenu
 
 " KEY REMAPPING
-
-" absolute line numbers in insert mode, relative otherwise for easy movement
-au InsertEnter * :set nu
-au InsertLeave * :set rnu
 
 " leader
 let mapleader = ","
@@ -141,11 +139,9 @@ map <leader>e :edit %%
 map <leader>v :view %%
 
 
-
 " Moving around
 " quick buffer list
 :nnoremap <C-b> :buffers<CR>:buffer<Space>
-
 
 
 " TABS, SPACING
@@ -160,7 +156,6 @@ set textwidth=80
 set formatoptions=qrn1
 set colorcolumn=+1
 set copyindent
-
 
 
 if has("autocmd")
@@ -201,7 +196,6 @@ nmap _= :call Preserve("normal gg=G")<CR>
   
 
 
-
 " EDITING"
 " **************************************************
 
@@ -225,10 +219,6 @@ map <leader>W  :%s/\s\+$//<cr>:let @/=''<CR>
 " Dammit, Slimv
 map <leader>WW :%s/\s\+$//<cr>:let @/=''<CR>
 
-" Change case
-"nnoremap <C-u> gUiw
-"inoremap <C-u> <esc>gUiwea
-
 " Substitute
 nnoremap <leader>s :%s//<left>
 
@@ -239,39 +229,11 @@ cnoremap <c-e> <end>
 " Diffoff
 nnoremap <leader>D :diffoff!<cr>
 
-" Yankring
-"nnoremap <silent> <F6> :YRShow<cr>
-
 " Formatting, TextMate-style
 nnoremap Q gqip
 
 " Easier linewise reselection
 nnoremap <leader>V V`]
-
-" Preview Files
-nnoremap <leader>p :w<cr>:Hammer<cr>
-
-
-
-
-" Align text
-nnoremap <leader>Al :left<cr>
-nnoremap <leader>Ac :center<cr>
-nnoremap <leader>Ar :right<cr>
-vnoremap <leader>Al :left<cr>
-vnoremap <leader>Ac :center<cr>
-vnoremap <leader>Ar :right<cr>
-
-" Cmdheight switching
-nnoremap <leader>1 :set cmdheight=1<cr>
-nnoremap <leader>2 :set cmdheight=2<cr>
-
-" Source
-vnoremap <leader>S y:execute @@<cr>
-nnoremap <leader>S ^vg_y:execute @@<cr>
-
-" Replaste
-nnoremap <D-p> "_ddPV`]=
 
 " Marks and Quotes
 noremap ' `
@@ -283,8 +245,6 @@ set completeopt=longest,menuone,preview
 
 " Sudo to write
 cmap w!! w !sudo tee % >/dev/null
-
-
 
 
 " FILE MANAGEMENT
@@ -305,15 +265,12 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.DS_Store                       " OSX bullshit
-
 set wildignore+=*.luac                           " Lua byte code
-
 set wildignore+=migrations                       " Django migrations
-set wildignore+=*.py[co]                            " Python byte code
+set wildignore+=*.py[co]                         " Python byte code
 
 " Clojure/Leiningen
 set wildignore+=classes
-"set wildignore+=lib
 
 " Save when losing focus
 au FocusLost * :wa
@@ -325,12 +282,10 @@ au VimResized * exe "normal! \<c-w>="
 cmap w!! w !sudo tee % >/dev/null
 
 " backups
-set undodir=~/.vim/tmp/undo//     " undo files
-set backupdir=~/.vim/tmp/backup// " backups
-set directory=~/.vim/tmp/swap//   " swap files
+set undodir=/var/tmp/vim/undo//     " undo files
+set backupdir=/var/tmp/vim/backup// " backups
+set directory=/var/tmp/vim/swap//   " swap files
 set backup                        " enable backups""""
-
-
 
 
 " MOVEMENT
@@ -362,13 +317,6 @@ set virtualedit+=block
 
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
-nnoremap ˚ :lnext<cr>zvzz
-nnoremap ¬ :lprevious<cr>zvzz
-inoremap ˚ <esc>:lnext<cr>zvzz
-inoremap ¬ <esc>:lprevious<cr>zvzz
-nnoremap <m-Down> :cnext<cr>zvzz
-nnoremap <m-Up> :cprevious<cr>zvzz
-
 " Easy buffer navigation
 noremap <C-h>  <C-w>h
 noremap <C-j>  <C-w>j
@@ -381,15 +329,11 @@ for i in range(1, 9)
     exec "nnoremap <D-".i."> ".i."gt" 
 endfor"
 
-
-
-
-
 " FONT
 
 " Try to get nicer font render on OS X
 if has("unix")
-	set antialias
+    set antialias
 endif
 
 " Make bad spelling/syntax style prettier
@@ -410,52 +354,15 @@ nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'
 " Full python syntax highlighting
 let python_highlight_all=1
 
-
-
-
 " COLOR SCHEME
 syntax on
 set background=dark
 colorscheme jellybeans
+"colorscheme tomorrow_night
 set t_Co=256
 
-
-
-" STATUS LINE
-augroup ft_statuslinecolor
-    au!
-    
-    au InsertEnter * hi StatusLine ctermfg=196 guifg=#FF3145
-    au InsertLeave * hi StatusLine ctermfg=130 guifg=#CD5907
-augroup END
-
-set statusline=%f    " Path.
-set statusline+=%m   " Modified flag.
-set statusline+=%r   " Readonly flag.
-set statusline+=%w   " Preview window flag.
-
-set statusline+=\    " Space.
-
-set statusline+=%#redbar#                " Highlight the following as a warning.
-set statusline+=%{SyntasticStatuslineFlag()} " Syntastic errors.
-set statusline+=%*                           " Reset highlighting.
-
-set statusline+=%=   " Right align.
-
-" File format, encoding and type.  Ex: "(unix/utf-8/python)
-set statusline+=(
-set statusline+=%{&ff}                        " Format (unix/DOS).
-set statusline+=/
-set statusline+=%{strlen(&fenc)?&fenc:&enc}   " Encoding (utf-8).
-set statusline+=/
-set statusline+=%{&ft}                        " Type (python).
-set statusline+=)
-
-" Line and column position and counts.
-set statusline+=\ (line\ %l\/%L,\ col\ %03c)
-
-
-
+" Enable fancy mode 
+let g:Powerline_symbols = 'fancy'   " Powerline
 
 " ABBREVATIONS AND SPELLING
 function! EatChar(pat)
@@ -467,15 +374,6 @@ function! MakeSpacelessIabbrev(from, to)
     execute "iabbrev <silent> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
 endfunction
 
-call MakeSpacelessIabbrev('bb/',  'http://bitbucket.org/')
-call MakeSpacelessIabbrev('bbs/', 'http://bitbucket.org/lyddonb/')
-call MakeSpacelessIabbrev('gh/',  'http://github.com/')
-call MakeSpacelessIabbrev('ghs/', 'http://github.com/lyddonb/')
-
-iabbrev ldis ಠ_ಠ
-iabbrev sl@ steve@stevelosh.com
-iabbrev vrcf `~/.vimrc` file
-
 abbr teh the
 abbr nad and
 abbr adn and
@@ -486,25 +384,10 @@ abbr refactor reorganize
 abbr prase parse
 abbr sefl self
 
-
-
-
-" SYNTAX HELPER
-let g:tagbar_usearrows=1
-nnoremap <leader>l :TagbarToggle<CR>
-let g:tagbar_ctags_bin = 'ctags'
-
-
-
-
+" LINE HELPER
+nnoremap <leader>l :NumbersToggle<CR>
 
 " LANGUAGE STUFF
-
-" C
-augroup ft_c
-    au!
-    au FileType c setlocal foldmethod=syntax
-augroup END
 
 
 " CSS / LESS
@@ -512,7 +395,6 @@ augroup ft_css
     au!
 
     au BufNewFile,BufRead *.less setlocal filetype=css
-
     au Filetype less,css setlocal foldmethod=marker
     au Filetype less,css setlocal foldmarker={,}
     au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
@@ -523,7 +405,6 @@ augroup END
 
 
 " Django
-
 augroup ft_django
     au!
 
@@ -550,23 +431,13 @@ augroup ft_html
     au BufNewFile,BufRead *.html setlocal filetype=htmldjango
     au BufNewFile,BufRead *.mustache setlocal filetype=html
     au BufNewFile,BufRead *.mako setlocal filetype=htmldjango
-    au BufNewFile,BufRead *.jst setlocal filetype=htmldjango
+    au BufNewFile,BufRead *.jst setlocal filetype=html
 
     " HTML tag closing
-    "inoremap <C-_> <Space><BS><Esc>:call InsertCloseTag()<cr>
     nnoremap \hc :call InsertCloseTag()<CR>
     imap <F8> <Space><BS><Esc>\hca
 
     function! InsertCloseTag()
-    " inserts the appropriate closing HTML tag; used for the \hc operation defined
-    " above;
-    " requires ignorecase to be set, or to type HTML tags in exactly the same case
-    " that I do;
-    " doesn't treat <P> as something that needs closing;
-    " clobbers register z and mark z
-    "
-    " by Smylers  http://www.stripey.com/vim/
-    " 2000 May 3
 
     if &filetype == 'html' || $filetype == 'mustache' || $filetype == 'mako' || $filetype == 'jst'
 
@@ -630,44 +501,11 @@ augroup ft_html
     au FileType jinja,htmldjango inoremap <buffer> <c-f> {{<space><space>}}<left><left><left>
 augroup END
 
-
-" Javascript
-"augroup ft_javascripto
-    "au!
-
-    "au FileType javascript setlocal foldmethod=marker
-    "au FileType javascript setlocal foldmarker={,}
-"augroup END
-
-
-" Markdown
-augroup ft_markdown
-    au!
-
-    au BufNewFile,BufRead *.m*down setlocal filetype=markdown
-    au Filetype markdown nnoremap <buffer> <localleader>1 yypVr=
-    au Filetype markdown nnoremap <buffer> <localleader>2 yypVr-
-    au Filetype markdown nnoremap <buffer> <localleader>3 I### <ESC>
-augroup END
-
-
-" Nginx
-augroup ft_nginx
-    au!
-
-    au BufRead,BufNewFile /etc/nginx/conf/*                      set ft=nginx
-    au BufRead,BufNewFile /etc/nginx/sites-available/*           set ft=nginx
-    au BufRead,BufNewFile /usr/local/etc/nginx/sites-available/* set ft=nginx
-    au BufRead,BufNewFile vhost.nginx                            set ft=nginx
-
-    au FileType nginx setlocal foldmethod=marker foldmarker={,}
-augroup END
-
-
 " Python
 map <leader>j :RopeGotoDefinition<CR>
 map <leader>d :RopeShowDoc<CR>
-
+let g:pymode_folding = 0
+let g:pymode_lint = 0
 
 augroup ft_python
     au!
@@ -683,35 +521,13 @@ augroup ft_python
 
     au FileType python setlocal omnifunc=pythoncomplete#Complete
     au FileType python setlocal define=^\s*\\(def\\\\|class\\)
-    au FileType python compiler nose
     au FileType man nnoremap <buffer> <cr> :q<cr>
 augroup END
-
-
-"" Ruby
-"augroup ft_ruby
-    "au!
-    "au Filetype ruby setlocal foldmethod=syntax
-"augroup END
-
-
-
-
 
 " PLUGINS
 
 " Fugitive
 set statusline=%{fugitive#statusline()}
-nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gw :Gwrite<cr>
-nnoremap <leader>ga :Gadd<cr>
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gco :Gcheckout<cr>
-nnoremap <leader>gci :Gcommit<cr>
-nnoremap <leader>gm :Gmove<cr>
-nnoremap <leader>gr :Gremove<cr>
-nnoremap <leader>gl :Shell git gl -18<cr>:wincmd \|<cr>
 
 augroup ft_fugitive
     au!
@@ -719,17 +535,15 @@ augroup ft_fugitive
     au BufNewFile,BufRead .git/index setlocal nolist
 augroup END
 
-
 " HTML5
 let g:event_handler_attributes_complete = 0
 let g:rdfa_attributes_complete = 0
 let g:microdata_attributes_complete = 0
 let g:atia_attributes_complete = 0
 
-
 " NERD Tree
 map <leader>n :NERDTreeToggle<CR>j
-inoremap <F2> <esc>:NERDTreeToggle<cr>
+"inoremap <F2> <esc>:NERDTreeToggle<cr>
 
 au Filetype nerdtree setlocal nolist
 
@@ -738,14 +552,7 @@ let NERDTreeIgnore=['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
 
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-
-
-" Pydoc
-let g:pydoc_perform_mappings = 0
-
-au FileType python noremap <buffer> <localleader>ds :call ShowPyDoc('<C-R><C-W>', 1)<CR>
-au FileType python noremap <buffer> <localleader>dS :call ShowPyDoc('<C-R><C-A>', 1)<CR>
-
+let NERDTreeWinSize = 22
 
 " Rainbox Parentheses
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
@@ -769,74 +576,22 @@ let g:rbpt_colorpairs = [
     \ ]
 let g:rbpt_max = 16
 
-
-" Tasks
-map <leader>td <Plug>TaskList
-
-
 " Rope
 let ropevim_enable_shortcuts = 0
 let ropevim_guess_project = 1
 let ropevim_global_prefix = '<C-c>p'
 
-
-" Pep8
-let g:pep8_map='<leader>8'
-
-
 " Syntastic
-let g:syntastic_check_on_open=1
-"let g:syntastic_enable_signs = 1
-"let g:syntastic_disabled_filetypes = ['python']
-"let g:syntastic_auto_loc_list=0
-"let g:syntastic_stl_format = '[%E{Error 1/%e: line %fe}%B{, }%W{Warning 1/%w: line %fw}]'
-"let g:syntastic_jsl_conf = '$HOME/.vim/jsl.conf'
-"let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-
+nnoremap zj :lnext<CR>zz
+nnoremap zk :lprev<CR>zz
 
 " Pyflakes
 let g:pyflakes_use_quickfix = 0
-
-
-" Threesome
-let g:threesome_leader = "-"
-
-let g:threesome_initial_mode = "grid"
-
-let g:threesome_initial_layout_grid = 1
-let g:threesome_initial_layout_loupe = 0
-let g:threesome_initial_layout_compare = 0
-let g:threesome_initial_layout_path = 0
-
-let g:threesome_initial_diff_grid = 1
-let g:threesome_initial_diff_loupe = 0
-let g:threesome_initial_diff_compare = 0
-let g:threesome_initial_diff_path = 0
-
-let g:threesome_initial_scrollbind_grid = 0
-let g:threesome_initial_scrollbind_loupe = 0
-let g:threesome_initial_scrollbind_compare = 0
-let g:threesome_initial_scrollbind_path = 0
-
-let g:threesome_wrap = "nowrap"
-
-" Minibuff Explorer
-let g:miniBufExplSplitBelow=0
-
-
-" YankRing
-"function! YRRunAfterMaps()
-    "nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-    "omap <expr> L YRMapsExpression("", "$")
-    "omap <expr> H YRMapsExpression("", "^")
-"endfunction
-
 
 " Searching
 let g:gitgrepprg="grep\\ -n\\ -R\\ --include='*.py'"
 let g:gitgrepprgclass="grep\\ -n\\ -R\\ --include='*.py'\\ class\\"
 let g:gitgrepprgfunction="grep\\ -n\\ -R\\ --include='*.py\\ def\\'"
-"let g:gitgrepprgfile="grep\\ -n\\ -R\\ --include='*.py'"
 
 function! GitGrep(args)
     redraw
@@ -880,11 +635,8 @@ function! GitGrepWord()
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
 
-
 " Ctrlp
-"let g:ctrlp_map = '<c-p>'
-"let g:ctrlp_map = '<D-t>'
-map <leader>t :CtrlP()<CR>
+map <leader>p :CtrlP()<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
@@ -894,13 +646,11 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\.git$\|\.hg$\|\.svn$|\bin$\|\test-reports$\|\.externalToolBuilders$\|\.idea$\|\.ropeproject$\',
     \ 'file': '\.exe$\|\.mxml$\|\.dll$|\.pyc$\|\.swc$\',
 \ }
-"map <leader>p :CtrlP
-
-
 
 " Environments GUI
 if has('gui_running')
-    set guifont=Inconsolota:h11
+    "set guifont=Inconsolota:h11
+    set guifont=Inconsolota-dz for Pow:h11
 
     set go-=T
     set go-=l
@@ -940,8 +690,6 @@ if has('gui_running')
     else
         " Non-MacVim GUI, like Gvim
     end
-else
-    " Console Vim
 endif
 
 
@@ -949,7 +697,7 @@ endif
 map <Leader>rt :call RunVimTmuxCommand("clear; wft " . bufname("%"))<CR>
 map <Leader>rs :call RunVimTmuxCommand("clear; wfrs " . bufname("%"))<CR>
 " Prompt for a command to run
-map <Leader>rp :PromptVimTmuxCommand<CR>
+map <Leader>rp :VimuxPromptCommand <CR>
 " Run last command executed by RunVimTmuxCommand
 map <Leader>rl :RunLastVimTmuxCommand<CR>
 " Inspect runner pane
@@ -964,22 +712,8 @@ nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
 let VimuxOrientation = "h"
 let VimuxHeight = "25"
 
-
-"" VIMRC
-"nmap <leader>v :tabedit $MYVIMRC<CR>
-
-"" Source the vimrc file after saving it
-"if has("autocmd")
-    "autocmd bufwritepost .vimrc source $MYVIMRC
-"endif
-  ""
-
-
-
-"hi ColorColumn ctermbg=234 guibg=#1c1c1c
 hi ColorColumn ctermbg=0 guibg=#1c1c1c
 hi CursorLine ctermbg=236 guibg=#DDDDDD
 
 hi Normal guibg=#cccccc ctermbg=233
-"hi hsNiceOperator guifg=#cccccc guibg=#cccccc
 hi NonText guibg=#cccccc ctermbg=233
