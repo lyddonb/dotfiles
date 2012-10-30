@@ -541,7 +541,7 @@ let g:microdata_attributes_complete = 0
 let g:atia_attributes_complete = 0
 
 " NERD Tree
-map <leader>n :NERDTreeMirrorToggle<CR>j
+map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
 inoremap <F2> <esc>:NERDTreeToggle<cr>
 
 au Filetype nerdtree setlocal nolist
