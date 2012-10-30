@@ -33,10 +33,9 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+case "$TERM" in
+    xterm-256color) color_prompt=yes;;
+esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -69,8 +68,6 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -86,15 +83,6 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -102,7 +90,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-source /usr/local/bin/virtualenvwrapper.sh
+#source /usr/local/bin/virtualenvwrapper.sh
 source ~/aliases
 
 DEFAULT_COLOR="[00;1m"
@@ -146,10 +134,9 @@ export PYOPEN_CMD=vim
 export SVN_EDITOR=$EDITOR
 export GIT_EDITOR=$SVN_EDITOR
 
-# Enable bash history
-#export HISTCONTROL=erasedups
-#TSIZE=50000
-#shopt -s histappend
+# python
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONSTARTUP="$HOME/.pythonrc.py"
 
 # download this.
 # https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
@@ -173,9 +160,6 @@ export PIP_RESPECT_VIRTUALENV=true
 # Python command line
 export PYTHONSTARTUP=$HOME/.pythonstartup
 
-ssh-add $HOME/.ssh/wf_github
-
-source /usr/local/Cellar/autoenv/0.1.0/activate.sh
 source ~/.git-completion.bash
 
 #todo.txt

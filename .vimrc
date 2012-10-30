@@ -139,11 +139,9 @@ map <leader>e :edit %%
 map <leader>v :view %%
 
 
-
 " Moving around
 " quick buffer list
 :nnoremap <C-b> :buffers<CR>:buffer<Space>
-
 
 
 " TABS, SPACING
@@ -158,7 +156,6 @@ set textwidth=80
 set formatoptions=qrn1
 set colorcolumn=+1
 set copyindent
-
 
 
 if has("autocmd")
@@ -199,7 +196,6 @@ nmap _= :call Preserve("normal gg=G")<CR>
   
 
 
-
 " EDITING"
 " **************************************************
 
@@ -233,37 +229,11 @@ cnoremap <c-e> <end>
 " Diffoff
 nnoremap <leader>D :diffoff!<cr>
 
-" Yankring
-"nnoremap <silent> <F6> :YRShow<cr>
-
 " Formatting, TextMate-style
 nnoremap Q gqip
 
 " Easier linewise reselection
 nnoremap <leader>V V`]
-
-" Preview Files
-nnoremap <leader>p :w<cr>:Hammer<cr>
-
-
-" Align text
-nnoremap <leader>Al :left<cr>
-nnoremap <leader>Ac :center<cr>
-nnoremap <leader>Ar :right<cr>
-vnoremap <leader>Al :left<cr>
-vnoremap <leader>Ac :center<cr>
-vnoremap <leader>Ar :right<cr>
-
-" Cmdheight switching
-nnoremap <leader>1 :set cmdheight=1<cr>
-nnoremap <leader>2 :set cmdheight=2<cr>
-
-" Source
-vnoremap <leader>S y:execute @@<cr>
-nnoremap <leader>S ^vg_y:execute @@<cr>
-
-" Replaste
-nnoremap <D-p> "_ddPV`]=
 
 " Marks and Quotes
 noremap ' `
@@ -295,15 +265,12 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.DS_Store                       " OSX bullshit
-
 set wildignore+=*.luac                           " Lua byte code
-
 set wildignore+=migrations                       " Django migrations
-set wildignore+=*.py[co]                            " Python byte code
+set wildignore+=*.py[co]                         " Python byte code
 
 " Clojure/Leiningen
 set wildignore+=classes
-"set wildignore+=lib
 
 " Save when losing focus
 au FocusLost * :wa
@@ -319,8 +286,6 @@ set undodir=/var/tmp/vim/undo//     " undo files
 set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
 set backup                        " enable backups""""
-
-
 
 " MOVEMENT
 " Run this if you need the help of a greater power 
@@ -351,13 +316,6 @@ set virtualedit+=block
 
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
-"nnoremap ˚ :lnext<cr>zvzz
-"nnoremap ¬ :lprevious<cr>zvzz
-"inoremap ˚ <esc>:lnext<cr>zvzz
-"inoremap ¬ <esc>:lprevious<cr>zvzz
-"nnoremap <m-Down> :cnext<cr>zvzz
-"nnoremap <m-Up> :cprevious<cr>zvzz
-
 " Easy buffer navigation
 noremap <C-h>  <C-w>h
 noremap <C-j>  <C-w>j
@@ -369,8 +327,6 @@ noremap <leader>v <C-w>v
 for i in range(1, 9) 
     exec "nnoremap <D-".i."> ".i."gt" 
 endfor"
-
-
 
 " FONT
 
@@ -397,7 +353,6 @@ nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'
 " Full python syntax highlighting
 let python_highlight_all=1
 
-
 " COLOR SCHEME
 syntax on
 set background=dark
@@ -407,7 +362,6 @@ set t_Co=256
 
 " Enable fancy mode 
 let g:Powerline_symbols = 'fancy'   " Powerline
-
 
 " ABBREVATIONS AND SPELLING
 function! EatChar(pat)
@@ -419,15 +373,6 @@ function! MakeSpacelessIabbrev(from, to)
     execute "iabbrev <silent> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
 endfunction
 
-call MakeSpacelessIabbrev('bb/',  'http://bitbucket.org/')
-call MakeSpacelessIabbrev('bbs/', 'http://bitbucket.org/lyddonb/')
-call MakeSpacelessIabbrev('gh/',  'http://github.com/')
-call MakeSpacelessIabbrev('ghs/', 'http://github.com/lyddonb/')
-
-iabbrev ldis ಠ_ಠ
-iabbrev sl@ steve@stevelosh.com
-iabbrev vrcf `~/.vimrc` file
-
 abbr teh the
 abbr nad and
 abbr adn and
@@ -438,14 +383,8 @@ abbr refactor reorganize
 abbr prase parse
 abbr sefl self
 
-
-
-" SYNTAX HELPER
-let g:tagbar_usearrows=1
-nnoremap <leader>l :TagbarToggle<CR>
-let g:tagbar_ctags_bin = 'ctags'
-
-
+" LINE HELPER
+nnoremap <leader>l :NumbersToggle<CR>
 
 " LANGUAGE STUFF
 
@@ -455,7 +394,6 @@ augroup ft_css
     au!
 
     au BufNewFile,BufRead *.less setlocal filetype=css
-
     au Filetype less,css setlocal foldmethod=marker
     au Filetype less,css setlocal foldmarker={,}
     au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
@@ -466,7 +404,6 @@ augroup END
 
 
 " Django
-
 augroup ft_django
     au!
 
@@ -496,20 +433,10 @@ augroup ft_html
     au BufNewFile,BufRead *.jst setlocal filetype=html
 
     " HTML tag closing
-    "inoremap <C-_> <Space><BS><Esc>:call InsertCloseTag()<cr>
     nnoremap \hc :call InsertCloseTag()<CR>
     imap <F8> <Space><BS><Esc>\hca
 
     function! InsertCloseTag()
-    " inserts the appropriate closing HTML tag; used for the \hc operation defined
-    " above;
-    " requires ignorecase to be set, or to type HTML tags in exactly the same case
-    " that I do;
-    " doesn't treat <P> as something that needs closing;
-    " clobbers register z and mark z
-    "
-    " by Smylers  http://www.stripey.com/vim/
-    " 2000 May 3
 
     if &filetype == 'html' || $filetype == 'mustache' || $filetype == 'mako' || $filetype == 'jst'
 
@@ -573,11 +500,11 @@ augroup ft_html
     au FileType jinja,htmldjango inoremap <buffer> <c-f> {{<space><space>}}<left><left><left>
 augroup END
 
-
 " Python
 map <leader>j :RopeGotoDefinition<CR>
 map <leader>d :RopeShowDoc<CR>
-
+let g:pymode_folding = 0
+let g:pymode_lint = 0
 
 augroup ft_python
     au!
@@ -607,13 +534,11 @@ augroup ft_fugitive
     au BufNewFile,BufRead .git/index setlocal nolist
 augroup END
 
-
 " HTML5
 let g:event_handler_attributes_complete = 0
 let g:rdfa_attributes_complete = 0
 let g:microdata_attributes_complete = 0
 let g:atia_attributes_complete = 0
-
 
 " NERD Tree
 map <leader>n :NERDTreeMirrorToggle<CR>j
@@ -626,15 +551,7 @@ let NERDTreeIgnore=['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
 
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-let NERDTreeWinSize = 25
-
-
-" Pydoc
-let g:pydoc_perform_mappings = 0
-
-au FileType python noremap <buffer> <localleader>ds :call ShowPyDoc('<C-R><C-W>', 1)<CR>
-au FileType python noremap <buffer> <localleader>dS :call ShowPyDoc('<C-R><C-A>', 1)<CR>
-
+let NERDTreeWinSize = 22
 
 " Rainbox Parentheses
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
@@ -663,47 +580,17 @@ let ropevim_enable_shortcuts = 0
 let ropevim_guess_project = 1
 let ropevim_global_prefix = '<C-c>p'
 
-
-" Pep8
-let g:pep8_map='<leader>8'
-
 " Syntastic
-"let g:syntastic_check_on_open=1
-"let g:SyntasticCheck
 nnoremap zj :lnext<CR>zz
 nnoremap zk :lprev<CR>zz
 
 " Pyflakes
 let g:pyflakes_use_quickfix = 0
 
-" Threesome
-let g:threesome_leader = "-"
-
-let g:threesome_initial_mode = "grid"
-
-let g:threesome_initial_layout_grid = 1
-let g:threesome_initial_layout_loupe = 0
-let g:threesome_initial_layout_compare = 0
-let g:threesome_initial_layout_path = 0
-
-let g:threesome_initial_diff_grid = 1
-let g:threesome_initial_diff_loupe = 0
-let g:threesome_initial_diff_compare = 0
-let g:threesome_initial_diff_path = 0
-
-let g:threesome_initial_scrollbind_grid = 0
-let g:threesome_initial_scrollbind_loupe = 0
-let g:threesome_initial_scrollbind_compare = 0
-let g:threesome_initial_scrollbind_path = 0
-
-let g:threesome_wrap = "nowrap"
-
-
 " Searching
 let g:gitgrepprg="grep\\ -n\\ -R\\ --include='*.py'"
 let g:gitgrepprgclass="grep\\ -n\\ -R\\ --include='*.py'\\ class\\"
 let g:gitgrepprgfunction="grep\\ -n\\ -R\\ --include='*.py\\ def\\'"
-"let g:gitgrepprgfile="grep\\ -n\\ -R\\ --include='*.py'"
 
 function! GitGrep(args)
     redraw
@@ -747,9 +634,8 @@ function! GitGrepWord()
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
 
-
 " Ctrlp
-map <leader>t :CtrlP()<CR>
+map <leader>p :CtrlP()<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
@@ -759,9 +645,6 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\.git$\|\.hg$\|\.svn$|\bin$\|\test-reports$\|\.externalToolBuilders$\|\.idea$\|\.ropeproject$\',
     \ 'file': '\.exe$\|\.mxml$\|\.dll$|\.pyc$\|\.swc$\',
 \ }
-"map <leader>p :CtrlP
-
-
 
 " Environments GUI
 if has('gui_running')
@@ -806,8 +689,6 @@ if has('gui_running')
     else
         " Non-MacVim GUI, like Gvim
     end
-else
-    " Console Vim
 endif
 
 
@@ -815,7 +696,7 @@ endif
 map <Leader>rt :call RunVimTmuxCommand("clear; wft " . bufname("%"))<CR>
 map <Leader>rs :call RunVimTmuxCommand("clear; wfrs " . bufname("%"))<CR>
 " Prompt for a command to run
-map <Leader>rp :PromptVimTmuxCommand<CR>
+map <Leader>rp :VimuxPromptCommand <CR>
 " Run last command executed by RunVimTmuxCommand
 map <Leader>rl :RunLastVimTmuxCommand<CR>
 " Inspect runner pane
@@ -830,22 +711,8 @@ nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
 let VimuxOrientation = "h"
 let VimuxHeight = "25"
 
-
-"" VIMRC
-"nmap <leader>v :tabedit $MYVIMRC<CR>
-
-"" Source the vimrc file after saving it
-"if has("autocmd")
-    "autocmd bufwritepost .vimrc source $MYVIMRC
-"endif
-  ""
-
-
-
-"hi ColorColumn ctermbg=234 guibg=#1c1c1c
 hi ColorColumn ctermbg=0 guibg=#1c1c1c
 hi CursorLine ctermbg=236 guibg=#DDDDDD
 
 hi Normal guibg=#cccccc ctermbg=233
-"hi hsNiceOperator guifg=#cccccc guibg=#cccccc
 hi NonText guibg=#cccccc ctermbg=233
