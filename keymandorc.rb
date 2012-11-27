@@ -32,7 +32,7 @@ end
 # VIM Mapping
 
 nmap '<Ctrl-;>', '<Escape>'
-except /iTerm/, /MacVim/, /Chrome/, /Firefox/, /Sublime Text 2/, /Term/ do
+except /iTerm/, /MacVim/, /Chrome/, /Firefox/, /Term/ do
     map '<Ctrl-j>', '<Down>'
     map '<Ctrl-k>', '<Up>'
     map '<Ctrl-h>', '<Left>'
@@ -75,6 +75,12 @@ end
 #only /PyCharm/ do
     #map "<Cmd-q>", nil
 #end
+
+
+only /Chrome/ do
+    abbrev 'sdo', 'Bar Open'
+    abbrev 'sages', 'All Ages, 21+ after 10pm'
+end
 
 except /PyCharm/ do
     map "<Cmd-k>" do
