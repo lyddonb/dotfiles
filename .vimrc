@@ -285,7 +285,6 @@ cmap w!! w !sudo tee % >/dev/null
 set undodir=/var/tmp/vim/undo//     " undo files
 set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
-set backup                        " enable backups""""
 
 
 " MOVEMENT
@@ -383,6 +382,8 @@ abbr taht that
 abbr refactor reorganize
 abbr prase parse
 abbr sefl self
+abbr pathc patch
+abbr udpate update
 
 " LINE HELPER
 nnoremap <leader>l :NumbersToggle<CR>
@@ -525,6 +526,13 @@ augroup ft_python
 augroup END
 
 " PLUGINS
+
+" Makegreen
+"map <localleader>t <Plug>MakeGreen
+map <localleader>t :call MakeGreen()<cr>
+
+" TODO: make it smart enough to know if a "django" based project with manage.py
+autocmd BufNewFile,BufRead *.py compiler wftest
 
 " Fugitive
 set statusline=%{fugitive#statusline()}
@@ -687,9 +695,14 @@ if has('gui_running')
 
         imap <M-BS>         <C-w>
         inoremap <D-BS>     <esc>my0c`y
-    else
-        " Non-MacVim GUI, like Gvim
-    end
+    endif
+else
+    " Non-MacVim GUI, like Gvim
+    hi ColorColumn ctermbg=0 guibg=#1c1c1c
+    hi CursorLine ctermbg=236 guibg=#DDDDDD
+
+    hi Normal guibg=#cccccc ctermbg=233
+    hi NonText guibg=#cccccc ctermbg=233
 endif
 
 
@@ -712,8 +725,3 @@ nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
 let VimuxOrientation = "h"
 let VimuxHeight = "25"
 
-hi ColorColumn ctermbg=0 guibg=#1c1c1c
-hi CursorLine ctermbg=236 guibg=#DDDDDD
-
-hi Normal guibg=#cccccc ctermbg=233
-hi NonText guibg=#cccccc ctermbg=233
