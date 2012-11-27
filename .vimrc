@@ -286,7 +286,6 @@ set undodir=/var/tmp/vim/undo//     " undo files
 set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
 
-
 " MOVEMENT
 " Run this if you need the help of a greater power 
 " in breaking the arrow keys addiction.
@@ -431,7 +430,7 @@ augroup ft_html
 
     au BufNewFile,BufRead *.html setlocal filetype=htmldjango
     au BufNewFile,BufRead *.mustache setlocal filetype=html
-    au BufNewFile,BufRead *.mako setlocal filetype=htmldjango
+    au BufNewFile,BufRead *.mako setlocal filetype=html
     au BufNewFile,BufRead *.jst setlocal filetype=html
 
     " HTML tag closing
@@ -488,18 +487,6 @@ augroup ft_html
 
     endfunction " InsertCloseTag()
 
-    au FileType html,jinja,htmldjango,mustache,mako,jst setlocal foldmethod=manual
-
-    au FileType html,jinja,htmldjango nnoremap <buffer> <localleader>f Vatzf
-    au FileType html,jinja,htmldjango nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
-
-    au FileType html,jinja,htmldjango nnoremap <buffer> p :<C-U>YRPaste 'p'<CR>v`]=`]
-    au FileType html,jinja,htmldjango nnoremap <buffer> P :<C-U>YRPaste 'P'<CR>v`]=`]
-    au FileType html,jinja,htmldjango nnoremap <buffer> π :<C-U>YRPaste 'p'<CR>
-    au FileType html,jinja,htmldjango nnoremap <buffer> ∏ :<C-U>YRPaste 'P'<CR>
-
-    au FileType jinja,htmldjango inoremap <buffer> <c-t> {%<space><space>%}<left><left><left>
-    au FileType jinja,htmldjango inoremap <buffer> <c-f> {{<space><space>}}<left><left><left>
 augroup END
 
 " Python
@@ -550,8 +537,8 @@ let g:microdata_attributes_complete = 0
 let g:atia_attributes_complete = 0
 
 " NERD Tree
-map <leader>n :NERDTreeToggle<CR>j
-"inoremap <F2> <esc>:NERDTreeToggle<cr>
+map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
+inoremap <F2> <esc>:NERDTreeToggle<cr>
 
 au Filetype nerdtree setlocal nolist
 

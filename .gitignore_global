@@ -33,3 +33,4 @@ z_bigsky/flex/*/*/bin/*
 flex/applications/wf_tester/bin
 flex/applications/wf_vwr_web/bin/lib
 flex/*/*/bin/*
+.env

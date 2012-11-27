@@ -139,14 +139,14 @@ source $HOME/aliases
 # 
 # Setting up the VirtualEnv
 export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
-
-# Python command line
-export PYTHONSTARTUP=$HOME/.pythonstartup
 
 source /usr/local/bin/virtualenvwrapper.sh
 source ~/aliases
 
 #todo.txt
+export PATH=~$PATH:~/Programs/todo.txt-cli
+source ~/Programs/todo.txt-cli/todo_completion
 export TODOTXT_DEFAULT_ACTION=ls
