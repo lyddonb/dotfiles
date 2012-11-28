@@ -10,6 +10,8 @@ Bundle 'gmarik/vundle'
 " My bundles
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-rake'
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'ervandew/supertab'
 Bundle 'sjl/gundo.vim'
 Bundle 'reinh/vim-makegreen'
@@ -28,6 +30,7 @@ Bundle 'vim-scripts/ZoomWin'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'xolox/vim-notes'
+Bundle 'vim-scripts/TaskList.vim'
 
 filetype plugin indent on
 
@@ -343,6 +346,9 @@ augroup ft_python
 augroup END
 
 " PLUGINS
+
+" Task list
+map <leader>td <Plug>TaskList
 
 " Makegreen
 map <localleader>t :call MakeGreen()<cr>
