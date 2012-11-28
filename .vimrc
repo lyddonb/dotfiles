@@ -28,6 +28,7 @@ Bundle 'vim-scripts/ZoomWin'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'xolox/vim-notes'
+Bundle 'duff/vim-scratch'
 
 filetype plugin indent on
 
