@@ -20,41 +20,6 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -131,27 +96,27 @@ function parse_git_branch {
             branch="NO BRANCH"
         fi
 
-        echo "(${branch}${state}${remote})"
+        git=""
+        if [ $branch ]; then
+            git=${branch}
+        fi
+
+        if [ $state ]; then
+            git=${git}" "${state}
+        fi
+
+        if [ $remote ]; then
+            git=${git}" "${remote}
+        fi
+
+        echo ":${git}"
     fi
     return
 }
-
-export BASEPROMPT="\[\e${GREEN_COLOR}\]\w\[\e${CYAN_COLOR}\]\$(parse_git_branch)\[\e${DEFAULT_COLOR}\]"
+export BASEPROMPT="\[\e${GREEN_COLOR}\]\w\[\e${CYAN_COLOR}\]""\$(parse_git_branch)""\[\e${DEFAULT_COLOR}\]"
 export PS1="${BASEPROMPT} $ "
 
-#export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
-
-#export CLICOLOR=1
-#if [ `uname` == "Darwin" ]; then
-    #export LSCOLORS=ExGxFxDxCxHxHxCbCeEbEb
-    #export LC_CTYPE=en_US.utf-8
-    #alias free=tfree
-#else
-    #alias ls='ls --color=auto'
-#fi
-#export IGNOREEOF=1
-#export LESS=FRSX
 
 export EDITOR=vim
 export PYOPEN_CMD=vim
