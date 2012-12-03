@@ -3,7 +3,6 @@
     name = Beau Lyddon
 [github]
     user = beaulyddon-wf
-    token = 0779aaec9a85f7146f7deeb8e774cc8c
 [core]
     excludesfile = ~/.gitignore_global
     editor = /usr/bin/vim
