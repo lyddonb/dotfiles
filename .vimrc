@@ -180,6 +180,18 @@ map <leader>v :view %%
 " ,e to fast finding files. just type beginning of a name and hit TAB
 nmap <leader>e :e **/
 
+" Rename current file
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>n :call RenameFile()<cr>
+
 " Moving around
 " quick buffer list
 :nnoremap <C-b> :buffers<CR>:buffer<Space>
@@ -251,9 +263,6 @@ set wildignore+=*.luac                           " Lua byte code
 set wildignore+=migrations                       " Django migrations
 set wildignore+=*.py[co]                         " Python byte code
 
-" Save when losing focus
-au FocusLost * :wa
-
 " Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
 
@@ -261,6 +270,9 @@ au VimResized * exe "normal! \<c-w>="
 cmap w!! w !sudo tee % >/dev/null
 
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>
+
+" Make leader leader switch between last 2 buffers
+nnoremap <leader><leader> <c-^>
 
 " Easy buffer navigation
 noremap <C-h>  <C-w>h
@@ -465,6 +477,22 @@ let g:ctrlp_custom_ignore = {
 " Notes
 let g:notes_suffix = ".txt"
 let g:notes_directory = "~/Dropbox/Notes/vim"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" OpenChangedFiles COMMAND
+" Open a split for each dirty file in git
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! OpenChangedFiles()
+  only " Close all windows, unless they're modified
+  let status = system('git status -s | grep "^ \?\(M\|A\|UU\)" | sed "s/^.\{3\}//"')
+  let filenames = split(status, "\n")
+  exec "edit " . filenames[0]
+  for filename in filenames[1:]
+    exec "sp " . filename
+  endfor
+endfunction
+command! OpenChangedFiles :call OpenChangedFiles()
+
 
 " Environments GUI
 if has('gui_running')
