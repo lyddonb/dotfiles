@@ -42,6 +42,8 @@
     ra = !git r --all
     l = "!source ~/.githelpers && pretty_git_log"
     la = !git l --all
+
+    lme = log --author='Beau Lyddon' --no-merges
 [push]
 	default = tracking
 [fetch]

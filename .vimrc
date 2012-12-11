@@ -463,12 +463,8 @@ endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
 
 " Ctrlp
-map <leader>p :CtrlP()<CR>
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_match_window_bottom = 0
-let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_working_path_mode = 2
-let g:ctrlp_max_height = 30
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\.git$\|\.hg$\|\.svn$|\bin$\|\test-reports$\|\.externalToolBuilders$\|\.idea$\|\.ropeproject$\',
     \ 'file': '\.exe$\|\.mxml$\|\.dll$|\.pyc$\|\.swc$\',
