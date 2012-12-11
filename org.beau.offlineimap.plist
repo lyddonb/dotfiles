@@ -8,13 +8,7 @@
     <array>
         <string>/Users/beaulyddon/.mutt/offlinejobsync.sh</string>
     </array>
-    <key>StandardErrorPath</key>
-    <string>/dev/null</string>
-    <key>StandardOutPath</key>
-    <string>/dev/null</string>
     <key>StartInterval</key>
     <integer>150</integer>
-    <key>RunAtLoad</key>
-    <true/>
 </dict>
 </plist>
