@@ -1,0 +1,33 @@
+color normal     default        default
+color indicator  brightcyan     black  
+color tree       brightmagenta  default
+color status     cyan           black  
+color error      brightcyan     default
+color message    cyan           default
+color signature  red            default
+color attachment green          default
+color search     brightyellow   red    
+color tilde      brightmagenta  default
+color markers    red            default
+color hdrdefault blue           default
+color bold       red            default
+color underline  green          default
+color quoted     cyan           default
+color quoted1    green          default
+color quoted2    red            default
+color quoted3    magenta        default
+color quoted4    blue           default
+color quoted5    blue           default
+color header     red        default  "^(from|subject):"
+color body       yellow       default  "((ftp|http|https)://|(file|news):|www\\.)[-a-z0-9_.:]*[a-z0-9](/[^][{} \t\n\r\"&lt;&gt;()]*[^][{} \t\n\r\"&lt;&gt;().,:!])?/?"
+color body       cyan       default  "[-a-z_0-9.+]+@[-a-z_0-9.]+"
+color body       red        default  "(^| )\\*[-a-z0-9*]+\\*[,.?]?[ \n]"
+color body       green      default  "(^| )_[-a-z0-9_]+_[,.?]?[ \n]"
+
+uncolor index *
+color index      brightblack default "~h ^X.Mailer..Microsoft.Outlook"
+color index      green      default  ~F
+color index      red        default  ~N
+color index      magenta    default  ~T
+color index      yellow     default  ~D
+color index	 blue 	    default  '\[(CHRPM|Contrib-Rpm)\]'
