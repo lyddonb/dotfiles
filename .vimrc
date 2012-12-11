@@ -10,7 +10,7 @@ Bundle 'gmarik/vundle'
 " My bundles
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-rake'
+Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'ervandew/supertab'
 Bundle 'sjl/gundo.vim'
@@ -266,6 +266,16 @@ set wildignore+=*.py[co]                         " Python byte code
 " Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
 
+" Resize windows depending on foucs
+"set winwidth=84
+"" We have to have a winheight bigger than we want to set winminheight. But if
+"" we set winheight to be huge before winminheight, the winminheight set will
+"" fail.
+"set winheight=15
+"set winminheight=15
+"set winheight=999
+
+
 " sudo from inside vim if forgot
 cmap w!! w !sudo tee % >/dev/null
 
@@ -374,6 +384,19 @@ augroup ft_fugitive
 
     au BufNewFile,BufRead .git/index setlocal nolist
 augroup END
+
+if has("autocmd")
+
+    " Auto-close fugitive buffers
+    autocmd BufReadPost fugitive://* set bufhidden=delete
+
+    " Navigate up one level from fugitive trees and blobs
+    autocmd User fugitive
+        \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+        \   nnoremap <buffer> .. :edit %:h<CR> |
+        \ endifugitive://* set bufhidden=delete
+
+endif
 
 " HTML5
 let g:event_handler_attributes_complete = 0
@@ -522,7 +545,7 @@ else
     " Select current paragraph and send it to tmux
     nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
 
-    let VimuxHeight = "27"
+    let VimuxHeight = "25"
     let VimuxUseNearestPane = 1
     let g:VimuxOrientation = "h"
 endif
