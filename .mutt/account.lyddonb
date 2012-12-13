@@ -1,6 +1,6 @@
 source ~/.muttrc
 
-source ~/.mutt/themes/comidia.muttrc
+source ~/.mutt/themes/mutt-colors-solarized-dark-256.muttrc
 
 set folder = ~/.mail # mailbox location
 set signature = ~/.mutt/sig  # my signature file
@@ -25,6 +25,7 @@ mailboxes +lyddonb/INBOX \
           +lyddonb/"Fantasy Football" \
           +lyddonb/Finances \
           +lyddonb/Friends \
+          +lyddonb/Important \
           +lyddonb/Github \
           +lyddonb/House \
           +lyddonb/Jobs \
@@ -33,6 +34,7 @@ mailboxes +lyddonb/INBOX \
           +lyddonb/"Mailing Lists.Javascript" \
           +lyddonb/"Mailing Lists.LinuxUsers" \
           +lyddonb/"Mailing Lists.Python-dev" \
+          +lyddonb/"Online Transactions" \
           +lyddonb/Payments \
           +lyddonb/Programming \
           +lyddonb/Python \

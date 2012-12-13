@@ -137,12 +137,12 @@ macro index a "<limit>all\n" "show all messages (undo limit)"
 
 
 # color WHERE FOREGROUND BACKGROUND REGEXP
-color index green   default ~p  # i am to/cc
-color index cyan    default ~P  # from me
-color index yellow  default ~N  # new
-color index yellow  default ~O  # new
-color index magenta default ~F  # flagged
-color index blue    default ~T  # tagged
-color index red     default ~D  # deleted
+#color index green   default ~p  # i am to/cc
+#color index cyan    default ~P  # from me
+#color index yellow  default ~N  # new
+#color index yellow  default ~O  # new
+#color index magenta default ~F  # flagged
+#color index blue    default ~T  # tagged
+#color index red     default ~D  # deleted
 
-color sidebar_new green black
+#color sidebar_new green black
