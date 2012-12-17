@@ -53,4 +53,4 @@ bind g:${hyper} grid padding: 5 16,16
 #bind down:cmd;alt focus behind
 
 # Window Hints
-bind esc:cmd hint
+bind `:cmd hint
