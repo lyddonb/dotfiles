@@ -547,7 +547,7 @@ else
     " Select current paragraph and send it to tmux
     nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
 
-    let VimuxHeight = "25"
+    let VimuxHeight = "28"
     let VimuxUseNearestPane = 1
     let g:VimuxOrientation = "h"
 endif
