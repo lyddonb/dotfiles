@@ -131,7 +131,7 @@ fi;
 source ~/.git-completion.bash
 
 source /usr/local/etc/profile.d/z.sh
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$PATH
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
 export PATH=~/bin:$PATH
 source $HOME/aliases
 

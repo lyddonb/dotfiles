@@ -24,7 +24,6 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'pangloss/vim-javascript'
 Bundle 'kien/ctrlp.vim'
 Bundle 'benmills/vimux'
-Bundle 'myusuf3/numbers.vim'
 Bundle 'klen/python-mode'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'vim-scripts/Jinja'
@@ -160,6 +159,12 @@ map <leader>c :set cursorcolumn!<cr>
 
 " Gundo
 nnoremap <leader>g :GundoToggle<CR>
+
+" toggle between relative and absolute line numbers.
+map <leader>l :exec "set " &nu ? "rnu": "nu"<cr>
+
+" toggle paste mode.
+map <leader>p :set paste!<CR>
 
 
 " SEARCHING
@@ -329,9 +334,6 @@ abbr prase parse
 abbr sefl self
 abbr pathc patch
 abbr udpate update
-
-" LINE HELPER
-nnoremap <leader>l :NumbersToggle<CR>
 
 " LANGUAGE STUFF
 
