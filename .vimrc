@@ -172,6 +172,9 @@ map <leader>p :set paste!<CR>
 nnoremap / /\v
 vnoremap / /\v
 
+" Search for selected word
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
 " Open a Quickfix window for the last search.
 nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 

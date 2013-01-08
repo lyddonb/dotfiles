@@ -1,3 +1,8 @@
+[user]
+    email = beau.lyddon@webfilings.com
+    name = Beau Lyddon
+[github]
+    user = beaulyddon-wf
 [core]
     excludesfile = ~/.gitignore_global
     editor = /usr/bin/vim
@@ -12,6 +17,7 @@
     cm = commit -m
 
     co = checkout
+    com = checkout master
 
     stat = status
     st = status
@@ -44,6 +50,8 @@
     la = !git l --all
 
     lme = log --author='Beau Lyddon' --no-merges
+
+    lt = latest
 [push]
 	default = tracking
 [fetch]
