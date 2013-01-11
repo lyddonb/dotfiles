@@ -32,6 +32,7 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'xolox/vim-notes'
 Bundle 'duff/vim-scratch'
 Bundle 'vim-scripts/TaskList.vim'
+Bundle 'jnwhiteh/vim-golang'
 
 filetype plugin indent on
 
