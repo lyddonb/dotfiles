@@ -40,15 +40,13 @@ filetype plugin indent on
 syn on
 set encoding=utf-8
 set modelines=0
-set autoindent
 set showmode
 set showcmd
 set hidden
-set visualbell
 set cursorline
-set ttyfast
+"set ttyfast
 set ruler
-set backspace=indent,eol,start
+set backspace=2
 set nonumber
 set norelativenumber
 set laststatus=2
@@ -60,22 +58,11 @@ set cpoptions+=J
 set list
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 set shell=/bin/bash
-set lazyredraw
 set matchtime=3
 set showbreak=↪
-set splitbelow
-set splitright
 set fillchars=diff:⣿
-set ttimeout
-set notimeout
-set nottimeout
-set autowrite
-set shiftround
-set autoread
-set title
 set dictionary=/usr/share/dict/words
 set mouse=a
-set number
 set noswapfile
 set backup
 
@@ -83,17 +70,13 @@ set wildmode=longest:full
 set wildmenu
 
 " TABS, SPACING
-set smarttab
-set nosmartindent
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set wrap
+set autoindent
 set textwidth=80
-set formatoptions=qrn1
 set colorcolumn=+1
-set copyindent
 
 " backups
 set undodir=/var/tmp/vim/undo//     " undo files
@@ -165,7 +148,10 @@ nnoremap <leader>g :GundoToggle<CR>
 map <leader>l :exec "set " &nu ? "rnu": "nu"<cr>
 
 " toggle paste mode.
-map <leader>p :set paste!<CR>
+map <localleader>p :set paste!<CR>
+
+" toggle spell mode.
+map <leader>p :set spell!<cr>
 
 
 " SEARCHING
