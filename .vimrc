@@ -219,13 +219,16 @@ if has("autocmd")
     autocmd FileType mustache setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType javascript setlocal ts=2 sts=2 sw=2 noexpandtab
+    autocmd FileType javascript setlocal ts=2 sts=2 sw=2
     autocmd FileType coffeescript setlocal ts=4 sts=4 sw=4 noexpandtab
     autocmd FileType mako setlocal ts=2 sts=2 sw=2 noexpandtab
-    autocmd FileType jst setlocal ts=2 sts=2 sw=2 noexpandtab
+    autocmd FileType jst setlocal ts=2 sts=2 sw=2
     
 endif
 
+" Flex syntax highlighting
+autocmd BufRead *.as set filetype=actionscript
+autocmd BufRead *.mxml set filetype=mxml
 
 " EDITING"
 " **************************************************
