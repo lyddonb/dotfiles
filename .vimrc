@@ -26,12 +26,14 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'benmills/vimux'
 Bundle 'klen/python-mode'
 Bundle 'vim-scripts/ZoomWin'
+Bundle 'vim-scripts/Jinja'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'xolox/vim-notes'
 Bundle 'duff/vim-scratch'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'bartekd/vim-dart'
+Bundle 'jnwhiteh/vim-golang'
 
 filetype plugin indent on
 
@@ -39,15 +41,13 @@ filetype plugin indent on
 syn on
 set encoding=utf-8
 set modelines=0
-set autoindent
 set showmode
 set showcmd
 set hidden
-set visualbell
 set cursorline
-set ttyfast
+"set ttyfast
 set ruler
-set backspace=indent,eol,start
+set backspace=2
 set nonumber
 set norelativenumber
 set laststatus=2
@@ -59,22 +59,11 @@ set cpoptions+=J
 set list
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 set shell=/bin/bash
-set lazyredraw
 set matchtime=3
 set showbreak=↪
-set splitbelow
-set splitright
 set fillchars=diff:⣿
-set ttimeout
-set notimeout
-set nottimeout
-set autowrite
-set shiftround
-set autoread
-set title
 set dictionary=/usr/share/dict/words
 set mouse=a
-set number
 set noswapfile
 set backup
 
@@ -82,16 +71,13 @@ set wildmode=longest:full
 set wildmenu
 
 " TABS, SPACING
-set smarttab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set wrap
+set autoindent
 set textwidth=80
-set formatoptions=qrn1
 set colorcolumn=+1
-set copyindent
 
 " backups
 set undodir=/var/tmp/vim/undo//     " undo files
@@ -163,7 +149,10 @@ nnoremap <leader>g :GundoToggle<CR>
 map <leader>l :exec "set " &nu ? "rnu": "nu"<cr>
 
 " toggle paste mode.
-map <leader>p :set paste!<CR>
+map <localleader>p :set paste!<CR>
+
+" toggle spell mode.
+map <leader>p :set spell!<cr>
 
 
 " SEARCHING
@@ -217,13 +206,16 @@ if has("autocmd")
     autocmd FileType mustache setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType javascript setlocal ts=2 sts=2 sw=2 noexpandtab
+    autocmd FileType javascript setlocal ts=2 sts=2 sw=2
     autocmd FileType coffeescript setlocal ts=4 sts=4 sw=4 noexpandtab
     autocmd FileType mako setlocal ts=2 sts=2 sw=2 noexpandtab
-    autocmd FileType jst setlocal ts=2 sts=2 sw=2 noexpandtab
+    autocmd FileType jst setlocal ts=2 sts=2 sw=2
     
 endif
 
+" Flex syntax highlighting
+autocmd BufRead *.as set filetype=actionscript
+autocmd BufRead *.mxml set filetype=mxml
 
 " EDITING"
 " **************************************************
