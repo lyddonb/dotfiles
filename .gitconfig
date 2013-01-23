@@ -52,6 +52,7 @@
     lme = log --author='Beau Lyddon' --no-merges
 
     lt = latest
+    lb = for-each-ref --sort=-committerdate refs/heads/ --format='%(objectname) %(refname:short)'
 [push]
 	default = tracking
 [fetch]

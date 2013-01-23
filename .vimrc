@@ -31,6 +31,7 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'xolox/vim-notes'
 Bundle 'duff/vim-scratch'
 Bundle 'vim-scripts/TaskList.vim'
+Bundle 'bartekd/vim-dart'
 
 filetype plugin indent on
 
@@ -82,7 +83,6 @@ set wildmenu
 
 " TABS, SPACING
 set smarttab
-set nosmartindent
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -351,7 +351,7 @@ let g:pymode_folding = 0
 let g:pymode_lint = 0
 
 " Pyflakes
-let g:pyflakes_use_quickfix = 0
+let g:pyflakes_use_quickfix = 1
 
 " Full python syntax highlighting
 let python_highlight_all=1
