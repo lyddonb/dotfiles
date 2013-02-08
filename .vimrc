@@ -372,6 +372,11 @@ map <leader>td <Plug>TaskList
 
 " Makegreen
 map <localleader>t :call MakeGreen()<cr>
+let g:makegreen_stay_on_file=1
+"autocmd BufNewFile,BufRead *.py compiler nose
+" For now set all tests to nose. But we'll probably want something better long
+" term. Like using a make file...
+autocmd BufNewFile,BufRead *.* compiler nose
 
 " Fugitive
 set statusline=%{fugitive#statusline()}
