@@ -34,6 +34,7 @@ Bundle 'duff/vim-scratch'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'bartekd/vim-dart'
 Bundle 'jnwhiteh/vim-golang'
+Bundle 'jelera/vim-javascript-syntax'
 
 filetype plugin indent on
 
