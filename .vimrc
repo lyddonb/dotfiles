@@ -35,6 +35,8 @@ Bundle 'vim-scripts/TaskList.vim'
 Bundle 'bartekd/vim-dart'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'jelera/vim-javascript-syntax'
+Bundle 'robertkluin/vim-handy-highlights'
+Bundle 'git@github.com:airblade/vim-gitgutter.git'
 
 filetype plugin indent on
 
