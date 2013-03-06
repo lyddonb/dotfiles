@@ -40,6 +40,7 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'bartekd/vim-dart'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'elzr/vim-json'
+Bundle 'jelera/vim-javascript-syntax'
 
 filetype plugin indent on
 

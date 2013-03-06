@@ -1,8 +1,8 @@
 [user]
-    email = beau.lyddon@webfilings.com
+    email = lyddonb@gmail.com
     name = Beau Lyddon
 [github]
-    user = beaulyddon-wf
+    user = lyddonb
 [core]
     excludesfile = ~/.gitignore_global
     editor = /usr/bin/vim
