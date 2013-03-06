@@ -8,10 +8,8 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My bundles
-Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'vim-ruby/vim-ruby'
 Bundle 'ervandew/supertab'
 Bundle 'sjl/gundo.vim'
 Bundle 'reinh/vim-makegreen'
@@ -20,11 +18,8 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'Townk/vim-autoclose'
 Bundle 'vim-scripts/Rainbow-Parenthesis'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'pangloss/vim-javascript'
 Bundle 'kien/ctrlp.vim'
 Bundle 'benmills/vimux'
-Bundle 'klen/python-mode'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'vim-scripts/Jinja'
 Bundle 'jeetsukumaran/vim-buffergator'
@@ -32,8 +27,19 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'xolox/vim-notes'
 Bundle 'duff/vim-scratch'
 Bundle 'vim-scripts/TaskList.vim'
+
+" Git
+Bundle 'tpope/vim-fugitive'
+Bundle 'gregsexton/gitv'
+
+" Language-spec
+Bundle 'klen/python-mode'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'pangloss/vim-javascript'
 Bundle 'bartekd/vim-dart'
 Bundle 'jnwhiteh/vim-golang'
+Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'git@github.com:airblade/vim-gitgutter.git'
@@ -137,7 +143,8 @@ nnoremap K <nop>
 inoremap # X<BS>#
 
 " Less chording
-nnoremap ; :
+map ; :
+noremap ;; ;
 
 " Faster Esc
 inoremap jj <esc>
