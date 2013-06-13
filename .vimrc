@@ -43,6 +43,7 @@ Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'git@github.com:airblade/vim-gitgutter.git'
+Bundle 'jeroenbourgois/vim-actionscript'
 
 filetype plugin indent on
 
