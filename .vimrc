@@ -25,7 +25,6 @@ Bundle 'vim-scripts/Jinja'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'xolox/vim-notes'
-Bundle 'duff/vim-scratch'
 Bundle 'vim-scripts/TaskList.vim'
 
 " Git
@@ -37,13 +36,14 @@ Bundle 'klen/python-mode'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'pangloss/vim-javascript'
-Bundle 'bartekd/vim-dart'
-Bundle 'jnwhiteh/vim-golang'
+"Bundle 'jnwhiteh/vim-golang'
 Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
-Bundle 'robertkluin/vim-handy-highlights'
+"Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'git@github.com:airblade/vim-gitgutter.git'
 Bundle 'jeroenbourgois/vim-actionscript'
+
+set rtp+=/usr/local/go/misc/vim
 
 filetype plugin indent on
 
@@ -359,6 +359,9 @@ let g:pyflakes_use_quickfix = 1
 " Full python syntax highlighting
 let python_highlight_all=1
 
+" GOLANG
+autocmd FileType go autocmd BufWritePre <buffer> Fmt
+
 augroup ft_python
     au!
 
@@ -503,7 +506,7 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 2
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\.git$\|\.hg$\|\.svn$|\bin$\|\test-reports$\|\.externalToolBuilders$\|\.idea$\|\.ropeproject$\',
-    \ 'file': '\.exe$\|\.mxml$\|\.dll$|\.pyc$\|\.swc$\',
+    \ 'file': '\.exe$\|\.dll$|\.pyc$\|\.swc$\',
 \ }
 
 " Notes
