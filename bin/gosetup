@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Setup default project structure
+mkdir bin pkg src
