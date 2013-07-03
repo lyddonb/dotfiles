@@ -24,8 +24,9 @@ Bundle 'vim-scripts/ZoomWin'
 Bundle 'vim-scripts/Jinja'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'xolox/vim-notes'
 Bundle 'vim-scripts/TaskList.vim'
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rizzatti/dash.vim'
 
 " Git
 Bundle 'tpope/vim-fugitive'
@@ -36,10 +37,9 @@ Bundle 'klen/python-mode'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'pangloss/vim-javascript'
-"Bundle 'jnwhiteh/vim-golang'
 Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
-"Bundle 'robertkluin/vim-handy-highlights'
+Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'git@github.com:airblade/vim-gitgutter.git'
 Bundle 'jeroenbourgois/vim-actionscript'
 
@@ -347,7 +347,7 @@ abbr udpate update
 map <leader>j :RopeGotoDefinition<CR>
 map <leader>d :RopeShowDoc<CR>
 let ropevim_enable_shortcuts = 0
-let ropevim_guess_project = 1
+let g:pymode_rope_guess_project = 0
 let ropevim_global_prefix = '<C-c>p'
 
 let g:pymode_folding = 0
