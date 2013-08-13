@@ -132,7 +132,7 @@ source ~/.git-completion.bash
 
 source /usr/local/etc/profile.d/z.sh
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
-export PATH=~/bin:$PATH
+export PATH=~/bin:$PATH:$HOME/programs/gcutil-1.8.2
 source $HOME/aliases
 
 # VirtualEnv
@@ -150,3 +150,8 @@ source ~/aliases
 #todo.txt
 source /usr/local/Cellar/todo-txt/2.9/etc/bash_completion.d/todo_completion
 export TODOTXT_DEFAULT_ACTION=ls
+
+# RVM
+source /Users/beaulyddon/.rvm/scripts/rvm
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
