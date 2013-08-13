@@ -130,11 +130,6 @@ if [ -e "$HOME/git-completion.bash" ]; then
 fi;
 source ~/.git-completion.bash
 
-source /usr/local/etc/profile.d/z.sh
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
-export PATH=~/bin:$PATH:$HOME/programs/gcutil-1.8.2
-source $HOME/aliases
-
 # VirtualEnv
 # 
 # Setting up the VirtualEnv
@@ -153,5 +148,12 @@ export TODOTXT_DEFAULT_ACTION=ls
 
 # RVM
 source /Users/beaulyddon/.rvm/scripts/rvm
+source /usr/local/etc/profile.d/z.sh
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$HOME/programs/gcutil-1.8.2
+export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+source $HOME/aliases
+
