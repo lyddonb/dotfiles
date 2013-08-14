@@ -24,8 +24,10 @@ Bundle 'vim-scripts/ZoomWin'
 Bundle 'vim-scripts/Jinja'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'xolox/vim-notes'
 Bundle 'vim-scripts/TaskList.vim'
+
+" Markdown
+Bundle 'tpope/vim-markdown'
 
 " Git
 Bundle 'tpope/vim-fugitive'
