@@ -20,19 +20,12 @@
     com = checkout master
 
     stat = status
-    st = status
+    st = status -sb
 
     fo = fetch origin
     fu = fetch upstream
     po = push origin
     lo = pull origin
-
-    # Divergence (commits we added and commits remote added)
-    div = divergence
-    
-    # Goodness (summary of diff lines added/removed/total)
-    gn = goodness
-    gnc = goodness --cached
 
     # Fancy logging.
     #   h = head
@@ -48,6 +41,8 @@
     ra = !git r --all
     l = "!source ~/.githelpers && pretty_git_log"
     la = !git l --all
+
+    lg = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 
     lme = log --author='Beau Lyddon' --no-merges
 
