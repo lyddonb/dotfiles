@@ -30,6 +30,9 @@ Bundle 'rizzatti/dash.vim'
 " Markdown
 Bundle 'tpope/vim-markdown'
 
+" Markdown
+Bundle 'tpope/vim-markdown'
+
 " Git
 Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/gitv'
@@ -310,7 +313,19 @@ let g:makegreen_stay_on_file=1
 autocmd BufNewFile,BufRead *.* compiler nose
 
 " Fugitive
-set statusline=%{fugitive#statusline()}
+set statusline=   " clear the statusline for when vimrc is reloaded
+set statusline+=%-3.3n\                      " buffer number
+set statusline+=%{fugitive#statusline()}\    " Git branch
+set statusline+=%f\                          " file name
+set statusline+=%h%m%r%w                     " flags
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+set statusline+=%{&fileformat}]              " file format
+set statusline+=%=                           " right align
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=%b,0x%-8B\                   " current char
+set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
+
 
 augroup ft_fugitive
     au!
