@@ -130,9 +130,13 @@ if [ -e "$HOME/git-completion.bash" ]; then
 fi;
 source ~/.git-completion.bash
 
+export GOPATH=$HOME/go:$HOME/programs/go_appengine/goroot
+
 source /usr/local/etc/profile.d/z.sh
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
 export PATH=~/bin:$PATH
+export PATH=$PATH:$GOPATH/bin
+
 source $HOME/aliases
 
 # VirtualEnv
@@ -150,3 +154,5 @@ source ~/aliases
 #todo.txt
 source /usr/local/Cellar/todo-txt/2.9/etc/bash_completion.d/todo_completion
 export TODOTXT_DEFAULT_ACTION=ls
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
