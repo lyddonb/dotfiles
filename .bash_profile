@@ -1,5 +1,6 @@
 
 source ~/.bashrc
+source ~/.profile
 
 # android shit
 export PATH=${PATH}:$HOME/programs/android-sdk/sdk/platform-tools:$HOME/programs/android-sdk/sdk/tools
@@ -53,3 +54,5 @@ fi
 
 
 
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
