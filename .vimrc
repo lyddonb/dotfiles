@@ -37,9 +37,6 @@ Bundle 'terryma/vim-multiple-cursors'
 " Snippets
 Bundle 'SirVer/ultisnips'
 
-" Auto complete + go to definition
-Bundle 'Valloric/YouCompleteMe'
-
 " Markdown
 Bundle 'tpope/vim-markdown'
 
@@ -328,12 +325,6 @@ let g:makegreen_stay_on_file=1
 autocmd BufNewFile,BufRead *.* compiler nose
 
 
-" YouCompleteMe
-" *****************************************************************************
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" *****************************************************************************
-
-
 " Control P
 " *****************************************************************************
 " *****************************************************************************
@@ -401,24 +392,24 @@ set statusline+=%b,0x%-8B\                   " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
 
-augroup ft_fugitive
-    au!
+"augroup ft_fugitive
+    "au!
 
-    au BufNewFile,BufRead .git/index setlocal nolist
-augroup END
+    "au BufNewFile,BufRead .git/index setlocal nolist
+"augroup END
 
-if has("autocmd")
+"if has("autocmd")
 
-    " Auto-close fugitive buffers
-    autocmd BufReadPost fugitive://* set bufhidden=delete
+    "" Auto-close fugitive buffers
+    "autocmd BufReadPost fugitive://* set bufhidden=delete
 
-    " Navigate up one level from fugitive trees and blobs
-    autocmd User fugitive
-        \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-        \   nnoremap <buffer> .. :edit %:h<CR> |
-        \ endifugitive://* set bufhidden=delete
+    "" Navigate up one level from fugitive trees and blobs
+    "autocmd User fugitive
+        "\ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+        "\   nnoremap <buffer> .. :edit %:h<CR> |
+        "\ endifugitive://* set bufhidden=delete
 
-endif
+"endif
 
 " NERD Tree
 "map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
