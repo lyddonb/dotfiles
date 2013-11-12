@@ -13,7 +13,6 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'ervandew/supertab'
 Bundle 'sjl/gundo.vim'
 Bundle 'reinh/vim-makegreen'
-Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'Townk/vim-autoclose'
@@ -26,9 +25,20 @@ Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
+Bundle 'majutsushi/tagbar'
 
-" Markdown
-Bundle 'tpope/vim-markdown'
+" Nerdtree
+Bundle 'vim-scripts/The-NERD-tree'
+Bundle 'jistr/vim-nerdtree-tabs'
+
+" Multiple Cursors
+Bundle 'terryma/vim-multiple-cursors'
+
+" Snippets
+Bundle 'SirVer/ultisnips'
+
+" Auto complete + go to definition
+Bundle 'Valloric/YouCompleteMe'
 
 " Markdown
 Bundle 'tpope/vim-markdown'
@@ -48,9 +58,11 @@ Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'git@github.com:airblade/vim-gitgutter.git'
 Bundle 'jeroenbourgois/vim-actionscript'
 
+
 " GOLANG
 set rtp+=/usr/local/go/misc/vim
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
+nmap <F4> :TagbarToggle<CR>
 
 
 filetype plugin indent on
@@ -92,6 +104,8 @@ set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
 
 set hlsearch
+
+set switchbuf=usetab,newtab     " open new buffers always in new tabs
 
 " KEY REMAPPING
 
@@ -188,6 +202,7 @@ endif
 
 " EDITING"
 " **************************************************
+au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
 
 " auto complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -234,7 +249,7 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " COLOR SCHEME
 syntax on
 set background=dark
-colorscheme molokai
+colorscheme mymolokai
 "colorscheme zenburn
 "colorscheme jellybeans
 set t_Co=256
@@ -268,6 +283,8 @@ abbr sefl self
 abbr pathc patch
 abbr udpate update
 
+" PLUGINS
+
 " LANGUAGE STUFF
 
 " Flake 8
@@ -299,8 +316,6 @@ augroup ft_python
     au FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup END
 
-" PLUGINS
-
 " Task list
 map <leader>td <Plug>TaskList
 
@@ -311,6 +326,65 @@ let g:makegreen_stay_on_file=1
 " For now set all tests to nose. But we'll probably want something better long
 " term. Like using a make file...
 autocmd BufNewFile,BufRead *.* compiler nose
+
+
+" YouCompleteMe
+" *****************************************************************************
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" *****************************************************************************
+
+
+" Control P
+" *****************************************************************************
+" *****************************************************************************
+let g:ctrlp_cmd = 'CtrlPMixed'                        " search anything (in files, buffers and MRU files at the same time.)
+let g:ctrlp_working_path_mode = 'ra'        " search for nearest ancestor like .git, .hg, and the directory of the current file
+let g:ctrlp_match_window_bottom = 0                " show the match window at the top of the screen
+let g:ctrlp_by_filename = 1
+let g:ctrlp_max_height = 10                                " maxiumum height of match window
+let g:ctrlp_switch_buffer = 'et'                " jump to a file if it's open already
+let g:ctrlp_use_caching = 1                                " enable caching
+let g:ctrlp_clear_cache_on_exit=0                  " speed up by not removing clearing cache evertime
+let g:ctrlp_mruf_max = 250                                 " number of recently opened files
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|build)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+  \ }
+
+func! MyPrtMappings()
+    let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<c-t>'],
+        \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+        \ }
+endfunc
+
+func! MyCtrlPTag()
+    let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
+        \ 'AcceptSelection("t")': ['<c-t>'],
+        \ }
+    CtrlPBufTag
+endfunc
+
+let g:ctrlp_buffer_func = { 'exit': 'MyPrtMappings' }
+com! MyCtrlPTag call MyCtrlPTag()
+
+" TODO: add javascript and some other languages who doesn't have ctags support
+" coffee: https://gist.github.com/michaelglass/5210282
+" go: http://stackoverflow.com/a/8236826/462233 
+" objc:  http://www.gregsexton.org/2011/04/objective-c-exuberant-ctags-regex/
+" rust: https://github.com/mozilla/rust/blob/master/src/etc/ctags.rust
+let g:ctrlp_buftag_types = {
+\ 'go'                : '--language-force=go --golang-types=ftv',
+\ 'coffee'     : '--language-force=coffee --coffee-types=cmfvf',
+\ 'markdown'   : '--language-force=markdown --markdown-types=hik',
+\ 'objc'       : '--language-force=objc --objc-types=mpci',
+\ 'rc'         : '--language-force=rust --rust-types=fTm'
+\ }
+" *****************************************************************************
+" *****************************************************************************
+
 
 " Fugitive
 set statusline=   " clear the statusline for when vimrc is reloaded
@@ -347,8 +421,10 @@ if has("autocmd")
 endif
 
 " NERD Tree
-map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
-inoremap <F2> <esc>:NERDTreeToggle<cr>
+"map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
+map <leader>n :NERDTreeTabsToggle<CR>
+"inoremap <F2> <esc>:NERDTreeToggle<cr>
+let g:nerdtree_tabs_open_on_gui_startup = 0
 
 au Filetype nerdtree setlocal nolist
 
@@ -406,13 +482,60 @@ function! GitGrepWord()
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
 
-" Ctrlp
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 2
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\.git$\|\.hg$\|\.svn$|\bin$\|\test-reports$\|\.externalToolBuilders$\|\.idea$\|\.ropeproject$\',
-    \ 'file': '\.exe$\|\.dll$|\.pyc$\|\.swc$\',
+
+" GOLANG
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'bin/gotags',
+    \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" SNIPPETS - UltiSnips
+" *****************************************************************************
+" *****************************************************************************
+function! g:UltiSnips_Complete()
+    call UltiSnips_ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<C-n>"
+        else
+            call UltiSnips_JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+               return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
+endfunction
+
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-e>"
+let g:UltiSnipsSnippetDirectories = ["UltiSnips", "ultisnips-snippets"]
+" *****************************************************************************
+" *****************************************************************************
 
 
 " Environments GUI
