@@ -13,7 +13,6 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'ervandew/supertab'
 Bundle 'sjl/gundo.vim'
 Bundle 'reinh/vim-makegreen'
-Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'Townk/vim-autoclose'
@@ -23,9 +22,26 @@ Bundle 'benmills/vimux'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'vim-scripts/Jinja'
 Bundle 'jeetsukumaran/vim-buffergator'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'xolox/vim-notes'
 Bundle 'vim-scripts/TaskList.vim'
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rizzatti/dash.vim'
+Bundle 'majutsushi/tagbar'
+
+" Nerdtree
+Bundle 'vim-scripts/The-NERD-tree'
+Bundle 'jistr/vim-nerdtree-tabs'
+
+" Multiple Cursors
+Bundle 'terryma/vim-multiple-cursors'
+
+" Snippets
+Bundle 'SirVer/ultisnips'
+
+" Auto complete + go to definition
+Bundle 'Valloric/YouCompleteMe'
+
+" Markdown
+Bundle 'tpope/vim-markdown'
 
 " Git
 Bundle 'tpope/vim-fugitive'
@@ -36,46 +52,34 @@ Bundle 'klen/python-mode'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'pangloss/vim-javascript'
-"Bundle 'jnwhiteh/vim-golang'
 Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
-"Bundle 'robertkluin/vim-handy-highlights'
+Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'git@github.com:airblade/vim-gitgutter.git'
 Bundle 'jeroenbourgois/vim-actionscript'
 
+
+" GOLANG
 set rtp+=/usr/local/go/misc/vim
+autocmd FileType go autocmd BufWritePre <buffer> Fmt
+nmap <F4> :TagbarToggle<CR>
+
 
 filetype plugin indent on
 
 " The basics
-syn on
-set encoding=utf-8
-set modelines=0
-set showmode
+syntax on
 set showcmd
 set hidden
 set cursorline
-"set ttyfast
 set ruler
 set backspace=2
-set nonumber
-set norelativenumber
+set number
 set laststatus=2
 set history=1000
-set undolevels=999
-set undofile
-set undoreload=10000
-set cpoptions+=J
-set list
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
-set shell=/bin/bash
-set matchtime=3
-set showbreak=↪
-set fillchars=diff:⣿
 set dictionary=/usr/share/dict/words
 set mouse=a
-set noswapfile
-set backup
 
 set wildmode=longest:full
 set wildmenu
@@ -87,25 +91,21 @@ set softtabstop=4
 set expandtab
 set autoindent
 set textwidth=80
-set colorcolumn=+1
+set colorcolumn=80
 
 " backups
+set backup
+set noswapfile
+set undolevels=999
+set undofile
+set undoreload=10000
 set undodir=/var/tmp/vim/undo//     " undo files
 set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
 
-set ignorecase
-set smartcase
-set incsearch
-set showmatch
 set hlsearch
-set gdefault
 
-set scrolloff=3
-set sidescroll=1
-set sidescrolloff=10
-
-set virtualedit+=block
+set switchbuf=usetab,newtab     " open new buffers always in new tabs
 
 " KEY REMAPPING
 
@@ -115,18 +115,6 @@ let maplocalleader = "\\"
 
 " Made D behave
 nnoremap D d$
-
-" Same when jumping around
-nnoremap g; g;zz
-nnoremap g, g,zz
-
-" Easier to type, and I never use the default behavior.
-noremap H ^
-noremap L g_
-
-" Heresy
-inoremap <c-a> <esc>I
-inoremap <c-e> <esc>A
 
 " It's 2011.
 noremap j gj
@@ -160,7 +148,7 @@ nnoremap <leader>g :GundoToggle<CR>
 map <leader>l :exec "set " &nu ? "rnu": "nu"<cr>
 
 " toggle paste mode.
-map <localleader>p :set paste!<CR>
+map <leader>e :set paste!<CR>
 
 " toggle spell mode.
 map <leader>p :set spell!<cr>
@@ -175,61 +163,46 @@ vnoremap / /\v
 " Search for selected word
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
-" Open a Quickfix window for the last search.
-nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" OPEN FILES IN DIRECTORY OF CURRENT FILE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
-map <localleader>e :edit %%
-map <leader>v :view %%
-
-" ,e to fast finding files. just type beginning of a name and hit TAB
-nmap <leader>e :e **/
-
-" Rename current file
-function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'), 'file')
-    if new_name != '' && new_name != old_name
-        exec ':saveas ' . new_name
-        exec ':silent !rm ' . old_name
-        redraw!
-    endif
-endfunction
-map <leader>n :call RenameFile()<cr>
 
 " Moving around
 " quick buffer list
-:nnoremap <C-b> :buffers<CR>:buffer<Space>
+:nnoremap <C-t> :buffers<CR>:buffer<Space>
 
 if has("autocmd")
     " Enable file type detection
     filetype on
 
-    " Syntax of these languages is fussy over tabs vs spaces
+    " Turn spellcheck on for gitcommit by default.
+    autocmd FileType gitcommit set spell
+
+    " mako syntax highlighting
+    autocmd BufRead *.mako set filetype=mako
+
+    " make jinja, jst, and handlebars templates use html syntax highlighting
+    autocmd BufRead *.jinja,*.jst,*.handlebars,*.mustache set filetype=html
+
+    " Set html, coffee, and javascript indent depths to 2-space.
+    autocmd FileType coffee,html,javascript,mako.yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
+
+    " Flex syntax highlighting
+    autocmd BufRead *.as set filetype=actionscript
+    autocmd BufRead *.mxml set filetype=mxml
+
     autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
     " Customisations base on preference
-    autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType mustache setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType javascript setlocal ts=2 sts=2 sw=2
-    autocmd FileType coffeescript setlocal ts=4 sts=4 sw=4 noexpandtab
-    autocmd FileType mako setlocal ts=2 sts=2 sw=2 noexpandtab
-    autocmd FileType jst setlocal ts=2 sts=2 sw=2
     
-endif
+    " Flex syntax highlighting
+    autocmd BufRead *.as set filetype=actionscript
+    autocmd BufRead *.mxml set filetype=mxml
 
-" Flex syntax highlighting
-autocmd BufRead *.as set filetype=actionscript
-autocmd BufRead *.mxml set filetype=mxml
+endif
 
 " EDITING"
 " **************************************************
+au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
 
 " auto complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -241,18 +214,9 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType c set omnifunc=ccomplete#Completej
 set completeopt=menuone
 
-" Clean whitespace
-map <leader>W  :%s/\s\+$//<cr>:let @/=''<CR>
-
-" Dammit, Slimv
-map <leader>WW :%s/\s\+$//<cr>:let @/=''<CR>
 
 " Substitute
 nnoremap <leader>s :%s//<left>
-
-" Emacs bindings in command line mode
-cnoremap <c-a> <home>
-cnoremap <c-e> <end>
 
 " Sudo to write
 cmap w!! w !sudo tee % >/dev/null
@@ -261,34 +225,10 @@ cmap w!! w !sudo tee % >/dev/null
 " ***************************************************
 
 " wild menu
-set wildmenu
-set wildmode=list:longest
-set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.spl                            " compiled spelling word lists
-set wildignore+=*.sw?                            " Vim swap files
-set wildignore+=*.DS_Store                       " OSX bullshit
-set wildignore+=*.luac                           " Lua byte code
-set wildignore+=migrations                       " Django migrations
 set wildignore+=*.py[co]                         " Python byte code
 
 " Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
-
-" Resize windows depending on foucs
-"set winwidth=84
-"" We have to have a winheight bigger than we want to set winminheight. But if
-"" we set winheight to be huge before winminheight, the winminheight set will
-"" fail.
-"set winheight=15
-"set winminheight=15
-"set winheight=999
-
-
-" sudo from inside vim if forgot
-cmap w!! w !sudo tee % >/dev/null
 
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
@@ -302,17 +242,6 @@ noremap <C-k>  <C-w>k
 noremap <C-l>  <C-w>l
 noremap <leader>v <C-w>v
 
-" tabs
-for i in range(1, 9) 
-    exec "nnoremap <D-".i."> ".i."gt" 
-endfor"
-
-" FONT
-
-" Try to get nicer font render on OS X
-if has("unix")
-    set antialias
-endif
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -320,12 +249,26 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " COLOR SCHEME
 syntax on
 set background=dark
-colorscheme jellybeans
-"colorscheme tomorrow_night
+colorscheme mymolokai
+"colorscheme zenburn
+"colorscheme jellybeans
 set t_Co=256
 
-" Enable fancy mode 
-let g:Powerline_symbols = 'fancy'   " Powerline
+hi Normal ctermbg=235
+hi NonText ctermbg=235
+"hi Statement ctermbg=235
+hi Visual ctermbg=60
+hi StatusLine ctermfg=246 ctermbg=234
+hi StatusLineNC ctermfg=238 ctermbg=187
+hi Todo ctermfg=30
+hi Exception ctermfg=187 ctermbg=235
+
+" highlight groups
+hi CursorLine  cterm=NONE ctermbg=236
+hi CursorColumn  cterm=NONE ctermbg=236
+hi ColorColumn  cterm=NONE ctermbg=232
+
+
 
 " ABBREVATIONS AND SPELLING
 abbr teh the
@@ -340,18 +283,27 @@ abbr sefl self
 abbr pathc patch
 abbr udpate update
 
+" PLUGINS
+
 " LANGUAGE STUFF
+
+" Flake 8
+
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_python_flake8_args='--ignore=W391'
+nnoremap <leader>s :SyntasticCheck<CR>
+nnoremap zj :lnext<CR>zz
+nnoremap zk :lprev<CR>zz
 
 " Python
 " Rope
-map <leader>j :RopeGotoDefinition<CR>
-map <leader>d :RopeShowDoc<CR>
-let ropevim_enable_shortcuts = 0
-let ropevim_guess_project = 1
-let ropevim_global_prefix = '<C-c>p'
-
-let g:pymode_folding = 0
+let g:pymode_folding=0
+let g:pymode_lint_ignore = "W391"
 let g:pymode_lint = 0
+let g:pymode_lint_cwindow = 0
+let g:pymode_run = 0
+
+"let g:pymode_rope_guess_project = 0
 
 " Pyflakes
 let g:pyflakes_use_quickfix = 1
@@ -359,27 +311,10 @@ let g:pyflakes_use_quickfix = 1
 " Full python syntax highlighting
 let python_highlight_all=1
 
-" GOLANG
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
-
 augroup ft_python
     au!
-
-    au Filetype python noremap  <buffer> <localleader>rr :RopeRename<CR>
-    au Filetype python vnoremap <buffer> <localleader>rm :RopeExtractMethod<CR>
-    au Filetype python noremap  <buffer> <localleader>ri :RopeOrganizeImports<CR>
-    au Filetype python noremap  <buffer> <localleader>ra :RopeCodeAssist<CR>
-    au Filetype python noremap  <buffer> <localleader>ro :RopeFindOccurrences<CR>
-    au Filetype python noremap  <buffer> <localleader>rs :RopeShowCalltip<CR>
-    au Filetype python noremap  <buffer> <localleader>rf :RopeFindFile<CR>
-    au Filetype python noremap  <buffer> <localleader>rg :RopeJumpToGlobal<CR>
-
     au FileType python setlocal omnifunc=pythoncomplete#Complete
-    au FileType python setlocal define=^\s*\\(def\\\\|class\\)
-    au FileType man nnoremap <buffer> <cr> :q<cr>
 augroup END
-
-" PLUGINS
 
 " Task list
 map <leader>td <Plug>TaskList
@@ -392,8 +327,79 @@ let g:makegreen_stay_on_file=1
 " term. Like using a make file...
 autocmd BufNewFile,BufRead *.* compiler nose
 
+
+" YouCompleteMe
+" *****************************************************************************
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" *****************************************************************************
+
+
+" Control P
+" *****************************************************************************
+" *****************************************************************************
+let g:ctrlp_cmd = 'CtrlPMixed'                        " search anything (in files, buffers and MRU files at the same time.)
+let g:ctrlp_working_path_mode = 'ra'        " search for nearest ancestor like .git, .hg, and the directory of the current file
+let g:ctrlp_match_window_bottom = 0                " show the match window at the top of the screen
+let g:ctrlp_by_filename = 1
+let g:ctrlp_max_height = 10                                " maxiumum height of match window
+let g:ctrlp_switch_buffer = 'et'                " jump to a file if it's open already
+let g:ctrlp_use_caching = 1                                " enable caching
+let g:ctrlp_clear_cache_on_exit=0                  " speed up by not removing clearing cache evertime
+let g:ctrlp_mruf_max = 250                                 " number of recently opened files
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|build)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+  \ }
+
+func! MyPrtMappings()
+    let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<c-t>'],
+        \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+        \ }
+endfunc
+
+func! MyCtrlPTag()
+    let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
+        \ 'AcceptSelection("t")': ['<c-t>'],
+        \ }
+    CtrlPBufTag
+endfunc
+
+let g:ctrlp_buffer_func = { 'exit': 'MyPrtMappings' }
+com! MyCtrlPTag call MyCtrlPTag()
+
+" TODO: add javascript and some other languages who doesn't have ctags support
+" coffee: https://gist.github.com/michaelglass/5210282
+" go: http://stackoverflow.com/a/8236826/462233 
+" objc:  http://www.gregsexton.org/2011/04/objective-c-exuberant-ctags-regex/
+" rust: https://github.com/mozilla/rust/blob/master/src/etc/ctags.rust
+let g:ctrlp_buftag_types = {
+\ 'go'                : '--language-force=go --golang-types=ftv',
+\ 'coffee'     : '--language-force=coffee --coffee-types=cmfvf',
+\ 'markdown'   : '--language-force=markdown --markdown-types=hik',
+\ 'objc'       : '--language-force=objc --objc-types=mpci',
+\ 'rc'         : '--language-force=rust --rust-types=fTm'
+\ }
+" *****************************************************************************
+" *****************************************************************************
+
+
 " Fugitive
-set statusline=%{fugitive#statusline()}
+set statusline=   " clear the statusline for when vimrc is reloaded
+set statusline+=%-3.3n\                      " buffer number
+set statusline+=%{fugitive#statusline()}\    " Git branch
+set statusline+=%f\                          " file name
+set statusline+=%h%m%r%w                     " flags
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+set statusline+=%{&fileformat}]              " file format
+set statusline+=%=                           " right align
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=%b,0x%-8B\                   " current char
+set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
+
 
 augroup ft_fugitive
     au!
@@ -414,45 +420,20 @@ if has("autocmd")
 
 endif
 
-" HTML5
-let g:event_handler_attributes_complete = 0
-let g:rdfa_attributes_complete = 0
-let g:microdata_attributes_complete = 0
-let g:atia_attributes_complete = 0
-
 " NERD Tree
-map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
-inoremap <F2> <esc>:NERDTreeToggle<cr>
+"map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
+map <leader>n :NERDTreeTabsToggle<CR>
+"inoremap <F2> <esc>:NERDTreeToggle<cr>
+let g:nerdtree_tabs_open_on_gui_startup = 0
 
 au Filetype nerdtree setlocal nolist
 
 let NERDTreeHighlightCursorline=1
-let NERDTreeIgnore=['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'db.db']
+let NERDTreeIgnore=['.vim$', '.*\.pyc$']
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let NERDTreeWinSize = 30
 
-" Rainbox Parentheses
-nnoremap <leader>R :RainbowParenthesesToggle<cr>
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:rbpt_max = 16
 
 " Searching
 let g:gitgrepprg="grep\\ -n\\ -R\\ --include='*.py'"
@@ -501,32 +482,60 @@ function! GitGrepWord()
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
 
-" Ctrlp
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 2
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\.git$\|\.hg$\|\.svn$|\bin$\|\test-reports$\|\.externalToolBuilders$\|\.idea$\|\.ropeproject$\',
-    \ 'file': '\.exe$\|\.dll$|\.pyc$\|\.swc$\',
+
+" GOLANG
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'bin/gotags',
+    \ 'ctagsargs' : '-sort -silent'
 \ }
 
-" Notes
-let g:notes_suffix = ".txt"
-let g:notes_directory = "~/Dropbox/Notes/vim"
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" OpenChangedFiles COMMAND
-" Open a split for each dirty file in git
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! OpenChangedFiles()
-  only " Close all windows, unless they're modified
-  let status = system('git status -s | grep "^ \?\(M\|A\|UU\)" | sed "s/^.\{3\}//"')
-  let filenames = split(status, "\n")
-  exec "edit " . filenames[0]
-  for filename in filenames[1:]
-    exec "sp " . filename
-  endfor
+" SNIPPETS - UltiSnips
+" *****************************************************************************
+" *****************************************************************************
+function! g:UltiSnips_Complete()
+    call UltiSnips_ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<C-n>"
+        else
+            call UltiSnips_JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+               return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
 endfunction
-command! OpenChangedFiles :call OpenChangedFiles()
+
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-e>"
+let g:UltiSnipsSnippetDirectories = ["UltiSnips", "ultisnips-snippets"]
+" *****************************************************************************
+" *****************************************************************************
 
 
 " Environments GUI
@@ -546,20 +555,11 @@ else
     hi NonText guibg=#cccccc ctermbg=233
 
     " Vim TMUx
-    map <Leader>rt :call RunVimTmuxCommand("clear; wft " . bufname("%"))<CR>
-    map <Leader>rs :call RunVimTmuxCommand("clear; wfrs " . bufname("%"))<CR>
-    " Prompt for a command to run
     map <Leader>rp :VimuxPromptCommand <CR>
     " Run last command executed by RunVimTmuxCommand
     map <Leader>rl :RunLastVimTmuxCommand<CR>
     " Inspect runner pane
     map <Leader>ri :InspectVimTmuxRunner<CR>
-    " Close all other tmux panes in current window
-    map <Leader>rx :CloseVimTmuxPanes<CR>
-    " If text is selected, save it in the v buffer and send that buffer it to tmux
-    vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
-    " Select current paragraph and send it to tmux
-    nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
 
     let VimuxHeight = "28"
     let VimuxUseNearestPane = 1

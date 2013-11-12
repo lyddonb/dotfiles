@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sh -c 'git rev-parse HEAD | pbcopy'
+
+git rev-parse HEAD

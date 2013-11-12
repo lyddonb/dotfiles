@@ -20,19 +20,12 @@
     com = checkout master
 
     stat = status
-    st = status
+    st = status -sb
 
     fo = fetch origin
     fu = fetch upstream
     po = push origin
     lo = pull origin
-
-    # Divergence (commits we added and commits remote added)
-    div = divergence
-    
-    # Goodness (summary of diff lines added/removed/total)
-    gn = goodness
-    gnc = goodness --cached
 
     # Fancy logging.
     #   h = head
@@ -49,10 +42,23 @@
     l = "!source ~/.githelpers && pretty_git_log"
     la = !git l --all
 
+    lg = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+
     lme = log --author='Beau Lyddon' --no-merges
 
     lt = latest
     lb = for-each-ref --sort=-committerdate refs/heads/ --format='%(objectname) %(refname:short)'
+    cpc = "sh -c 'git commit \"$@\" && git rev-parse HEAD | xsel --clipboard'"
+
+    sy = log --since yesterday --author='Beau Lyddon'¬
+    purr = pull --rebase¬
+    ready = rebase -i @{u}¬
+    ours   = "!f() { git checkout --ours $@ && git add $@; }; f"¬
+    theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"¬
+
+    assume   = update-index --assume-unchanged¬
+    unassume = update-index --no-assume-unchanged¬
+    assumed  = "!git ls-files -v | grep ^h | cut -c 3-"¬
 [push]
 	default = tracking
 [fetch]

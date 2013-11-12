@@ -2,9 +2,6 @@
 source ~/.bashrc
 source ~/.profile
 
-# android shit
-export PATH=${PATH}:$HOME/programs/android-sdk/sdk/platform-tools:$HOME/programs/android-sdk/sdk/tools
-
 DEFAULT_COLOR="[00;1m"
 SSH_ENV="$HOME/.ssh/environment"
 
