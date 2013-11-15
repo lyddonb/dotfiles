@@ -25,7 +25,6 @@ Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
-Bundle 'majutsushi/tagbar'
 
 " Nerdtree
 Bundle 'vim-scripts/The-NERD-tree'
@@ -34,15 +33,13 @@ Bundle 'jistr/vim-nerdtree-tabs'
 " Multiple Cursors
 Bundle 'terryma/vim-multiple-cursors'
 
-" Snippets
-Bundle 'SirVer/ultisnips'
-
 " Markdown
 Bundle 'tpope/vim-markdown'
 
 " Git
 Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/gitv'
+Bundle 'git@github.com:airblade/vim-gitgutter.git'
 
 " Language-spec
 Bundle 'klen/python-mode'
@@ -52,7 +49,6 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'robertkluin/vim-handy-highlights'
-Bundle 'git@github.com:airblade/vim-gitgutter.git'
 Bundle 'jeroenbourgois/vim-actionscript'
 
 
@@ -472,61 +468,6 @@ function! GitGrepWord()
     call GitGrep(getreg('z'))
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
-
-
-" GOLANG
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'bin/gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
-
-" SNIPPETS - UltiSnips
-" *****************************************************************************
-" *****************************************************************************
-function! g:UltiSnips_Complete()
-    call UltiSnips_ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips_JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
-    endif
-    return ""
-endfunction
-
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-e>"
-let g:UltiSnipsSnippetDirectories = ["UltiSnips", "ultisnips-snippets"]
-" *****************************************************************************
-" *****************************************************************************
 
 
 " Environments GUI
