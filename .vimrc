@@ -28,7 +28,6 @@ Bundle 'rizzatti/dash.vim'
 
 " Nerdtree
 Bundle 'vim-scripts/The-NERD-tree'
-Bundle 'jistr/vim-nerdtree-tabs'
 
 " Multiple Cursors
 Bundle 'terryma/vim-multiple-cursors'
@@ -243,8 +242,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 syntax on
 set background=dark
 colorscheme mymolokai
-"colorscheme zenburn
-"colorscheme jellybeans
 set t_Co=256
 
 hi Normal ctermbg=235
@@ -339,24 +336,6 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
   \ }
 
-func! MyPrtMappings()
-    let g:ctrlp_prompt_mappings = {
-        \ 'AcceptSelection("e")': ['<c-t>'],
-        \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-        \ }
-endfunc
-
-func! MyCtrlPTag()
-    let g:ctrlp_prompt_mappings = {
-        \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-        \ 'AcceptSelection("t")': ['<c-t>'],
-        \ }
-    CtrlPBufTag
-endfunc
-
-let g:ctrlp_buffer_func = { 'exit': 'MyPrtMappings' }
-com! MyCtrlPTag call MyCtrlPTag()
-
 " TODO: add javascript and some other languages who doesn't have ctags support
 " coffee: https://gist.github.com/michaelglass/5210282
 " go: http://stackoverflow.com/a/8236826/462233 
@@ -408,10 +387,8 @@ set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 "endif
 
 " NERD Tree
-"map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
-map <leader>n :NERDTreeTabsToggle<CR>
+map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
 "inoremap <F2> <esc>:NERDTreeToggle<cr>
-let g:nerdtree_tabs_open_on_gui_startup = 0
 
 au Filetype nerdtree setlocal nolist
 
