@@ -21,7 +21,6 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'benmills/vimux'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'vim-scripts/Jinja'
-Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
@@ -97,8 +96,6 @@ set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
 
 set hlsearch
-
-set switchbuf=usetab,newtab     " open new buffers always in new tabs
 
 " KEY REMAPPING
 
@@ -327,9 +324,9 @@ autocmd BufNewFile,BufRead *.* compiler nose
 let g:ctrlp_cmd = 'CtrlPMixed'                        " search anything (in files, buffers and MRU files at the same time.)
 let g:ctrlp_working_path_mode = 'ra'        " search for nearest ancestor like .git, .hg, and the directory of the current file
 let g:ctrlp_match_window_bottom = 0                " show the match window at the top of the screen
-let g:ctrlp_by_filename = 1
+"let g:ctrlp_by_filename = 1
 let g:ctrlp_max_height = 10                                " maxiumum height of match window
-let g:ctrlp_switch_buffer = 'et'                " jump to a file if it's open already
+"let g:ctrlp_switch_buffer = 'et'                " jump to a file if it's open already
 let g:ctrlp_use_caching = 1                                " enable caching
 let g:ctrlp_clear_cache_on_exit=0                  " speed up by not removing clearing cache evertime
 let g:ctrlp_mruf_max = 250                                 " number of recently opened files
@@ -339,22 +336,6 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
   \ }
 
-func! MyPrtMappings()
-    let g:ctrlp_prompt_mappings = {
-        \ 'AcceptSelection("e")': ['<c-t>'],
-        \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-        \ }
-endfunc
-
-func! MyCtrlPTag()
-    let g:ctrlp_prompt_mappings = {
-        \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-        \ 'AcceptSelection("t")': ['<c-t>'],
-        \ }
-    CtrlPBufTag
-endfunc
-
-let g:ctrlp_buffer_func = { 'exit': 'MyPrtMappings' }
 com! MyCtrlPTag call MyCtrlPTag()
 
 " TODO: add javascript and some other languages who doesn't have ctags support
@@ -423,6 +404,7 @@ let NERDTreeWinSize = 30
 
 
 " Searching
+let g:gitgreprg="grep\\ -n\\ -R\\ --exclude='*.{xml}'"
 let g:gitgrepprg="grep\\ -n\\ -R\\ --include='*.py'"
 let g:gitgrepprgclass="grep\\ -n\\ -R\\ --include='*.py'\\ class\\"
 let g:gitgrepprgfunction="grep\\ -n\\ -R\\ --include='*.py\\ def\\'"
@@ -431,7 +413,7 @@ function! GitGrep(args)
     redraw
     echo "Searching..."
     let grepprg_bak=&grepprg
-    exec "set grepprg=" . g:gitgrepprg
+    exec "set grepprg=" . g:gitgreprg
     execute "silent! grep " . a:args . " *"
     let &grepprg=grepprg_bak
     botright copen
