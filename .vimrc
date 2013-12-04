@@ -191,7 +191,7 @@ endif
 
 " EDITING"
 " **************************************************
-au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
+"au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
 
 " auto complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
