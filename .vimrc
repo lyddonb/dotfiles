@@ -472,3 +472,4 @@ else
     let VimuxUseNearestPane = 1
     let g:VimuxOrientation = "h"
 endif
+
