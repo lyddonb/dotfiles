@@ -167,6 +167,7 @@ source /Users/beaulyddon/.rvm/scripts/rvm
 source /usr/local/etc/profile.d/z.sh
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
+export GOROOT=$HOME/go
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/programs/gcutil-1.8.2
 #export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

@@ -1,5 +1,7 @@
 set nocompatible
 filetype off
+filetype plugin indent off
+set runtimepath+=$GOROOT/misc/vim
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -48,12 +50,19 @@ Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'jeroenbourgois/vim-actionscript'
+Bundle 'vim-scripts/VimClojure'
 
 
 " GOLANG
+Bundle 'dgryski/vim-godef'
 set rtp+=/usr/local/go/misc/vim
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
 nmap <F4> :TagbarToggle<CR>
+" Need to make sure bash_profile as GOROORT set to HOME/go
+" go get -v code.google.com/p/rog-go/exp/cmd/godef
+" go install -v code.google.com/p/rog-go/exp/cmd/godef
+let g:godef_split=0
+let g:godef_same_file_in_same_window=1
 
 
 filetype plugin indent on
@@ -187,6 +196,8 @@ if has("autocmd")
     autocmd BufRead *.as set filetype=actionscript
     autocmd BufRead *.mxml set filetype=mxml
 
+    " Clojure
+    au BufNewFile,BufRead *.cljs set filetype=clojure
 endif
 
 " EDITING"
