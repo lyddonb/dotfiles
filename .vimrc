@@ -50,19 +50,25 @@ Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'jeroenbourgois/vim-actionscript'
+
+Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-classpath'
+Bundle 'guns/vim-clojure-static'
+Bundle 'vim-scripts/paredit.vim'
 Bundle 'vim-scripts/VimClojure'
 
 
 " GOLANG
-Bundle 'dgryski/vim-godef'
-set rtp+=/usr/local/go/misc/vim
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
-nmap <F4> :TagbarToggle<CR>
-" Need to make sure bash_profile as GOROORT set to HOME/go
-" go get -v code.google.com/p/rog-go/exp/cmd/godef
-" go install -v code.google.com/p/rog-go/exp/cmd/godef
-let g:godef_split=0
-let g:godef_same_file_in_same_window=1
+"Bundle 'dgryski/vim-godef'
+"set rtp+=/usr/local/go/misc/vim
+"autocmd FileType go autocmd BufWritePre <buffer> Fmt
+"nmap <F4> :TagbarToggle<CR>
+"" Need to make sure bash_profile as GOROORT set to HOME/go
+"" go get -v code.google.com/p/rog-go/exp/cmd/godef
+"" go install -v code.google.com/p/rog-go/exp/cmd/godef
+"let g:godef_split=0
+"let g:godef_same_file_in_same_window=1
+Bundle 'fatih/vim-go'
 
 
 filetype plugin indent on
@@ -283,47 +289,8 @@ abbr udpate update
 
 " PLUGINS
 
-" LANGUAGE STUFF
-
-" Flake 8
-
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_python_flake8_args='--ignore=W391'
-nnoremap <leader>s :SyntasticCheck<CR>
-nnoremap zj :lnext<CR>zz
-nnoremap zk :lprev<CR>zz
-
-" Python
-" Rope
-let g:pymode_folding=0
-let g:pymode_lint_ignore = "W391"
-let g:pymode_lint = 0
-let g:pymode_lint_cwindow = 0
-let g:pymode_run = 0
-
-"let g:pymode_rope_guess_project = 0
-
-" Pyflakes
-let g:pyflakes_use_quickfix = 1
-
-" Full python syntax highlighting
-let python_highlight_all=1
-
-augroup ft_python
-    au!
-    au FileType python setlocal omnifunc=pythoncomplete#Complete
-augroup END
-
 " Task list
 map <leader>td <Plug>TaskList
-
-" Makegreen
-map <localleader>t :call MakeGreen()<cr>
-let g:makegreen_stay_on_file=1
-"autocmd BufNewFile,BufRead *.py compiler nose
-" For now set all tests to nose. But we'll probably want something better long
-" term. Like using a make file...
-autocmd BufNewFile,BufRead *.* compiler nose
 
 
 " Control P
@@ -374,25 +341,6 @@ set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
 set statusline+=%b,0x%-8B\                   " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
-
-"augroup ft_fugitive
-    "au!
-
-    "au BufNewFile,BufRead .git/index setlocal nolist
-"augroup END
-
-"if has("autocmd")
-
-    "" Auto-close fugitive buffers
-    "autocmd BufReadPost fugitive://* set bufhidden=delete
-
-    "" Navigate up one level from fugitive trees and blobs
-    "autocmd User fugitive
-        "\ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-        "\   nnoremap <buffer> .. :edit %:h<CR> |
-        "\ endifugitive://* set bufhidden=delete
-
-"endif
 
 " NERD Tree
 map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
@@ -454,6 +402,73 @@ function! GitGrepWord()
     call GitGrep(getreg('z'))
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
+
+" LANGUAGE STUFF
+
+augroup ft_python
+    au!
+
+    au FileType python setlocal omnifunc=pythoncomplete#Complete
+
+    " Flake 8
+
+    let g:syntastic_python_checkers=['flake8']
+    let g:syntastic_python_flake8_args='--ignore=W391'
+    au FileType python nnoremap <leader>s :SyntasticCheck<CR>
+    au FileType python nnoremap zj :lnext<CR>zz
+    au FileType python nnoremap zk :lprev<CR>zz
+
+    " Python
+    " Rope
+    let g:pymode_folding=0
+    let g:pymode_lint_ignore = "W391"
+    let g:pymode_lint = 0
+    let g:pymode_lint_cwindow = 0
+    let g:pymode_run = 0
+
+    "let g:pymode_rope_guess_project = 0
+
+    " Pyflakes
+    let g:pyflakes_use_quickfix = 1
+
+    " Full python syntax highlighting
+    let python_highlight_all=1
+
+    " Makegreen
+    au FileType python map <localleader>t :call MakeGreen()<cr>
+    au FileType python let g:makegreen_stay_on_file=1
+    "autocmd BufNewFile,BufRead *.py compiler nose
+    " For now set all tests to nose. But we'll probably want something better long
+    " term. Like using a make file...
+    au FileType python autocmd BufNewFile,BufRead *.* compiler nose
+
+augroup END
+
+augroup ft_go
+    au!
+
+    " Import package under cursor.
+    au FileType go nmap <Leader>i <Plug>(go-import)
+
+    " Open Godoc for word.
+    "au FileType go nmap <Leader>d <Plug>(go-doc)
+    au FileType go nmap <C-c>d <Plug>(go-doc)
+
+    " Run go <command>
+    au FileType go nmap <localleader>r <Plug>(go-run)
+    au FileType go nmap <localleader>b <Plug>(go-build)
+    au FileType go nmap <localleader>t <Plug>(go-test)
+
+    " Goto declaration for word under cursor.
+    "au FileType go nmap gd <Plug>(go-def)
+    au FileType go nmap <C-c>g <Plug>(go-def)
+
+    " Open declaration for word under curos in split, vertical, tab
+    au FileType go nmap <C-c>gs <Plug>(go-def-split)
+    au FileType go nmap <C-c>gv <Plug>(go-def-vertical)
+    au FileType go nmap <C-c>gt <Plug>(go-def-tab)
+
+augroup END
 
 
 " Environments GUI
