@@ -22,8 +22,8 @@ HISTCONTROL=ignoredups:ignorespace
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=5000
+HISTFILESIZE=10000
 
 case "$TERM" in
     xterm-color) color_prompt=yes;;
@@ -40,8 +40,8 @@ alias ls='ls -G'
 # sources /etc/bash.bashrc).
 
 if [[ $platform == "mac" ]]; then
-	source /usr/local/etc/profile.d/z.sh
-	source /usr/local/Cellar/todo-txt/2.9/etc/bash_completion.d/todo_completion
+	#source /usr/local/etc/profile.d/z.sh
+	#source /usr/local/Cellar/todo-txt/2.9/etc/bash_completion.d/todo_completion
 	# on mac to install
 	# brew install bash-completion
 	if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
@@ -65,64 +65,64 @@ if [[ $platform == "mac" ]]; then
 	fi
 
 	function parse_git_branch {
-	    git rev-parse --git-dir > /dev/null 2>&1
+        git rev-parse --git-dir > /dev/null 2>&1
 	    if [ $? -eq 0 ]; then
-		git_status="$(git status 2> /dev/null)"
-		branch_pattern="^# On branch ([^${IFS}]*)"
-		detached_branch_pattern="# Not currently on any branch"
-		remote_pattern="# Your branch is (.*) of"
-		diverge_pattern="# Your branch and (.*) have diverged"
-		untracked_pattern="# Untracked files:"
-		new_pattern="new file:"
-		not_staged_pattern="Changes not staged for commit"
+            git_status="$(git status 2> /dev/null)"
+            branch_pattern="^On branch ([^${IFS}]*)"
+            detached_branch_pattern="Not currently on any branch"
+            remote_pattern="Your branch is (.*) of"
+            diverge_pattern="Your branch and (.*) have diverged"
+            untracked_pattern="Untracked files:"
+            new_pattern="new file:"
+            not_staged_pattern="Changes not staged for commit"
 
-		#files not staged for commit
-		if [[ ${git_status}} =~ ${not_staged_pattern} ]]; then
-		    state="✔"
-		fi
-		# add an else if or two here if you want to get more specific
-		# show if we're ahead or behind HEAD
-		if [[ ${git_status} =~ ${remote_pattern} ]]; then
-		    if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-			remote="↑"
-		    else
-			remote="↓"
-		    fi
-		fi
-		#new files
-		if [[ ${git_status} =~ ${new_pattern} ]]; then
-		    remote="+"
-		fi
-		#untracked files
-		if [[ ${git_status} =~ ${untracked_pattern} ]]; then
-		    remote="✖"
-		fi
-		#diverged branch
-		if [[ ${git_status} =~ ${diverge_pattern} ]]; then
-		    remote="↕"
-		fi
-		#branch name
-		if [[ ${git_status} =~ ${branch_pattern} ]]; then
-		    branch=${BASH_REMATCH[1]}
-		#detached branch
-		elif [[ ${git_status} =~ ${detached_branch_pattern} ]]; then
-		    branch="NO BRANCH"
-		fi
+            #files not staged for commit
+            if [[ ${git_status}} =~ ${not_staged_pattern} ]]; then
+                state="✔"
+            fi
+            # add an else if or two here if you want to get more specific
+            # show if we're ahead or behind HEAD
+            if [[ ${git_status} =~ ${remote_pattern} ]]; then
+                if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+                remote="↑"
+                else
+                remote="↓"
+                fi
+            fi
+            #new files
+            if [[ ${git_status} =~ ${new_pattern} ]]; then
+                remote="+"
+            fi
+            #untracked files
+            if [[ ${git_status} =~ ${untracked_pattern} ]]; then
+                remote="✖"
+            fi
+            #diverged branch
+            if [[ ${git_status} =~ ${diverge_pattern} ]]; then
+                remote="↕"
+            fi
+            #branch name
+            if [[ ${git_status} =~ ${branch_pattern} ]]; then
+                branch=${BASH_REMATCH[1]}
+            #detached branch
+            elif [[ ${git_status} =~ ${detached_branch_pattern} ]]; then
+                branch="NO BRANCH"
+            fi
 
-		git=""
-		if [ $branch ]; then
-		    git=${branch}
-		fi
+            git=""
+            if [ $branch ]; then
+                git=${branch}
+            fi
 
-		if [ $state ]; then
-		    git=${git}" "${state}
-		fi
+            if [ $state ]; then
+                git=${git}" "${state}
+            fi
 
-		if [ $remote ]; then
-		    git=${git}" "${remote}
-		fi
+            if [ $remote ]; then
+                git=${git}" "${remote}
+            fi
 
-		echo ":${git}"
+            echo ":${git}"
 	    fi
 	    return
 	}
@@ -158,19 +158,39 @@ source /usr/local/bin/virtualenvwrapper.sh
 source ~/aliases
 
 #todo.txt
-source /usr/local/Cellar/todo-txt/2.9/etc/bash_completion.d/todo_completion
-export TODOTXT_DEFAULT_ACTION=ls
+#source /usr/local/Cellar/todo-txt/2.9/etc/bash_completion.d/todo_completion
+#export TODOTXT_DEFAULT_ACTION=ls
 
 # RVM
 source /Users/beaulyddon/.rvm/scripts/rvm
 
-source /usr/local/etc/profile.d/z.sh
+#source /usr/local/etc/profile.d/z.sh
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
-export GOROOT=/usr/local/go
-export GOPATH=$GOROOT/bin
-export PATH=$PATH:$GOPATH
+export PATH="$HOME/Library/Haskell/bin:$PATH"
 export PATH=$PATH:$HOME/programs/gcutil-1.8.2
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH:$GOPATH/bin
+# Java 6
+#export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/
+# Java 8
+export JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/
 #export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 source $HOME/aliases
+
+export ANT_OPTS="-Xms512m -Xmx1024m"
+export MAVEN_OPTS="-Xmx4096m -Xss1024m -XX:MaxPermSize=128m"
+
+export DOCKER_CERT_PATH=/Users/beaulyddon/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+export DOCKER_HOST=tcp://192.168.59.103:2376
+
+source /Users/beaulyddon/.nix-profile/etc/profile.d/nix.sh
+
+# Clojure
+LEIN_FAST_TRAMPOLINE=y
+export LEIN_FAST_TRAMPOLINE
+alias cljsbuild="lein trampoline cljsbuild $@"

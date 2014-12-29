@@ -10,6 +10,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My bundles
+Bundle 'Shougo/vimproc.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'ervandew/supertab'
@@ -26,6 +27,7 @@ Bundle 'vim-scripts/Jinja'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
+Bundle 'ap/vim-buftabline'
 
 " Nerdtree
 Bundle 'vim-scripts/The-NERD-tree'
@@ -50,12 +52,25 @@ Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'jeroenbourgois/vim-actionscript'
+Bundle 'mxw/vim-jsx'
+Bundle 'raichoo/purescript-vim'
 
-Bundle 'tpope/vim-fireplace'
+"Clojure
 Bundle 'tpope/vim-classpath'
-Bundle 'guns/vim-clojure-static'
 Bundle 'vim-scripts/paredit.vim'
-Bundle 'vim-scripts/VimClojure'
+Bundle 'guns/vim-clojure-static'
+Bundle 'tpope/vim-fireplace'
+
+" Less
+Bundle 'groenewege/vim-less'
+
+" Haskell
+Bundle 'lukerandall/haskellmode-vim'
+Bundle 'eagletmt/ghcmod-vim'
+Bundle 'dag/vim2hs'
+
+" Rust
+Bundle 'wting/rust.vim'
 
 
 " GOLANG
@@ -69,6 +84,7 @@ Bundle 'vim-scripts/VimClojure'
 "let g:godef_split=0
 "let g:godef_same_file_in_same_window=1
 Bundle 'fatih/vim-go'
+Bundle 'benmills/vimux-golang'
 
 
 filetype plugin indent on
@@ -172,6 +188,10 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " quick buffer list
 :nnoremap <C-t> :buffers<CR>:buffer<Space>
 
+" Buffer movement.
+nnoremap <leader>j :bnext<CR>
+nnoremap <leader>k :bprev<CR>
+
 if has("autocmd")
     " Enable file type detection
     filetype on
@@ -181,6 +201,12 @@ if has("autocmd")
 
     " mako syntax highlighting
     autocmd BufRead *.mako set filetype=mako
+
+    " haskell
+    autocmd BufRead *.hs set filetype=haskell
+
+    " Docker
+    autocmd BufRead *.Dockerfile set filetype=sh
 
     " make jinja, jst, and handlebars templates use html syntax highlighting
     autocmd BufRead *.jinja,*.jst,*.handlebars,*.mustache set filetype=html
@@ -296,14 +322,14 @@ map <leader>td <Plug>TaskList
 " Control P
 " *****************************************************************************
 " *****************************************************************************
-let g:ctrlp_cmd = 'CtrlPMixed'                        " search anything (in files, buffers and MRU files at the same time.)
-let g:ctrlp_working_path_mode = 'ra'        " search for nearest ancestor like .git, .hg, and the directory of the current file
+"let g:ctrlp_cmd = 'CtrlPMixed'                        " search anything (in files, buffers and MRU files at the same time.)
+let g:ctrlp_working_path_mode = 'r'        " search for nearest ancestor like .git, .hg, and the directory of the current file
 let g:ctrlp_match_window_bottom = 0                " show the match window at the top of the screen
 "let g:ctrlp_by_filename = 1
 let g:ctrlp_max_height = 10                                " maxiumum height of match window
 "let g:ctrlp_switch_buffer = 'et'                " jump to a file if it's open already
 let g:ctrlp_use_caching = 1                                " enable caching
-let g:ctrlp_clear_cache_on_exit=0                  " speed up by not removing clearing cache evertime
+let g:ctrlp_clear_cache_on_exit=1                  " speed up by not removing clearing cache evertime
 let g:ctrlp_mruf_max = 250                                 " number of recently opened files
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn|build)$',
@@ -405,6 +431,21 @@ nmap <leader>gw :call GitGrepWord()<CR>"
 
 " LANGUAGE STUFF
 
+augroup ft_haskell
+    au!
+
+    let g:haddock_browser = "open"
+    au Bufenter *.hs compiler ghc
+
+augroup END
+
+augroup ft_javascript
+    au!
+
+    let g:syntastic_javascript_checkers = ['jsxhint']
+
+augroup END
+
 augroup ft_python
     au!
 
@@ -447,6 +488,9 @@ augroup END
 augroup ft_go
     au!
 
+    map <localleader>t :wa<CR> :GolangTestCurrentPackage<CR>
+    map <localleader>tf :wa<CR> :GolangTestFocused<CR>
+
     " Import package under cursor.
     au FileType go nmap <Leader>i <Plug>(go-import)
 
@@ -457,7 +501,7 @@ augroup ft_go
     " Run go <command>
     au FileType go nmap <localleader>r <Plug>(go-run)
     au FileType go nmap <localleader>b <Plug>(go-build)
-    au FileType go nmap <localleader>t <Plug>(go-test)
+    "au FileType go nmap <localleader>t <Plug>(go-test)
 
     " Goto declaration for word under cursor.
     "au FileType go nmap gd <Plug>(go-def)
