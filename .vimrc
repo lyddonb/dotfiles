@@ -1,5 +1,7 @@
 set nocompatible
 filetype off
+filetype plugin indent off
+set runtimepath+=$GOROOT/misc/vim
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -8,6 +10,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " My bundles
+Bundle 'Shougo/vimproc.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'ervandew/supertab'
@@ -21,14 +24,13 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'benmills/vimux'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'vim-scripts/Jinja'
-Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
+Bundle 'ap/vim-buftabline'
 
 " Nerdtree
 Bundle 'vim-scripts/The-NERD-tree'
-Bundle 'jistr/vim-nerdtree-tabs'
 
 " Multiple Cursors
 Bundle 'terryma/vim-multiple-cursors'
@@ -50,12 +52,39 @@ Bundle 'elzr/vim-json'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'robertkluin/vim-handy-highlights'
 Bundle 'jeroenbourgois/vim-actionscript'
+Bundle 'mxw/vim-jsx'
+Bundle 'raichoo/purescript-vim'
+
+"Clojure
+Bundle 'tpope/vim-classpath'
+Bundle 'vim-scripts/paredit.vim'
+Bundle 'guns/vim-clojure-static'
+Bundle 'tpope/vim-fireplace'
+
+" Less
+Bundle 'groenewege/vim-less'
+
+" Haskell
+Bundle 'lukerandall/haskellmode-vim'
+Bundle 'eagletmt/ghcmod-vim'
+Bundle 'dag/vim2hs'
+
+" Rust
+Bundle 'wting/rust.vim'
 
 
 " GOLANG
-set rtp+=/usr/local/go/misc/vim
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
-nmap <F4> :TagbarToggle<CR>
+"Bundle 'dgryski/vim-godef'
+"set rtp+=/usr/local/go/misc/vim
+"autocmd FileType go autocmd BufWritePre <buffer> Fmt
+"nmap <F4> :TagbarToggle<CR>
+"" Need to make sure bash_profile as GOROORT set to HOME/go
+"" go get -v code.google.com/p/rog-go/exp/cmd/godef
+"" go install -v code.google.com/p/rog-go/exp/cmd/godef
+"let g:godef_split=0
+"let g:godef_same_file_in_same_window=1
+Bundle 'fatih/vim-go'
+Bundle 'benmills/vimux-golang'
 
 
 filetype plugin indent on
@@ -97,8 +126,6 @@ set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
 
 set hlsearch
-
-set switchbuf=usetab,newtab     " open new buffers always in new tabs
 
 " KEY REMAPPING
 
@@ -161,6 +188,10 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " quick buffer list
 :nnoremap <C-t> :buffers<CR>:buffer<Space>
 
+" Buffer movement.
+nnoremap <leader>j :bnext<CR>
+nnoremap <leader>k :bprev<CR>
+
 if has("autocmd")
     " Enable file type detection
     filetype on
@@ -170,6 +201,12 @@ if has("autocmd")
 
     " mako syntax highlighting
     autocmd BufRead *.mako set filetype=mako
+
+    " haskell
+    autocmd BufRead *.hs set filetype=haskell
+
+    " Docker
+    autocmd BufRead *.Dockerfile set filetype=sh
 
     " make jinja, jst, and handlebars templates use html syntax highlighting
     autocmd BufRead *.jinja,*.jst,*.handlebars,*.mustache set filetype=html
@@ -191,11 +228,13 @@ if has("autocmd")
     autocmd BufRead *.as set filetype=actionscript
     autocmd BufRead *.mxml set filetype=mxml
 
+    " Clojure
+    au BufNewFile,BufRead *.cljs set filetype=clojure
 endif
 
 " EDITING"
 " **************************************************
-au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
+"au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
 
 " auto complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -243,8 +282,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 syntax on
 set background=dark
 colorscheme mymolokai
-"colorscheme zenburn
-"colorscheme jellybeans
 set t_Co=256
 
 hi Normal ctermbg=235
@@ -278,84 +315,27 @@ abbr udpate update
 
 " PLUGINS
 
-" LANGUAGE STUFF
-
-" Flake 8
-
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_python_flake8_args='--ignore=W391'
-nnoremap <leader>s :SyntasticCheck<CR>
-nnoremap zj :lnext<CR>zz
-nnoremap zk :lprev<CR>zz
-
-" Python
-" Rope
-let g:pymode_folding=0
-let g:pymode_lint_ignore = "W391"
-let g:pymode_lint = 0
-let g:pymode_lint_cwindow = 0
-let g:pymode_run = 0
-
-"let g:pymode_rope_guess_project = 0
-
-" Pyflakes
-let g:pyflakes_use_quickfix = 1
-
-" Full python syntax highlighting
-let python_highlight_all=1
-
-augroup ft_python
-    au!
-    au FileType python setlocal omnifunc=pythoncomplete#Complete
-augroup END
-
 " Task list
 map <leader>td <Plug>TaskList
-
-" Makegreen
-map <localleader>t :call MakeGreen()<cr>
-let g:makegreen_stay_on_file=1
-"autocmd BufNewFile,BufRead *.py compiler nose
-" For now set all tests to nose. But we'll probably want something better long
-" term. Like using a make file...
-autocmd BufNewFile,BufRead *.* compiler nose
 
 
 " Control P
 " *****************************************************************************
 " *****************************************************************************
-let g:ctrlp_cmd = 'CtrlPMixed'                        " search anything (in files, buffers and MRU files at the same time.)
-let g:ctrlp_working_path_mode = 'ra'        " search for nearest ancestor like .git, .hg, and the directory of the current file
+"let g:ctrlp_cmd = 'CtrlPMixed'                        " search anything (in files, buffers and MRU files at the same time.)
+let g:ctrlp_working_path_mode = 'r'        " search for nearest ancestor like .git, .hg, and the directory of the current file
 let g:ctrlp_match_window_bottom = 0                " show the match window at the top of the screen
-let g:ctrlp_by_filename = 1
+"let g:ctrlp_by_filename = 1
 let g:ctrlp_max_height = 10                                " maxiumum height of match window
-let g:ctrlp_switch_buffer = 'et'                " jump to a file if it's open already
+"let g:ctrlp_switch_buffer = 'et'                " jump to a file if it's open already
 let g:ctrlp_use_caching = 1                                " enable caching
-let g:ctrlp_clear_cache_on_exit=0                  " speed up by not removing clearing cache evertime
+let g:ctrlp_clear_cache_on_exit=1                  " speed up by not removing clearing cache evertime
 let g:ctrlp_mruf_max = 250                                 " number of recently opened files
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn|build)$',
   \ 'file': '\v\.(exe|so|dll)$',
   \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
   \ }
-
-func! MyPrtMappings()
-    let g:ctrlp_prompt_mappings = {
-        \ 'AcceptSelection("e")': ['<c-t>'],
-        \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-        \ }
-endfunc
-
-func! MyCtrlPTag()
-    let g:ctrlp_prompt_mappings = {
-        \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-        \ 'AcceptSelection("t")': ['<c-t>'],
-        \ }
-    CtrlPBufTag
-endfunc
-
-let g:ctrlp_buffer_func = { 'exit': 'MyPrtMappings' }
-com! MyCtrlPTag call MyCtrlPTag()
 
 " TODO: add javascript and some other languages who doesn't have ctags support
 " coffee: https://gist.github.com/michaelglass/5210282
@@ -388,30 +368,9 @@ set statusline+=%b,0x%-8B\                   " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
 
-"augroup ft_fugitive
-    "au!
-
-    "au BufNewFile,BufRead .git/index setlocal nolist
-"augroup END
-
-"if has("autocmd")
-
-    "" Auto-close fugitive buffers
-    "autocmd BufReadPost fugitive://* set bufhidden=delete
-
-    "" Navigate up one level from fugitive trees and blobs
-    "autocmd User fugitive
-        "\ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-        "\   nnoremap <buffer> .. :edit %:h<CR> |
-        "\ endifugitive://* set bufhidden=delete
-
-"endif
-
 " NERD Tree
-"map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
-map <leader>n :NERDTreeTabsToggle<CR>
+map <leader>n :NERDTreeToggle<CR> :NERDTreeMirror<CR>
 "inoremap <F2> <esc>:NERDTreeToggle<cr>
-let g:nerdtree_tabs_open_on_gui_startup = 0
 
 au Filetype nerdtree setlocal nolist
 
@@ -423,6 +382,7 @@ let NERDTreeWinSize = 30
 
 
 " Searching
+let g:gitgreprg="grep\\ -n\\ -R\\ --exclude='*.{xml}'"
 let g:gitgrepprg="grep\\ -n\\ -R\\ --include='*.py'"
 let g:gitgrepprgclass="grep\\ -n\\ -R\\ --include='*.py'\\ class\\"
 let g:gitgrepprgfunction="grep\\ -n\\ -R\\ --include='*.py\\ def\\'"
@@ -431,7 +391,7 @@ function! GitGrep(args)
     redraw
     echo "Searching..."
     let grepprg_bak=&grepprg
-    exec "set grepprg=" . g:gitgrepprg
+    exec "set grepprg=" . g:gitgreprg
     execute "silent! grep " . a:args . " *"
     let &grepprg=grepprg_bak
     botright copen
@@ -469,6 +429,91 @@ function! GitGrepWord()
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
 
+" LANGUAGE STUFF
+
+augroup ft_haskell
+    au!
+
+    let g:haddock_browser = "open"
+    au Bufenter *.hs compiler ghc
+
+augroup END
+
+augroup ft_javascript
+    au!
+
+    let g:syntastic_javascript_checkers = ['jsxhint']
+
+augroup END
+
+augroup ft_python
+    au!
+
+    au FileType python setlocal omnifunc=pythoncomplete#Complete
+
+    " Flake 8
+
+    let g:syntastic_python_checkers=['flake8']
+    let g:syntastic_python_flake8_args='--ignore=W391'
+    au FileType python nnoremap <leader>s :SyntasticCheck<CR>
+    au FileType python nnoremap zj :lnext<CR>zz
+    au FileType python nnoremap zk :lprev<CR>zz
+
+    " Python
+    " Rope
+    let g:pymode_folding=0
+    let g:pymode_lint_ignore = "W391"
+    let g:pymode_lint = 0
+    let g:pymode_lint_cwindow = 0
+    let g:pymode_run = 0
+
+    "let g:pymode_rope_guess_project = 0
+
+    " Pyflakes
+    let g:pyflakes_use_quickfix = 1
+
+    " Full python syntax highlighting
+    let python_highlight_all=1
+
+    " Makegreen
+    au FileType python map <localleader>t :call MakeGreen()<cr>
+    au FileType python let g:makegreen_stay_on_file=1
+    "autocmd BufNewFile,BufRead *.py compiler nose
+    " For now set all tests to nose. But we'll probably want something better long
+    " term. Like using a make file...
+    au FileType python autocmd BufNewFile,BufRead *.* compiler nose
+
+augroup END
+
+augroup ft_go
+    au!
+
+    map <localleader>t :wa<CR> :GolangTestCurrentPackage<CR>
+    map <localleader>tf :wa<CR> :GolangTestFocused<CR>
+
+    " Import package under cursor.
+    au FileType go nmap <Leader>i <Plug>(go-import)
+
+    " Open Godoc for word.
+    "au FileType go nmap <Leader>d <Plug>(go-doc)
+    au FileType go nmap <C-c>d <Plug>(go-doc)
+
+    " Run go <command>
+    au FileType go nmap <localleader>r <Plug>(go-run)
+    au FileType go nmap <localleader>b <Plug>(go-build)
+    "au FileType go nmap <localleader>t <Plug>(go-test)
+
+    " Goto declaration for word under cursor.
+    "au FileType go nmap gd <Plug>(go-def)
+    au FileType go nmap <C-c>g <Plug>(go-def)
+
+    " Open declaration for word under curos in split, vertical, tab
+    au FileType go nmap <C-c>gs <Plug>(go-def-split)
+    au FileType go nmap <C-c>gv <Plug>(go-def-vertical)
+    au FileType go nmap <C-c>gt <Plug>(go-def-tab)
+
+augroup END
+
 
 " Environments GUI
 if has('gui_running')
@@ -497,3 +542,4 @@ else
     let VimuxUseNearestPane = 1
     let g:VimuxOrientation = "h"
 endif
+
