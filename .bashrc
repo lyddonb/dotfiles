@@ -162,7 +162,7 @@ source ~/aliases
 #export TODOTXT_DEFAULT_ACTION=ls
 
 # RVM
-source /Users/beaulyddon/.rvm/scripts/rvm
+#source /Users/beaulyddon/.rvm/scripts/rvm
 
 #source /usr/local/etc/profile.d/z.sh
 
@@ -170,13 +170,18 @@ export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PAT
 export PATH="$HOME/Library/Haskell/bin:$PATH"
 export PATH=$PATH:$HOME/programs/gcutil-1.8.2
 
-export GOROOT=/usr/local/go
+
+# GO
+export PATH=$PATH:/usr/local/go/bin
+#export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH:$GOPATH/bin
 # Java 6
 #export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/
+# Java 7
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk/Contents/Home/
 # Java 8
-export JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/
+#export JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/
 #export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 source $HOME/aliases
@@ -188,9 +193,10 @@ export DOCKER_CERT_PATH=/Users/beaulyddon/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=1
 export DOCKER_HOST=tcp://192.168.59.103:2376
 
-source /Users/beaulyddon/.nix-profile/etc/profile.d/nix.sh
+#source /Users/beaulyddon/.nix-profile/etc/profile.d/nix.sh
 
 # Clojure
 LEIN_FAST_TRAMPOLINE=y
 export LEIN_FAST_TRAMPOLINE
 alias cljsbuild="lein trampoline cljsbuild $@"
+export CLOJURESCRIPT_HOME=/Users/beaulyddon/programs/clojurescript
