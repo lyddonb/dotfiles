@@ -16,7 +16,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'ervandew/supertab'
 Plugin 'sjl/gundo.vim'
-Plugin 'reinh/vim-makegreen'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
 Plugin 'Townk/vim-autoclose'
@@ -25,34 +24,32 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'benmills/vimux'
 Plugin 'vim-scripts/ZoomWin'
 Plugin 'vim-scripts/Jinja'
-Plugin 'vim-scripts/TaskList.vim'
 Plugin 'rizzatti/funcoo.vim'
-Plugin 'rizzatti/dash.vim'
 Plugin 'ap/vim-buftabline'
+Plugin 'terryma/vim-expand-region'
+Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-sleuth'
 
 " Nerdtree
 Plugin 'vim-scripts/The-NERD-tree'
-
-" Multiple Cursors
-Plugin 'terryma/vim-multiple-cursors'
 
 " Markdown
 Plugin 'tpope/vim-markdown'
 
 " Git
 Plugin 'tpope/vim-fugitive'
-Plugin 'gregsexton/gitv'
 Plugin 'git@github.com:airblade/vim-gitgutter.git'
+Plugin 'vim-scripts/gitignore'
 
 " Language-spec
 Plugin 'klen/python-mode'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'pangloss/vim-javascript'
 Plugin 'elzr/vim-json'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'robertkluin/vim-handy-highlights'
-Plugin 'jeroenbourgois/vim-actionscript'
 Plugin 'mxw/vim-jsx'
 Plugin 'raichoo/purescript-vim'
 Plugin 'dart-lang/dart-vim-plugin'
@@ -189,7 +186,6 @@ vnoremap / /\v
 " Search for selected word
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
-
 " Moving around
 " quick buffer list
 :nnoremap <C-t> :buffers<CR>:buffer<Space>
@@ -197,6 +193,10 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " Buffer movement.
 nnoremap <leader>j :bnext<CR>
 nnoremap <leader>k :bprev<CR>
+
+" Vim Expand Region
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 if has("autocmd")
     " Enable file type detection
@@ -545,6 +545,39 @@ augroup ft_go
 
 augroup END
 
+function! ZoomMode()
+    if exists("t:zoom_mode_enabled")
+        " If zoom mode is on, make windows a size usable for coding as we jump
+        " between them.
+        set winwidth=84
+
+        " We have to have a winheight bigger than we want to set winminheight.
+        " But if we set winheight to be huge before winminheight, the
+        " winminheight set will fail.
+        set winheight=15
+        set winminheight=15
+        set winheight=999
+
+        " Mark ZoomMode as off.
+        unlet t:zoom_mode_enabled
+
+        echo "  zoom"
+    else
+        " If zoom mode is not on, set resize limits much lower.
+        set winwidth=20
+        set winheight=15
+        set winminheight=1
+        set winheight=1
+
+        " Mark that ZoomMode is on.
+        let t:zoom_mode_enabled = 1
+
+        echo "nozoom"
+    endif
+endfunction
+
+" Toggle zoom mode on/off.
+map <leader>z :call ZoomMode()<cr>
 
 " Environments GUI
 if has('gui_running')
