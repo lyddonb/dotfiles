@@ -1,7 +1,8 @@
 set nocompatible
 filetype off
 filetype plugin indent off
-set runtimepath+=$GOROOT/misc/vim
+set runtimepath+=$GOBIN
+set runtimepath+=~/.vim/bundle/dart-vim-plugin
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -57,6 +58,8 @@ Plugin 'robertkluin/vim-handy-highlights'
 Plugin 'jeroenbourgois/vim-actionscript'
 Plugin 'mxw/vim-jsx'
 Plugin 'raichoo/purescript-vim'
+Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'jimenezrick/vimerl'
 
 "Clojure
 Plugin 'tpope/vim-classpath'
@@ -131,6 +134,8 @@ set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
 
 set hlsearch
+
+set nowrap
 
 " KEY REMAPPING
 
@@ -241,14 +246,17 @@ endif
 " **************************************************
 "au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
 
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
 " auto complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType mustache set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType mako set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType jst set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType c set omnifunc=ccomplete#Completej
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS noci
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType mustache set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType mako set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType jst set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags noci
+autocmd FileType c set omnifunc=ccomplete#Completej noci
 set completeopt=menuone
 
 
@@ -435,6 +443,26 @@ function! GitGrepWord()
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
 
+" Selecta
+" Run a given vim command on the results of fuzzy selecting from a given shell
+" command. See usage below.
+function! SelectaCommand(choice_command, selecta_args, vim_command)
+  try
+    let selection = system(a:choice_command . " | selecta " . a:selecta_args)
+  catch /Vim:Interrupt/
+    " Swallow the ^C so that the redraw below happens; otherwise there will be
+    " leftovers from selecta on the screen
+    redraw!
+    return
+  endtry
+  redraw!
+  exec a:vim_command . " " . selection
+endfunction
+
+" Find all files in all non-dot directories starting in the working directory.
+" Fuzzy select one of those. Open the selected file with :e.
+nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
+
 " LANGUAGE STUFF
 
 augroup ft_haskell
@@ -518,6 +546,8 @@ augroup ft_go
     au FileType go nmap <C-c>gv <Plug>(go-def-vertical)
     au FileType go nmap <C-c>gt <Plug>(go-def-tab)
 
+    let g:go_fmt_command = "goimports"
+
 augroup END
 
 
@@ -547,6 +577,31 @@ else
     let VimuxHeight = "28"
     let VimuxUseNearestPane = 1
     let g:VimuxOrientation = "h"
+
+    " for tmux to automatically set paste and nopaste mode at the time pasting (as
+    " happens in VIM UI)
+
+    function! WrapForTmux(s)
+      if !exists('$TMUX')
+        return a:s
+      endif
+
+      let tmux_start = "\<Esc>Ptmux;"
+      let tmux_end = "\<Esc>\\"
+
+      return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+    endfunction
+
+    let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+    let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+    function! XTermPasteBegin()
+      set pastetoggle=<Esc>[201~
+      set paste
+      return ""
+    endfunction
+
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 endif
 
 function! ZoomMode()
