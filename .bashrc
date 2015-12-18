@@ -162,7 +162,7 @@ source ~/aliases
 #export TODOTXT_DEFAULT_ACTION=ls
 
 # RVM
-source /Users/beaulyddon/.rvm/scripts/rvm
+#source /Users/beaulyddon/.rvm/scripts/rvm
 
 #source /usr/local/etc/profile.d/z.sh
 
@@ -188,7 +188,7 @@ export DOCKER_CERT_PATH=/Users/beaulyddon/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=1
 export DOCKER_HOST=tcp://192.168.59.103:2376
 
-source /Users/beaulyddon/.nix-profile/etc/profile.d/nix.sh
+#source /Users/beaulyddon/.nix-profile/etc/profile.d/nix.sh
 
 # Clojure
 LEIN_FAST_TRAMPOLINE=y
