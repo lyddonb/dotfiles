@@ -183,6 +183,9 @@ map <leader>p :set spell!<cr>
 nnoremap / /\v
 vnoremap / /\v
 
+" Open file in same path wiht :e %%
+cabbr <expr> %% expand('%:p:h')
+
 " Search for selected word
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
@@ -549,7 +552,7 @@ function! ZoomMode()
     if exists("t:zoom_mode_enabled")
         " If zoom mode is on, make windows a size usable for coding as we jump
         " between them.
-        set winwidth=84
+        set winwidth=90
 
         " We have to have a winheight bigger than we want to set winminheight.
         " But if we set winheight to be huge before winminheight, the
