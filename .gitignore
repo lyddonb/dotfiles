@@ -2,3 +2,4 @@ aliases
 .mutt/account.webfilings
 .mutt/cache
 bin/lein*
+/doc/tags
