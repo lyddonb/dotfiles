@@ -32,6 +32,14 @@ Plugin 'vim-scripts/TaskList.vim'
 Plugin 'rizzatti/funcoo.vim'
 Plugin 'rizzatti/dash.vim'
 Plugin 'ap/vim-buftabline'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'majutsushi/tagbar'
+Plugin 'vim-scripts/Align'
+Plugin 'godlygeek/tabular'
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'jceb/vim-orgmode'
+Plugin 'mtth/scratch.vim'
 
 " Nerdtree
 Plugin 'vim-scripts/The-NERD-tree'
@@ -46,6 +54,7 @@ Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-fugitive'
 Plugin 'gregsexton/gitv'
 Plugin 'airblade/vim-gitgutter.git'
+Plugin 'int3/vim-extradite'
 
 " Language-spec
 Plugin 'klen/python-mode'
@@ -72,9 +81,15 @@ Plugin 'tpope/vim-salve'
 Plugin 'groenewege/vim-less'
 
 " Haskell
-Plugin 'lukerandall/haskellmode-vim'
+Plugin 'neovimhaskell/haskell-vim'
+Plugin 'enomsg/vim-haskellConcealPlus'
 Plugin 'eagletmt/ghcmod-vim'
-Plugin 'dag/vim2hs'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'Twinside/vim-hoogle'
+Plugin 'lukerandall/haskellmode-vim'
+
+"Plugin 'lukerandall/haskellmode-vim'
+"Plugin 'dag/vim2hs'
 
 " Rust
 Plugin 'wting/rust.vim'
@@ -137,6 +152,12 @@ set hlsearch
 
 set nowrap
 
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
 " KEY REMAPPING
 
 " leader
@@ -193,6 +214,11 @@ vnoremap / /\v
 " Search for selected word
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch
 
 " Moving around
 " quick buffer list
@@ -201,6 +227,13 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " Buffer movement.
 nnoremap <leader>j :bnext<CR>
 nnoremap <leader>k :bprev<CR>
+
+" Show trailing whitespace
+set list
+" But only interesting whitespace
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
 
 if has("autocmd")
     " Enable file type detection
@@ -285,7 +318,6 @@ noremap <C-h>  <C-w>h
 noremap <C-j>  <C-w>j
 noremap <C-k>  <C-w>k
 noremap <C-l>  <C-w>l
-noremap <leader>v <C-w>v
 
 
 " Highlight VCS conflict markers
@@ -328,8 +360,133 @@ abbr udpate update
 
 " PLUGINS
 
+" Align
+" Stop Align plugin from forcing its mappings on us
+let g:loaded_AlignMapsPlugin=1
+" Align on equal signs
+map <Leader>a= :Align =<CR>
+" Align on commas
+map <Leader>a, :Align ,<CR>
+" Align on pipes
+map <Leader>a<bar> :Align <bar><CR>
+" Prompt for align character
+map <leader>ap :Align
+
 " Task list
 map <leader>td <Plug>TaskList
+
+
+" Haskell Interrogation {{{
+
+set completeopt+=longest
+
+" Use buffer words as default tab completion
+let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
+
+" But provide (neco-ghc) omnicompletion
+if has("gui_running")
+  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+else " no gui
+  if has("unix")
+    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  endif
+endif
+
+" Show types in completion suggestions
+let g:necoghc_enable_detailed_browse = 1
+" Resolve ghcmod base directory
+au FileType haskell let g:ghcmod_use_basedir = getcwd()
+
+" Type of expression under cursor
+nmap <silent> <leader>ht :GhcModType<CR>
+" Insert type of expression under cursor
+nmap <silent> <leader>hT :GhcModTypeInsert<CR>
+" GHC errors and warnings
+nmap <silent> <leader>hc :SyntasticCheck hdevtools<CR>
+
+" Haskell Lint
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haskell'] }
+nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
+
+" Options for Haskell Syntax Check
+let g:syntastic_haskell_hdevtools_args = '-g-Wall'
+
+" Hoogle the word under the cursor
+nnoremap <silent> <leader>hh :Hoogle<CR>
+
+" Hoogle and prompt for input
+nnoremap <leader>hH :Hoogle 
+
+" Hoogle for detailed documentation (e.g. "Functor")
+nnoremap <silent> <leader>hi :HoogleInfo<CR>
+
+" Hoogle for detailed documentation and prompt for input
+nnoremap <leader>hI :HoogleInfo 
+
+" Hoogle, close the Hoogle window
+nnoremap <silent> <leader>hz :HoogleClose<CR>
+
+" }}}
+
+" Tags {{{
+
+set tags=tags;/,codex.tags;/
+
+let g:tagbar_type_haskell = {
+    \ 'ctagsbin'  : 'hasktags',
+    \ 'ctagsargs' : '-x -c -o-',
+    \ 'kinds'     : [
+        \  'm:modules:0:1',
+        \  'd:data: 0:1',
+        \  'd_gadt: data gadt:0:1',
+        \  't:type names:0:1',
+        \  'nt:new types:0:1',
+        \  'c:classes:0:1',
+        \  'cons:constructors:1:1',
+        \  'c_gadt:constructor gadt:1:1',
+        \  'c_a:constructor accessors:1:1',
+        \  'ft:function types:1:1',
+        \  'fi:function implementations:0:1',
+        \  'o:others:0:1'
+    \ ],
+    \ 'sro'        : '.',
+    \ 'kind2scope' : {
+        \ 'm' : 'module',
+        \ 'c' : 'class',
+        \ 'd' : 'data',
+        \ 't' : 'type'
+    \ },
+    \ 'scope2kind' : {
+        \ 'module' : 'm',
+        \ 'class'  : 'c',
+        \ 'data'   : 'd',
+        \ 'type'   : 't'
+    \ }
+\ }
+
+" Generate haskell tags with codex and hscope
+map <leader>tg :!codex update --force<CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR>
+
+map <leader>tt :TagbarToggle<CR>
+
+set csprg=hscope
+set csto=1 " search codex tags first
+set cst
+set csverb
+nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
+" Automatically make cscope connections
+function! LoadHscope()
+  let db = findfile("hscope.out", ".;")
+  if (!empty(db))
+    let path = strpart(db, 0, match(db, "/hscope.out$"))
+    set nocscopeverbose " suppress 'duplicate connection' error
+    exe "cs add " . db . " " . path
+    set cscopeverbose
+  endif
+endfunction
+au BufEnter /*.hs call LoadHscope()
+
+" }}}
 
 
 " Control P
@@ -393,7 +550,6 @@ let NERDTreeIgnore=['.vim$', '.*\.pyc$']
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let NERDTreeWinSize = 30
-
 
 " Searching
 let g:gitgreprg="grep\\ -n\\ -R\\ --exclude='*.{xml}'"
@@ -468,8 +624,24 @@ nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
 augroup ft_haskell
     au!
 
+    autocmd FileType haskell map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>:SyntasticReset<cr>
+    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
     let g:haddock_browser = "open"
     au Bufenter *.hs compiler ghc
+
+    " 1 tab == 2 spaces
+    set shiftwidth=2
+    set tabstop=2
+
+    " Pretty unicode haskell symbols
+    let g:haskell_conceal_wide = 1
+    let g:haskell_conceal_enumerations = 1
+    let hscoptions="𝐒𝐓𝐄𝐌xRtB𝔻w"
+
+    set ai "Auto indent
+    set si "Smart indent
+    set wrap "Wrap lines
 
 augroup END
 
@@ -567,12 +739,21 @@ else
     hi Normal guibg=#cccccc ctermbg=233
     hi NonText guibg=#cccccc ctermbg=233
 
+    " Vimux
+    function! VimuxSlime()
+      call VimuxSendText(@v)
+      call VimuxSendKeys("Enter")
+    endfunction
+
+    vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
+    nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
+
     " Vim TMUx
-    map <Leader>rp :VimuxPromptCommand <CR>
+    map <Leader>vp :VimuxPromptCommand <CR>
     " Run last command executed by RunVimTmuxCommand
-    map <Leader>rl :RunLastVimTmuxCommand<CR>
+    map <Leader>vl :RunLastVimTmuxCommand<CR>
     " Inspect runner pane
-    map <Leader>ri :InspectVimTmuxRunner<CR>
+    map <Leader>vi :InspectVimTmuxRunner<CR>
 
     let VimuxHeight = "28"
     let VimuxUseNearestPane = 1
@@ -608,7 +789,7 @@ function! ZoomMode()
     if exists("t:zoom_mode_enabled")
         " If zoom mode is on, make windows a size usable for coding as we jump
         " between them.
-        set winwidth=84
+        set winwidth=90
 
         " We have to have a winheight bigger than we want to set winminheight.
         " But if we set winheight to be huge before winminheight, the
