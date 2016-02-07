@@ -1,0 +1,30 @@
+alias aa='vim ~/aliases && . ~/aliases'
+
+alias mmosh='mosh --server=/usr/local/bin/mosh-server $1'
+
+alias dots='cd ~/dotfiles'
+alias gclean='sh ~/.bin/branch_cleanup'
+
+#TMUX
+tmux_attach() {
+    tmux attach-session -t $1
+}
+alias tmuxa='tmux_attach'
+alias tmuxl='tmux list-sessions'
+
+# GIT Aliases
+alias g='git'
+alias gb='git branch'
+alias gs='git status'
+
+# List direcory contents
+alias l1='tree --dirsfirst -ChFL 1'
+alias l2='tree --dirsfirst -ChFL 2'
+alias l3='tree --dirsfirst -ChFL 3'
+
+alias ll1='tree --dirsfirst -ChFupDaL 1'
+alias ll2='tree --dirsfirst -ChFupDaL 2'
+alias ll3='tree --dirsfirst -ChFupDaL 3'
+
+. ~/Dropbox/dotfiles/aliases_work
+. ~/Dropbox/dotfiles/aliases_osx
