@@ -1,4 +1,4 @@
-alias aa='vim ~/aliases && . ~/aliases'
+alias aa='vim ~/.aliases && . ~/.aliases'
 
 alias mmosh='mosh --server=/usr/local/bin/mosh-server $1'
 

@@ -50,10 +50,6 @@ else
 fi
 
 
-
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 # Add GHC 7.10.2 to the PATH, via https://ghcformacosx.github.io/
 export GHC_DOT_APP="/Applications/ghc-7.10.2.app"
 if [ -d "$GHC_DOT_APP" ]; then
