@@ -123,6 +123,7 @@ setup_vim_things() {
   mkdir -p /var/tmp/vim/backup
   mkdir -p /var/tmp/vim/swap
 
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
 
   info 'Vim setup with colors, backups and plugins'
