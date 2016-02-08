@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# STOLEN FROM MR. HOLMAN AND TWEAKED A BIT
+# https://github.com/holman/dotfiles/blob/master/script/bootstrap
+
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd -P)
 
