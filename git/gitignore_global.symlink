@@ -4,7 +4,6 @@
 atlassian-ide-plugin.xml
 wfkinds.py
 build-user.properties
-static
 *.log
 settingslocal.py
 .ropeproject
@@ -15,3 +14,5 @@ accounts.csv
 .~lock.accounts_to_run.csv#
 .com.apple.timemachine.supported
 .env
+*/bower_components
+*/.grunt

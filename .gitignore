@@ -1,4 +1,6 @@
-aliases
+aliases_work
+aliases_osx
 .mutt/account.webfilings
 .mutt/cache
 bin/lein*
+/doc/tags
