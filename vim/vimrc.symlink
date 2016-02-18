@@ -1,80 +1,102 @@
 set nocompatible
 filetype off
 filetype plugin indent off
-set runtimepath+=$GOROOT/misc/vim
+set runtimepath+=$GOBIN
+set runtimepath+=~/.vim/bundle/dart-vim-plugin
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
 " start vundle
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " My bundles
-Bundle 'Shougo/vimproc.vim'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'ervandew/supertab'
-Bundle 'sjl/gundo.vim'
-Bundle 'reinh/vim-makegreen'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/syntastic'
-Bundle 'Townk/vim-autoclose'
-Bundle 'vim-scripts/Rainbow-Parenthesis'
-Bundle 'kien/ctrlp.vim'
-Bundle 'benmills/vimux'
-Bundle 'vim-scripts/ZoomWin'
-Bundle 'vim-scripts/Jinja'
-Bundle 'vim-scripts/TaskList.vim'
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rizzatti/dash.vim'
-Bundle 'ap/vim-buftabline'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'ervandew/supertab'
+Plugin 'sjl/gundo.vim'
+Plugin 'reinh/vim-makegreen'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'Townk/vim-autoclose'
+Plugin 'vim-scripts/Rainbow-Parenthesis'
+Plugin 'kien/ctrlp.vim'
+Plugin 'benmills/vimux'
+Plugin 'vim-scripts/ZoomWin'
+Plugin 'vim-scripts/Jinja'
+Plugin 'vim-scripts/TaskList.vim'
+Plugin 'rizzatti/funcoo.vim'
+Plugin 'rizzatti/dash.vim'
+Plugin 'ap/vim-buftabline'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'majutsushi/tagbar'
+Plugin 'vim-scripts/Align'
+Plugin 'godlygeek/tabular'
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'jceb/vim-orgmode'
+Plugin 'mtth/scratch.vim'
 
 " Nerdtree
-Bundle 'vim-scripts/The-NERD-tree'
+Plugin 'vim-scripts/The-NERD-tree'
 
 " Multiple Cursors
-Bundle 'terryma/vim-multiple-cursors'
+Plugin 'terryma/vim-multiple-cursors'
 
 " Markdown
-Bundle 'tpope/vim-markdown'
+Plugin 'tpope/vim-markdown'
 
 " Git
-Bundle 'tpope/vim-fugitive'
-Bundle 'gregsexton/gitv'
-Bundle 'git@github.com:airblade/vim-gitgutter.git'
+Plugin 'tpope/vim-fugitive'
+Plugin 'gregsexton/gitv'
+Plugin 'airblade/vim-gitgutter.git'
+Plugin 'int3/vim-extradite'
 
 " Language-spec
-Bundle 'klen/python-mode'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'pangloss/vim-javascript'
-Bundle 'elzr/vim-json'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'robertkluin/vim-handy-highlights'
-Bundle 'jeroenbourgois/vim-actionscript'
-Bundle 'mxw/vim-jsx'
-Bundle 'raichoo/purescript-vim'
+Plugin 'klen/python-mode'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'pangloss/vim-javascript'
+Plugin 'elzr/vim-json'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'robertkluin/vim-handy-highlights'
+Plugin 'jeroenbourgois/vim-actionscript'
+Plugin 'mxw/vim-jsx'
+Plugin 'raichoo/purescript-vim'
+Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'jimenezrick/vimerl'
 
 "Clojure
-Bundle 'tpope/vim-classpath'
-Bundle 'vim-scripts/paredit.vim'
-Bundle 'guns/vim-clojure-static'
-Bundle 'tpope/vim-fireplace'
+Plugin 'tpope/vim-classpath'
+Plugin 'vim-scripts/paredit.vim'
+Plugin 'guns/vim-clojure-static'
+Plugin 'tpope/vim-fireplace'
+Plugin 'tpope/vim-salve'
 
 " Less
-Bundle 'groenewege/vim-less'
+Plugin 'groenewege/vim-less'
 
 " Haskell
-Bundle 'lukerandall/haskellmode-vim'
-Bundle 'eagletmt/ghcmod-vim'
-Bundle 'dag/vim2hs'
+Plugin 'neovimhaskell/haskell-vim'
+Plugin 'enomsg/vim-haskellConcealPlus'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'Twinside/vim-hoogle'
+Plugin 'lukerandall/haskellmode-vim'
+
+"Plugin 'lukerandall/haskellmode-vim'
+"Plugin 'dag/vim2hs'
 
 " Rust
-Bundle 'wting/rust.vim'
+Plugin 'wting/rust.vim'
 
 
 " GOLANG
-"Bundle 'dgryski/vim-godef'
+"Plugin 'dgryski/vim-godef'
 "set rtp+=/usr/local/go/misc/vim
 "autocmd FileType go autocmd BufWritePre <buffer> Fmt
 "nmap <F4> :TagbarToggle<CR>
@@ -83,9 +105,10 @@ Bundle 'wting/rust.vim'
 "" go install -v code.google.com/p/rog-go/exp/cmd/godef
 "let g:godef_split=0
 "let g:godef_same_file_in_same_window=1
-Bundle 'fatih/vim-go'
-Bundle 'benmills/vimux-golang'
+Plugin 'fatih/vim-go'
+Plugin 'benmills/vimux-golang'
 
+call vundle#end()
 
 filetype plugin indent on
 
@@ -126,6 +149,14 @@ set backupdir=/var/tmp/vim/backup// " backups
 set directory=/var/tmp/vim/swap//   " swap files
 
 set hlsearch
+
+set nowrap
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
 
 " KEY REMAPPING
 
@@ -183,6 +214,11 @@ vnoremap / /\v
 " Search for selected word
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch
 
 " Moving around
 " quick buffer list
@@ -191,6 +227,13 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " Buffer movement.
 nnoremap <leader>j :bnext<CR>
 nnoremap <leader>k :bprev<CR>
+
+" Show trailing whitespace
+set list
+" But only interesting whitespace
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
 
 if has("autocmd")
     " Enable file type detection
@@ -236,14 +279,17 @@ endif
 " **************************************************
 "au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
 
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
 " auto complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType mustache set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType mako set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType jst set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType c set omnifunc=ccomplete#Completej
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS noci
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType mustache set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType mako set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType jst set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags noci
+autocmd FileType c set omnifunc=ccomplete#Completej noci
 set completeopt=menuone
 
 
@@ -272,7 +318,6 @@ noremap <C-h>  <C-w>h
 noremap <C-j>  <C-w>j
 noremap <C-k>  <C-w>k
 noremap <C-l>  <C-w>l
-noremap <leader>v <C-w>v
 
 
 " Highlight VCS conflict markers
@@ -315,8 +360,133 @@ abbr udpate update
 
 " PLUGINS
 
+" Align
+" Stop Align plugin from forcing its mappings on us
+let g:loaded_AlignMapsPlugin=1
+" Align on equal signs
+map <Leader>a= :Align =<CR>
+" Align on commas
+map <Leader>a, :Align ,<CR>
+" Align on pipes
+map <Leader>a<bar> :Align <bar><CR>
+" Prompt for align character
+map <leader>ap :Align
+
 " Task list
 map <leader>td <Plug>TaskList
+
+
+" Haskell Interrogation {{{
+
+set completeopt+=longest
+
+" Use buffer words as default tab completion
+let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
+
+" But provide (neco-ghc) omnicompletion
+if has("gui_running")
+  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+else " no gui
+  if has("unix")
+    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  endif
+endif
+
+" Show types in completion suggestions
+let g:necoghc_enable_detailed_browse = 1
+" Resolve ghcmod base directory
+au FileType haskell let g:ghcmod_use_basedir = getcwd()
+
+" Type of expression under cursor
+nmap <silent> <leader>ht :GhcModType<CR>
+" Insert type of expression under cursor
+nmap <silent> <leader>hT :GhcModTypeInsert<CR>
+" GHC errors and warnings
+nmap <silent> <leader>hc :SyntasticCheck hdevtools<CR>
+
+" Haskell Lint
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haskell'] }
+nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
+
+" Options for Haskell Syntax Check
+let g:syntastic_haskell_hdevtools_args = '-g-Wall'
+
+" Hoogle the word under the cursor
+nnoremap <silent> <leader>hh :Hoogle<CR>
+
+" Hoogle and prompt for input
+nnoremap <leader>hH :Hoogle 
+
+" Hoogle for detailed documentation (e.g. "Functor")
+nnoremap <silent> <leader>hi :HoogleInfo<CR>
+
+" Hoogle for detailed documentation and prompt for input
+nnoremap <leader>hI :HoogleInfo 
+
+" Hoogle, close the Hoogle window
+nnoremap <silent> <leader>hz :HoogleClose<CR>
+
+" }}}
+
+" Tags {{{
+
+set tags=tags;/,codex.tags;/
+
+let g:tagbar_type_haskell = {
+    \ 'ctagsbin'  : 'hasktags',
+    \ 'ctagsargs' : '-x -c -o-',
+    \ 'kinds'     : [
+        \  'm:modules:0:1',
+        \  'd:data: 0:1',
+        \  'd_gadt: data gadt:0:1',
+        \  't:type names:0:1',
+        \  'nt:new types:0:1',
+        \  'c:classes:0:1',
+        \  'cons:constructors:1:1',
+        \  'c_gadt:constructor gadt:1:1',
+        \  'c_a:constructor accessors:1:1',
+        \  'ft:function types:1:1',
+        \  'fi:function implementations:0:1',
+        \  'o:others:0:1'
+    \ ],
+    \ 'sro'        : '.',
+    \ 'kind2scope' : {
+        \ 'm' : 'module',
+        \ 'c' : 'class',
+        \ 'd' : 'data',
+        \ 't' : 'type'
+    \ },
+    \ 'scope2kind' : {
+        \ 'module' : 'm',
+        \ 'class'  : 'c',
+        \ 'data'   : 'd',
+        \ 'type'   : 't'
+    \ }
+\ }
+
+" Generate haskell tags with codex and hscope
+map <leader>tg :!codex update --force<CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR>
+
+map <leader>tt :TagbarToggle<CR>
+
+set csprg=hscope
+set csto=1 " search codex tags first
+set cst
+set csverb
+nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
+" Automatically make cscope connections
+function! LoadHscope()
+  let db = findfile("hscope.out", ".;")
+  if (!empty(db))
+    let path = strpart(db, 0, match(db, "/hscope.out$"))
+    set nocscopeverbose " suppress 'duplicate connection' error
+    exe "cs add " . db . " " . path
+    set cscopeverbose
+  endif
+endfunction
+au BufEnter /*.hs call LoadHscope()
+
+" }}}
 
 
 " Control P
@@ -356,7 +526,8 @@ let g:ctrlp_buftag_types = {
 " Fugitive
 set statusline=   " clear the statusline for when vimrc is reloaded
 set statusline+=%-3.3n\                      " buffer number
-set statusline+=%{fugitive#statusline()}\    " Git branch
+" set statusline+=%{fugitive#statusline()}\    " Git branch
+set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''}
 set statusline+=%f\                          " file name
 set statusline+=%h%m%r%w                     " flags
 set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
@@ -379,7 +550,6 @@ let NERDTreeIgnore=['.vim$', '.*\.pyc$']
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let NERDTreeWinSize = 30
-
 
 " Searching
 let g:gitgreprg="grep\\ -n\\ -R\\ --exclude='*.{xml}'"
@@ -429,13 +599,49 @@ function! GitGrepWord()
 endfunction
 nmap <leader>gw :call GitGrepWord()<CR>"
 
+" Selecta
+" Run a given vim command on the results of fuzzy selecting from a given shell
+" command. See usage below.
+function! SelectaCommand(choice_command, selecta_args, vim_command)
+  try
+    let selection = system(a:choice_command . " | selecta " . a:selecta_args)
+  catch /Vim:Interrupt/
+    " Swallow the ^C so that the redraw below happens; otherwise there will be
+    " leftovers from selecta on the screen
+    redraw!
+    return
+  endtry
+  redraw!
+  exec a:vim_command . " " . selection
+endfunction
+
+" Find all files in all non-dot directories starting in the working directory.
+" Fuzzy select one of those. Open the selected file with :e.
+nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
+
 " LANGUAGE STUFF
 
 augroup ft_haskell
     au!
 
+    autocmd FileType haskell map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>:SyntasticReset<cr>
+    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
     let g:haddock_browser = "open"
     au Bufenter *.hs compiler ghc
+
+    " 1 tab == 2 spaces
+    set shiftwidth=2
+    set tabstop=2
+
+    " Pretty unicode haskell symbols
+    let g:haskell_conceal_wide = 1
+    let g:haskell_conceal_enumerations = 1
+    let hscoptions="𝐒𝐓𝐄𝐌xRtB𝔻w"
+
+    set ai "Auto indent
+    set si "Smart indent
+    set wrap "Wrap lines
 
 augroup END
 
@@ -512,6 +718,8 @@ augroup ft_go
     au FileType go nmap <C-c>gv <Plug>(go-def-vertical)
     au FileType go nmap <C-c>gt <Plug>(go-def-tab)
 
+    let g:go_fmt_command = "goimports"
+
 augroup END
 
 
@@ -531,15 +739,91 @@ else
     hi Normal guibg=#cccccc ctermbg=233
     hi NonText guibg=#cccccc ctermbg=233
 
+    " Vimux
+    function! VimuxSlime()
+      call VimuxSendText(@v)
+      call VimuxSendKeys("Enter")
+    endfunction
+
+    vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
+    nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
+
     " Vim TMUx
-    map <Leader>rp :VimuxPromptCommand <CR>
+    map <Leader>vp :VimuxPromptCommand <CR>
     " Run last command executed by RunVimTmuxCommand
-    map <Leader>rl :RunLastVimTmuxCommand<CR>
+    map <Leader>vl :RunLastVimTmuxCommand<CR>
     " Inspect runner pane
-    map <Leader>ri :InspectVimTmuxRunner<CR>
+    map <Leader>vi :InspectVimTmuxRunner<CR>
 
     let VimuxHeight = "28"
     let VimuxUseNearestPane = 1
     let g:VimuxOrientation = "h"
+
+    " for tmux to automatically set paste and nopaste mode at the time pasting (as
+    " happens in VIM UI)
+
+    function! WrapForTmux(s)
+      if !exists('$TMUX')
+        return a:s
+      endif
+
+      let tmux_start = "\<Esc>Ptmux;"
+      let tmux_end = "\<Esc>\\"
+
+      return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+    endfunction
+
+    let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+    let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+    function! XTermPasteBegin()
+      set pastetoggle=<Esc>[201~
+      set paste
+      return ""
+    endfunction
+
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 endif
 
+function! ZoomMode()
+    if exists("t:zoom_mode_enabled")
+        " If zoom mode is on, make windows a size usable for coding as we jump
+        " between them.
+        set winwidth=90
+
+        " We have to have a winheight bigger than we want to set winminheight.
+        " But if we set winheight to be huge before winminheight, the
+        " winminheight set will fail.
+        set winheight=15
+        set winminheight=15
+        set winheight=999
+
+        " Mark ZoomMode as off.
+        unlet t:zoom_mode_enabled
+
+        echo "  zoom"
+    else
+        " If zoom mode is not on, set resize limits much lower.
+        set winwidth=20
+        set winheight=15
+        set winminheight=1
+        set winheight=1
+
+        " Mark that ZoomMode is on.
+        let t:zoom_mode_enabled = 1
+
+        echo "nozoom"
+    endif
+endfunction
+
+" Toggle zoom mode on/off.
+map <leader>z :call ZoomMode()<cr>
+
+" NEO VIM PARTS
+if !has('nvim')
+    set ttymouse=xterm2
+endif
+
+if exists(':tnoremap')
+    tnoremap <Esc> <C-\><C-n>
+endif
