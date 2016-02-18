@@ -278,6 +278,9 @@ if has("autocmd")
 
     " Clojure
     au BufNewFile,BufRead *.cljs set filetype=clojure
+
+    " Symlinks
+    au BufNewFile,BufRead *.symlink set filetype=sh
 endif
 
 " EDITING"
