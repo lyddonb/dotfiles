@@ -33,12 +33,14 @@
 
 ;; EVIL
 
+;; These must be before the evil require
 ;; Get tab back for orgmode which evil trys to steal
 (setq evil-want-C-i-jump nil)
 
 (require 'evil)
 (define-key evil-motion-state-map ":" 'evil-repeat-find-char)
 (define-key evil-motion-state-map ";" 'evil-ex)
+(define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
 (evil-mode 1)
 
 ;; Remap some keys for evil
