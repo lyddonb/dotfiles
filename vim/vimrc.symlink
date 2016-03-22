@@ -37,35 +37,32 @@ Plug 'vim-scripts/Align'
 Plug 'godlygeek/tabular'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'jceb/vim-orgmode'
 Plug 'mtth/scratch.vim'
 
 " Nerdtree
 Plug 'vim-scripts/The-NERD-tree'
 
-" Multiple Cursors
-Plug 'terryma/vim-multiple-cursors'
-
 " Markdown
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 
 " Git
-Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv'
-Plug 'airblade/vim-gitgutter.git'
-Plug 'int3/vim-extradite'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/gitignore'
+Plugin 'gregsexton/gitv'
+Plugin 'airblade/vim-gitgutter.git'
+Plugin 'int3/vim-extradite'
 
 " Language-spec
-Plug 'klen/python-mode', { 'for': 'python' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'coffescript'] }
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'json'] }
-Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'json'] }
-Plug 'robertkluin/vim-handy-highlights'
-Plug 'mxw/vim-jsx', { 'for': ['javascript', 'json', 'jsx'] }
-Plug 'raichoo/purescript-vim', { 'for': 'purescript' }
-Plug 'dart-lang/dart-vim-plugin', { 'for': 'dart' }
+Plugin 'klen/python-mode'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'pangloss/vim-javascript'
+Plugin 'elzr/vim-json'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'robertkluin/vim-handy-highlights'
+Plugin 'mxw/vim-jsx'
+Plugin 'raichoo/purescript-vim'
+Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'jimenezrick/vimerl'
 
 "Clojure
 Plug 'tpope/vim-classpath', { 'for': 'clojure' }
@@ -216,6 +213,9 @@ map <leader>p :set spell!<cr>
 nnoremap / /\v
 vnoremap / /\v
 
+" Open file in same path wiht :e %%
+cabbr <expr> %% expand('%:p:h')
+
 " Search for selected word
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
@@ -232,6 +232,10 @@ set incsearch
 " Buffer movement.
 nnoremap <leader>j :bnext<CR>
 nnoremap <leader>k :bprev<CR>
+
+" Vim Expand Region
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 " Show trailing whitespace
 set list
@@ -738,6 +742,39 @@ augroup ft_go
 
 augroup END
 
+function! ZoomMode()
+    if exists("t:zoom_mode_enabled")
+        " If zoom mode is on, make windows a size usable for coding as we jump
+        " between them.
+        set winwidth=90
+
+        " We have to have a winheight bigger than we want to set winminheight.
+        " But if we set winheight to be huge before winminheight, the
+        " winminheight set will fail.
+        set winheight=15
+        set winminheight=15
+        set winheight=999
+
+        " Mark ZoomMode as off.
+        unlet t:zoom_mode_enabled
+
+        echo "  zoom"
+    else
+        " If zoom mode is not on, set resize limits much lower.
+        set winwidth=20
+        set winheight=15
+        set winminheight=1
+        set winheight=1
+
+        " Mark that ZoomMode is on.
+        let t:zoom_mode_enabled = 1
+
+        echo "nozoom"
+    endif
+endfunction
+
+" Toggle zoom mode on/off.
+map <leader>z :call ZoomMode()<cr>
 
 " Environments GUI
 if has('gui_running')
