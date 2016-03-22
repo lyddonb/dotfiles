@@ -46,23 +46,23 @@ Plug 'vim-scripts/The-NERD-tree'
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 
 " Git
-Plugin 'tpope/vim-fugitive'
-Plugin 'vim-scripts/gitignore'
-Plugin 'gregsexton/gitv'
-Plugin 'airblade/vim-gitgutter.git'
-Plugin 'int3/vim-extradite'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-scripts/gitignore'
+Plug 'gregsexton/gitv'
+Plug 'airblade/vim-gitgutter.git'
+Plug 'int3/vim-extradite'
 
 " Language-spec
-Plugin 'klen/python-mode'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'pangloss/vim-javascript'
-Plugin 'elzr/vim-json'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'robertkluin/vim-handy-highlights'
-Plugin 'mxw/vim-jsx'
-Plugin 'raichoo/purescript-vim'
-Plugin 'dart-lang/dart-vim-plugin'
-Plugin 'jimenezrick/vimerl'
+Plug 'klen/python-mode'
+Plug 'vim-ruby/vim-ruby'
+Plug 'pangloss/vim-javascript'
+Plug 'elzr/vim-json'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'robertkluin/vim-handy-highlights'
+Plug 'mxw/vim-jsx'
+Plug 'raichoo/purescript-vim'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'jimenezrick/vimerl'
 
 "Clojure
 Plug 'tpope/vim-classpath', { 'for': 'clojure' }
