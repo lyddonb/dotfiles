@@ -1,6 +1,6 @@
 
 source ~/.bashrc
-source ~/.profile
+#source ~/.profile
 
 DEFAULT_COLOR="[00;1m"
 SSH_ENV="$HOME/.ssh/environment"
