@@ -5,92 +5,96 @@ set runtimepath+=$GOBIN
 set runtimepath+=~/.vim/bundle/dart-vim-plugin
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin()
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'VundleVim/Vundle.vim'
 
 " start vundle
-Plugin 'gmarik/vundle'
+Plug 'gmarik/vundle'
 
 " My bundles
-Plugin 'Shougo/vimproc.vim'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'ervandew/supertab'
-Plugin 'sjl/gundo.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/syntastic'
-Plugin 'Townk/vim-autoclose'
-Plugin 'vim-scripts/Rainbow-Parenthesis'
-Plugin 'kien/ctrlp.vim'
-Plugin 'benmills/vimux'
-Plugin 'vim-scripts/ZoomWin'
-Plugin 'vim-scripts/Jinja'
-Plugin 'rizzatti/funcoo.vim'
-Plugin 'ap/vim-buftabline'
-Plugin 'terryma/vim-expand-region'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-sleuth'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'majutsushi/tagbar'
-Plugin 'vim-scripts/Align'
-Plugin 'godlygeek/tabular'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'jceb/vim-orgmode'
-Plugin 'mtth/scratch.vim'
+Plug 'Shougo/vimproc.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'ervandew/supertab'
+Plug 'sjl/gundo.vim'
+Plug 'reinh/vim-makegreen'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/syntastic'
+Plug 'Townk/vim-autoclose'
+Plug 'vim-scripts/Rainbow-Parenthesis'
+Plug 'kien/ctrlp.vim'
+Plug 'benmills/vimux'
+Plug 'vim-scripts/ZoomWin'
+Plug 'vim-scripts/Jinja'
+Plug 'vim-scripts/TaskList.vim'
+Plug 'rizzatti/funcoo.vim'
+Plug 'rizzatti/dash.vim'
+Plug 'ap/vim-buftabline'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/Align'
+Plug 'godlygeek/tabular'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'mtth/scratch.vim'
 
 " Nerdtree
-Plugin 'vim-scripts/The-NERD-tree'
+Plug 'vim-scripts/The-NERD-tree'
 
 " Markdown
-Plugin 'tpope/vim-markdown'
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 
 " Git
-Plugin 'tpope/vim-fugitive'
-Plugin 'vim-scripts/gitignore'
-Plugin 'gregsexton/gitv'
-Plugin 'airblade/vim-gitgutter.git'
-Plugin 'int3/vim-extradite'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-scripts/gitignore'
+Plug 'gregsexton/gitv'
+Plug 'airblade/vim-gitgutter.git'
+Plug 'int3/vim-extradite'
 
 " Language-spec
-Plugin 'klen/python-mode'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'pangloss/vim-javascript'
-Plugin 'elzr/vim-json'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'robertkluin/vim-handy-highlights'
-Plugin 'mxw/vim-jsx'
-Plugin 'raichoo/purescript-vim'
-Plugin 'dart-lang/dart-vim-plugin'
-Plugin 'jimenezrick/vimerl'
+Plug 'klen/python-mode'
+Plug 'vim-ruby/vim-ruby'
+Plug 'pangloss/vim-javascript'
+Plug 'elzr/vim-json'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'robertkluin/vim-handy-highlights'
+Plug 'mxw/vim-jsx'
+Plug 'raichoo/purescript-vim'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'jimenezrick/vimerl'
 
 "Clojure
-Plugin 'tpope/vim-classpath'
-Plugin 'vim-scripts/paredit.vim'
-Plugin 'guns/vim-clojure-static'
-Plugin 'tpope/vim-fireplace'
-Plugin 'tpope/vim-salve'
+Plug 'tpope/vim-classpath', { 'for': 'clojure' }
+Plug 'vim-scripts/paredit.vim', { 'for': 'clojure' }
+Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'tpope/vim-salve', { 'for': 'clojure' }
+
+" Erlang
+Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-rebar', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-dialyzer', { 'for': 'erlang' }
+Plug 'jimenezrick/vimerl', { 'for': 'erlang' }
 
 " Less
-Plugin 'groenewege/vim-less'
+Plug 'groenewege/vim-less', { 'for': 'less' }
 
 " Haskell
-Plugin 'neovimhaskell/haskell-vim'
-Plugin 'enomsg/vim-haskellConcealPlus'
-Plugin 'eagletmt/ghcmod-vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'Twinside/vim-hoogle'
-Plugin 'lukerandall/haskellmode-vim'
+Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell', 'cabal'] }
+Plug 'enomsg/vim-haskellConcealPlus', { 'for': ['haskell', 'cabal'] }
+Plug 'eagletmt/ghcmod-vim', { 'for': ['haskell', 'cabal'] }
+Plug 'eagletmt/neco-ghc', { 'for': ['haskell', 'cabal'] }
+Plug 'Twinside/vim-hoogle', { 'for': ['haskell', 'cabal'] }
+Plug 'lukerandall/haskellmode-vim', { 'for': ['haskell', 'cabal'] }
 
-"Plugin 'lukerandall/haskellmode-vim'
-"Plugin 'dag/vim2hs'
+"Plug 'lukerandall/haskellmode-vim'
+"Plug 'dag/vim2hs'
 
 " Rust
-Plugin 'wting/rust.vim'
+Plug 'wting/rust.vim', { 'for': 'rust' }
 
 
 " GOLANG
@@ -103,10 +107,10 @@ Plugin 'wting/rust.vim'
 "" go install -v code.google.com/p/rog-go/exp/cmd/godef
 "let g:godef_split=0
 "let g:godef_same_file_in_same_window=1
-Plugin 'fatih/vim-go'
-Plugin 'benmills/vimux-golang'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'benmills/vimux-golang', { 'for': 'go' }
 
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on
 
@@ -628,6 +632,17 @@ endfunction
 nnoremap <leader>f :call SelectaCommand("find * -type f", "", ":e")<cr>
 
 " LANGUAGE STUFF
+
+augroup ft_markdown
+    au!
+
+    set wrap
+    set linebreak
+    set nolist  " list disables linebreak
+    set textwidth=0
+    set wrapmargin=0
+
+augroup END
 
 augroup ft_haskell
     au!
