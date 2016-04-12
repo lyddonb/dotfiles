@@ -96,6 +96,9 @@ Plug 'lukerandall/haskellmode-vim', { 'for': ['haskell', 'cabal'] }
 " Rust
 Plug 'wting/rust.vim', { 'for': 'rust' }
 
+" Purescript
+Plug 'raichoo/purescript-vim', { 'for': ['purescript', 'purs'] }
+
 
 " GOLANG
 "Plugin 'dgryski/vim-godef'
@@ -256,6 +259,9 @@ if has("autocmd")
 
     " haskell
     autocmd BufRead *.hs set filetype=haskell
+
+    " purescript
+    autocmd BufRead *.purs set filetype=purescript
 
     " Docker
     autocmd BufRead *.Dockerfile set filetype=sh
