@@ -1,6 +1,9 @@
 
 source ~/.bashrc
-source ~/.profile
+
+if [ -f ~/.profile ]; then
+    source ~/.profile
+fi
 
 DEFAULT_COLOR="[00;1m"
 SSH_ENV="$HOME/.ssh/environment"
