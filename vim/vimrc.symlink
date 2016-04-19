@@ -6,11 +6,6 @@ set runtimepath+=~/.vim/bundle/dart-vim-plugin
 
 " set the runtime path to include Vundle and initialize
 call plug#begin()
-" let Vundle manage Vundle, required
-Plug 'VundleVim/Vundle.vim'
-
-" start vundle
-Plug 'gmarik/vundle'
 
 " My bundles
 Plug 'Shougo/vimproc.vim'
@@ -49,7 +44,7 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/gitignore'
 Plug 'gregsexton/gitv'
-Plug 'airblade/vim-gitgutter.git'
+Plug 'airblade/vim-gitgutter'
 Plug 'int3/vim-extradite'
 
 " Language-spec
