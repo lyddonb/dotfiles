@@ -31,7 +31,6 @@ Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/Align'
 Plug 'godlygeek/tabular'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'mtth/scratch.vim'
 
 " Nerdtree
@@ -207,6 +206,12 @@ map <leader>e :set paste!<CR>
 
 " toggle spell mode.
 map <leader>p :set spell!<cr>
+" Turn on for file types
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd FileType gitcommit setlocal spell
+
+" Auto complete with CTRL-N or CTRL-P in insert
+set complete+=kspell
 
 
 " SEARCHING
@@ -288,9 +293,14 @@ if has("autocmd")
     " Clojure
     au BufNewFile,BufRead *.cljs set filetype=clojure
 
+    " Symlinks
+    au BufNewFile,BufRead *.symlink set filetype=sh
+
     " Elm
     au BufNewFile,BufRead *.elm set filetype=elm
+
     autocmd FileType elm setlocal shiftwidth=4 tabstop=4 softtabstop=4
+
 endif
 
 " EDITING"
@@ -727,7 +737,7 @@ augroup ft_python
     "autocmd BufNewFile,BufRead *.py compiler nose
     " For now set all tests to nose. But we'll probably want something better long
     " term. Like using a make file...
-    au FileType python autocmd BufNewFile,BufRead *.* compiler nose
+    " au FileType python autocmd BufNewFile,BufRead *.* compiler nose
 
 augroup END
 
@@ -891,12 +901,3 @@ endfunction
 
 " Toggle zoom mode on/off.
 map <leader>z :call ZoomMode()<cr>
-
-" NEO VIM PARTS
-if !has('nvim')
-    set ttymouse=xterm2
-endif
-
-if exists(':tnoremap')
-    tnoremap <Esc> <C-\><C-n>
-endif
