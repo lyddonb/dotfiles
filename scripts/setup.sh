@@ -141,5 +141,7 @@ setup_vim_things() {
 install_dotfiles
 setup_vim_things
 
+# TODO: install merc for emacs. could also run emacs/el-get
+
 echo ''
 echo '  All installed!'

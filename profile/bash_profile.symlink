@@ -59,7 +59,9 @@ if [ -d "$GHC_DOT_APP" ]; then
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
-source '/Users/beaulyddon/google-cloud-sdk/path.bash.inc'
+source '/Users/beaulyddon/Downloads/google-cloud-sdk/path.bash.inc'
 
 # The next line enables shell command completion for gcloud.
-source '/Users/beaulyddon/google-cloud-sdk/completion.bash.inc'
+source '/Users/beaulyddon/Downloads/google-cloud-sdk/completion.bash.inc'
+
+export CLOUDSDK_PYTHON=/usr/bin/python

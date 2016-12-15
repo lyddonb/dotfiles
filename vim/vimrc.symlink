@@ -41,7 +41,7 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'vim-scripts/gitignore'
+"Plug 'vim-scripts/gitignore'
 Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
 Plug 'int3/vim-extradite'
@@ -575,7 +575,7 @@ au Filetype nerdtree setlocal nolist
 
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=['.vim$', '.*\.pyc$']
-"let NERDTreeMinimalUI = 1
+let NERDTreeMinimalUI = 0
 let NERDTreeDirArrows = 1
 let NERDTreeWinSize = 30
 
