@@ -41,7 +41,6 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 
 " Git
 Plug 'tpope/vim-fugitive'
-"Plug 'vim-scripts/gitignore'
 Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
 Plug 'int3/vim-extradite'
@@ -97,6 +96,9 @@ Plug 'raichoo/purescript-vim', { 'for': ['purescript', 'purs'] }
 "Plug 'lambdatoast/elm.vim', { 'for': ['elm'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'] }
 
+" Markdown
+Plug 'JamshedVesuna/vim-markdown-preview', { 'for': ['markdown', 'md'] }
+
 
 " GOLANG
 "Plugin 'dgryski/vim-godef'
@@ -114,6 +116,7 @@ Plug 'benmills/vimux-golang', { 'for': 'go' }
 call plug#end()
 
 filetype plugin indent on
+filetype plugin on
 
 " The basics
 syntax on
@@ -170,7 +173,7 @@ let maplocalleader = "\\"
 " Made D behave
 nnoremap D d$
 
-" It's 2011.
+" Its 2011.
 noremap j gj
 noremap k gk
 
@@ -205,13 +208,19 @@ map <leader>l :exec "set " &nu ? "rnu": "nu"<cr>
 map <leader>e :set paste!<CR>
 
 " toggle spell mode.
-map <leader>p :set spell!<cr>
+map <localleader>s :set spell!<cr>
 " Turn on for file types
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
+" ]s for the next word
+" z= for options
 
 " Auto complete with CTRL-N or CTRL-P in insert
 set complete+=kspell
+
+
+" PREVIEW
+let vim_markdown_preview_hotkey='<C-m>'
 
 
 " SEARCHING
@@ -298,8 +307,10 @@ if has("autocmd")
 
     " Elm
     au BufNewFile,BufRead *.elm set filetype=elm
-
     autocmd FileType elm setlocal shiftwidth=4 tabstop=4 softtabstop=4
+
+    " Markdown
+    autocmd BufNewFile,BufRead \*.{md,mdwn,mkd,mkdn,mark\*} set filetype=markdown
 
 endif
 
@@ -722,6 +733,7 @@ augroup ft_python
     let g:pymode_lint = 0
     let g:pymode_lint_cwindow = 0
     let g:pymode_run = 0
+    let g:pymode_virtualenv = 1
 
     "let g:pymode_rope_guess_project = 0
 

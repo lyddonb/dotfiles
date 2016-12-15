@@ -153,8 +153,9 @@ export PIP_RESPECT_VIRTUALENV=true
 
 source /usr/local/bin/virtualenvwrapper.sh
 
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
+export PATH=$HOME/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
 export PATH="$HOME/Library/Haskell/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH=$PATH:$HOME/programs/gcutil-1.8.2
 
 # GO
@@ -187,3 +188,8 @@ LEIN_FAST_TRAMPOLINE=y
 export LEIN_FAST_TRAMPOLINE
 alias cljsbuild="lein trampoline cljsbuild $@"
 export CLOJURESCRIPT_HOME=/Users/beaulyddon/programs/clojurescript
+
+export EDITOR="vim"
+source ~/.bin/tmuxinator.bash
+
+source $HOME/.bash_haskell
