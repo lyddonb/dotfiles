@@ -54,7 +54,6 @@ Plug 'elzr/vim-json'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'robertkluin/vim-handy-highlights'
 Plug 'mxw/vim-jsx'
-Plug 'raichoo/purescript-vim'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'jimenezrick/vimerl'
 
@@ -79,10 +78,10 @@ Plug 'groenewege/vim-less', { 'for': 'less' }
 " Haskell
 Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell', 'cabal'] }
 Plug 'enomsg/vim-haskellConcealPlus', { 'for': ['haskell', 'cabal'] }
-Plug 'eagletmt/ghcmod-vim', { 'for': ['haskell', 'cabal'] }
-Plug 'eagletmt/neco-ghc', { 'for': ['haskell', 'cabal'] }
-Plug 'Twinside/vim-hoogle', { 'for': ['haskell', 'cabal'] }
-Plug 'lukerandall/haskellmode-vim', { 'for': ['haskell', 'cabal'] }
+"Plug 'eagletmt/ghcmod-vim', { 'for': ['haskell', 'cabal'] }
+"Plug 'eagletmt/neco-ghc', { 'for': ['haskell', 'cabal'] }
+"Plug 'Twinside/vim-hoogle', { 'for': ['haskell', 'cabal'] }
+"Plug 'lukerandall/haskellmode-vim', { 'for': ['haskell', 'cabal'] }
 
 "Plug 'lukerandall/haskellmode-vim'
 "Plug 'dag/vim2hs'
@@ -90,12 +89,13 @@ Plug 'lukerandall/haskellmode-vim', { 'for': ['haskell', 'cabal'] }
 " Rust
 Plug 'wting/rust.vim', { 'for': 'rust' }
 
-" Purescript
-Plug 'raichoo/purescript-vim', { 'for': ['purescript', 'purs'] }
-
 " Elm
 "Plug 'lambdatoast/elm.vim', { 'for': ['elm'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'] }
+
+" Purescript
+Plug 'frigoeu/psc-ide-vim', { 'for': ['purescript', 'purs'] }
+Plug 'raichoo/purescript-vim', { 'for': ['purescript', 'purs'] }
 
 
 " GOLANG
@@ -681,8 +681,8 @@ augroup ft_haskell
     au Bufenter *.hs compiler ghc
 
     " 1 tab == 2 spaces
-    set shiftwidth=2
-    set tabstop=2
+    set shiftwidth=4
+    set tabstop=4
 
     " Pretty unicode haskell symbols
     let g:haskell_conceal_wide = 1
