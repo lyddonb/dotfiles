@@ -155,6 +155,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 export PATH=$HOME/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
 export PATH="$HOME/Library/Haskell/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH=$PATH:$HOME/programs/gcutil-1.8.2
 
 # GO
@@ -176,9 +177,9 @@ source $HOME/.aliases
 export ANT_OPTS="-Xms512m -Xmx1024m"
 export MAVEN_OPTS="-Xmx4096m -Xss1024m -XX:MaxPermSize=128m"
 
-export DOCKER_CERT_PATH="/Users/beaulyddon/.docker/machine/machines/dev"
-export DOCKER_TLS_VERIFY=1
-export DOCKER_HOST=tcp://192.168.99.100:2376
+#export DOCKER_CERT_PATH="/Users/beaulyddon/.docker/machine/machines/dev"
+#export DOCKER_TLS_VERIFY=1
+#export DOCKER_HOST=tcp://192.168.99.100:2376
 
 # source $HOME/.nix-profile/etc/profile.d/nix.sh
 
@@ -187,3 +188,8 @@ LEIN_FAST_TRAMPOLINE=y
 export LEIN_FAST_TRAMPOLINE
 alias cljsbuild="lein trampoline cljsbuild $@"
 export CLOJURESCRIPT_HOME=/Users/beaulyddon/programs/clojurescript
+
+export EDITOR="vim"
+source ~/.bin/tmuxinator.bash
+
+source $HOME/.bash_haskell
