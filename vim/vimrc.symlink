@@ -53,7 +53,6 @@ Plug 'elzr/vim-json'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'robertkluin/vim-handy-highlights'
 Plug 'mxw/vim-jsx'
-Plug 'raichoo/purescript-vim'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'jimenezrick/vimerl'
 
@@ -78,10 +77,10 @@ Plug 'groenewege/vim-less', { 'for': 'less' }
 " Haskell
 Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell', 'cabal'] }
 Plug 'enomsg/vim-haskellConcealPlus', { 'for': ['haskell', 'cabal'] }
-Plug 'eagletmt/ghcmod-vim', { 'for': ['haskell', 'cabal'] }
-Plug 'eagletmt/neco-ghc', { 'for': ['haskell', 'cabal'] }
-Plug 'Twinside/vim-hoogle', { 'for': ['haskell', 'cabal'] }
-Plug 'lukerandall/haskellmode-vim', { 'for': ['haskell', 'cabal'] }
+"Plug 'eagletmt/ghcmod-vim', { 'for': ['haskell', 'cabal'] }
+"Plug 'eagletmt/neco-ghc', { 'for': ['haskell', 'cabal'] }
+"Plug 'Twinside/vim-hoogle', { 'for': ['haskell', 'cabal'] }
+"Plug 'lukerandall/haskellmode-vim', { 'for': ['haskell', 'cabal'] }
 
 "Plug 'lukerandall/haskellmode-vim'
 "Plug 'dag/vim2hs'
@@ -89,12 +88,13 @@ Plug 'lukerandall/haskellmode-vim', { 'for': ['haskell', 'cabal'] }
 " Rust
 Plug 'wting/rust.vim', { 'for': 'rust' }
 
-" Purescript
-Plug 'raichoo/purescript-vim', { 'for': ['purescript', 'purs'] }
-
 " Elm
 "Plug 'lambdatoast/elm.vim', { 'for': ['elm'] }
 Plug 'elmcast/elm-vim', { 'for': ['elm'] }
+
+" Purescript
+Plug 'frigoeu/psc-ide-vim', { 'for': ['purescript', 'purs'] }
+Plug 'raichoo/purescript-vim', { 'for': ['purescript', 'purs'] }
 
 " Markdown
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': ['markdown', 'md'] }
@@ -586,7 +586,7 @@ au Filetype nerdtree setlocal nolist
 
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=['.vim$', '.*\.pyc$']
-"let NERDTreeMinimalUI = 1
+let NERDTreeMinimalUI = 0
 let NERDTreeDirArrows = 1
 let NERDTreeWinSize = 30
 
@@ -692,8 +692,8 @@ augroup ft_haskell
     au Bufenter *.hs compiler ghc
 
     " 1 tab == 2 spaces
-    set shiftwidth=2
-    set tabstop=2
+    set shiftwidth=4
+    set tabstop=4
 
     " Pretty unicode haskell symbols
     let g:haskell_conceal_wide = 1
@@ -783,40 +783,6 @@ augroup ft_go
     let g:go_fmt_command = "goimports"
 
 augroup END
-
-function! ZoomMode()
-    if exists("t:zoom_mode_enabled")
-        " If zoom mode is on, make windows a size usable for coding as we jump
-        " between them.
-        set winwidth=90
-
-        " We have to have a winheight bigger than we want to set winminheight.
-        " But if we set winheight to be huge before winminheight, the
-        " winminheight set will fail.
-        set winheight=15
-        set winminheight=15
-        set winheight=999
-
-        " Mark ZoomMode as off.
-        unlet t:zoom_mode_enabled
-
-        echo "  zoom"
-    else
-        " If zoom mode is not on, set resize limits much lower.
-        set winwidth=20
-        set winheight=15
-        set winminheight=1
-        set winheight=1
-
-        " Mark that ZoomMode is on.
-        let t:zoom_mode_enabled = 1
-
-        echo "nozoom"
-    endif
-endfunction
-
-" Toggle zoom mode on/off.
-map <leader>z :call ZoomMode()<cr>
 
 " Environments GUI
 if has('gui_running')
