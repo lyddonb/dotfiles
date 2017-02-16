@@ -48,6 +48,7 @@
 ;; Exit insert mode by pressing j and then j quickly
 (setq key-chord-two-keys-delay 0.5)
 (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+(key-chord-define-global ",," 'switch-to-previous-buffer)
 (key-chord-mode 1)
 
 ;; EVIL Plugins
@@ -72,6 +73,13 @@
 (global-set-key (kbd "C-c l") 'evilnc-quick-comment-or-uncomment-to-the-line)
 (global-set-key (kbd "C-c c") 'evilnc-copy-and-comment-lines)
 (global-set-key (kbd "C-c p") 'evilnc-comment-or-uncomment-paragraphs)
+
+;; Previous Buffer
+(defun switch-to-previous-buffer ()
+  "Switch to previously open buffer.
+Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 ;; Vim key bindings
 (require 'evil-leader)
@@ -136,6 +144,9 @@
 (require 'org)
 (define-key global-map "\C-cl" 'org-store-link)
 (setq org-agenda-files (list "~/Dropbox/org"))
+(setq org-directory "~/Dropbox/org")
+(setq org-mobile-inbox-for-pull "~/Dropbox/org/flagged.org")
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 (setq org-log-done t)
 
 (require 'evil-org)
