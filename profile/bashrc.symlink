@@ -125,7 +125,7 @@ function parse_git_branch {
     fi
     return
 }
-export BASEPROMPT="\[\e${GREEN_COLOR}\]\w\[\e${CYAN_COLOR}\]""\$(parse_git_branch)""\[\e${DEFAULT_COLOR}\]"
+export BASEPROMPT="\[\e${GREEN_COLOR}\]\W\[\e${CYAN_COLOR}\]""\$(parse_git_branch)""\[\e${DEFAULT_COLOR}\]"
 export PS1="${BASEPROMPT} $ "
 
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
@@ -146,7 +146,8 @@ source ~/.git-completion.bash
 # 
 # Setting up the VirtualEnv
 export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
@@ -177,19 +178,10 @@ source $HOME/.aliases
 export ANT_OPTS="-Xms512m -Xmx1024m"
 export MAVEN_OPTS="-Xmx4096m -Xss1024m -XX:MaxPermSize=128m"
 
-#export DOCKER_CERT_PATH="/Users/beaulyddon/.docker/machine/machines/dev"
-#export DOCKER_TLS_VERIFY=1
-#export DOCKER_HOST=tcp://192.168.99.100:2376
-
-# source $HOME/.nix-profile/etc/profile.d/nix.sh
-
-# Clojure
-LEIN_FAST_TRAMPOLINE=y
-export LEIN_FAST_TRAMPOLINE
-alias cljsbuild="lein trampoline cljsbuild $@"
-export CLOJURESCRIPT_HOME=/Users/beaulyddon/programs/clojurescript
-
 export EDITOR="vim"
 source ~/.bin/tmuxinator.bash
 
 source $HOME/.bash_haskell
+#export GAE_PYTHONPATH=/Users/beaulyddon/programs/google_appengine/
+
+export PATH=$PATH:/usr/local/Cellar/purescript/0.10.5/bin

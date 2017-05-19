@@ -1,5 +1,7 @@
 alias aa='vim ~/.aliases && . ~/.aliases'
 
+alias gc=gcloud
+
 alias mmosh='mosh --server=/usr/local/bin/mosh-server $1'
 
 alias dots='cd ~/dotfiles'
