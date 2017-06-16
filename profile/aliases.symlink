@@ -1,6 +1,11 @@
 alias aa='vim ~/.aliases && . ~/.aliases'
 
 alias gc=gcloud
+alias gca='gcloud config configurations activate $1'
+alias gclc='gcloud config'
+
+# ACKS
+alias ackelm='ack --ignore-dir=elm-stuff --ignore-dir=dist $1'
 
 alias mmosh='mosh --server=/usr/local/bin/mosh-server $1'
 
