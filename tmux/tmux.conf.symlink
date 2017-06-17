@@ -21,9 +21,10 @@ set -g history-limit 10000
 
 ##give me vim movement in copy mode
 setw -g mode-keys vi
-bind-key -t vi-copy 'v' begin-selection
-bind-key -t vi-copy 'C-v' rectangle-toggle
-bind-key -t vi-copy 'y' copy-selection
+bind-key -Tcopy-mode-vi 'v' send -X begin-selection
+#bind-key -Tcopy-mode-vi 'y' send -X copy-selection
+bind-key -Tcopy-mode-vi 'y' send -X copy-pipe-and-cancel pbcopy
+bind-key -Tcopy-mode-vi 'C-v' send -X rectangle-toggle
 
 ##start my windows at 1 instead of 0
 set-option -g base-index 1
