@@ -8,7 +8,7 @@ set runtimepath+=~/.vim/bundle/dart-vim-plugin
 call plug#begin()
 
 " My bundles
-Plug 'Shougo/vimproc.vim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'ervandew/supertab'
@@ -99,6 +99,9 @@ Plug 'JamshedVesuna/vim-markdown-preview', { 'for': ['markdown', 'md'] }
 " Idris
 Plug 'idris-hackers/idris-vim', { 'for': ['idris', 'idr'] }
 
+" Typescript
+Plug 'Quramy/tsuquyomi', { 'for': ['typescript', 'ts'] }
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'ts'] }
 
 " GOLANG
 "Plugin 'dgryski/vim-godef'
@@ -278,8 +281,11 @@ if has("autocmd")
     " make jinja, jst, and handlebars templates use html syntax highlighting
     autocmd BufRead *.jinja,*.jst,*.handlebars,*.mustache set filetype=html
 
-    " Set html, coffee, and javascript indent depths to 2-space.
-    autocmd FileType coffee,html,javascript,mako.yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
+    " Set html, coffee, typescript and javascript indent depths to 2-space.
+    autocmd FileType coffee,html,javascript,mako.yaml,typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+
+    " typescript
+    autocmd BufRead *.ts set filetype=typescript
 
     " Flex syntax highlighting
     autocmd BufRead *.as set filetype=actionscript
