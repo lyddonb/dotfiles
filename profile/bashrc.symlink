@@ -146,16 +146,16 @@ source ~/.git-completion.bash
 # 
 # Setting up the VirtualEnv
 export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+export VIRTUALENVWRAPPER_PYTHON=/opt/homebrew/opt/python3/libexec/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/opt/homebrew/bin/virtualenv
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
 
-source /usr/local/bin/virtualenvwrapper.sh
+source /opt/homebrew/bin/virtualenvwrapper.sh
 
 export PATH=$HOME/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/bin:$PATH
-export PATH="$HOME/Library/Haskell/bin:$PATH"
+export PATH=/opt/homebrew/opt/python3/libexec/bin:$PATH
+#export PATH="$HOME/Library/Haskell/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH=$PATH:$HOME/programs/gcutil-1.8.2
 
@@ -165,7 +165,8 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH:$GOPATH/bin
 # Java 8
-export JAVA_HOME=$(/usr/libexec/java_home)
+#export JAVA_HOME=$(/usr/libexec/java_home)
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 source $HOME/.aliases
 
@@ -179,3 +180,7 @@ source $HOME/.bash_haskell
 #export GAE_PYTHONPATH=/Users/beaulyddon/programs/google_appengine/
 
 export PATH=$PATH:/usr/local/Cellar/purescript/0.10.5/bin
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

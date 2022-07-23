@@ -33,6 +33,7 @@ Plug 'godlygeek/tabular'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'mtth/scratch.vim'
 Plug 'robertkluin/vim-handy-highlights'
+Plug 'craigemery/vim-autotag'
 
 " Nerdtree
 Plug 'vim-scripts/The-NERD-tree'
@@ -46,7 +47,7 @@ Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
 
 " Language-spec
-Plug 'klen/python-mode', { 'for': 'python' }
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 
 " Javascript
@@ -102,6 +103,11 @@ Plug 'idris-hackers/idris-vim', { 'for': ['idris', 'idr'] }
 " Typescript
 Plug 'Quramy/tsuquyomi', { 'for': ['typescript', 'ts'] }
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'ts'] }
+
+" Crypto
+
+" Eth
+Plug 'tomlion/vim-solidity', { 'for': ['solidity', 'sol'] }
 
 " GOLANG
 "Plugin 'dgryski/vim-godef'
@@ -321,6 +327,9 @@ endif
 "au BufWritePost *.go,*.c,*.cpp,*.h silent! !ctags -R &
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" Ctags
+"set tags=./tags,tags;$HOME
 
 " auto complete
 set omnifunc=syntaxcomplete#Complete
@@ -752,6 +761,8 @@ augroup ft_python
 
     au FileType python setlocal omnifunc=pythoncomplete#Complete
 
+    let g:autotagStartMethod='fork'
+
     " Flake 8
 
     let g:syntastic_python_checkers=['flake8', 'pyflakes']
@@ -780,12 +791,13 @@ augroup ft_python
     let python_highlight_all=1
 
     " Makegreen
-    au FileType python map <localleader>t :call MakeGreen()<cr>
-    au FileType python let g:makegreen_stay_on_file=1
+    "au FileType python map <localleader>t :call MakeGreen()<cr>
+    "au FileType python let g:makegreen_stay_on_file=1
     "autocmd BufNewFile,BufRead *.py compiler nose
     " For now set all tests to nose. But we'll probably want something better long
     " term. Like using a make file...
-    " au FileType python autocmd BufNewFile,BufRead *.* compiler nose
+    " au FileType python autocmd BufNewFile,BufRead *.* compiler mypy
+    "autocmd BufWritePost *.py silent! execute "!mypy . --ignore-missing-imports" | redraw!
 
 augroup END
 

@@ -33,5 +33,7 @@ alias ll1='tree --dirsfirst -ChFupDaL 1'
 alias ll2='tree --dirsfirst -ChFupDaL 2'
 alias ll3='tree --dirsfirst -ChFupDaL 3'
 
+alias ports='sudo lsof -iTCP -sTCP:LISTEN -n -P'
+
 # . ~/Dropbox/dotfiles/aliases_work
 # . ~/Dropbox/dotfiles/aliases_osx
